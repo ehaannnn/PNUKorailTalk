@@ -8,13 +8,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends Activity {
+import java.util.HashMap;
 
+public class MainActivity extends Activity {
+    private DBHelper dbhelper;
+    public Button checkPaiedTicket_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* 우진  시작*/
         Button btn_mypage = (Button) findViewById(R.id.myPage_button);
 
         btn_mypage.setOnClickListener(new Button.OnClickListener() {
@@ -24,7 +28,31 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+        /* 우진  끝*/
+
+        /* 한결  시작*/
+        checkPaiedTicket_button = (Button) findViewById(R.id.checkPaiedTicket_button);
+
+        dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db",null,1);
+        dbhelper.dropTable();
+        HashMap<String,Object> items = new HashMap<String,Object>();
+        items.put("boardingDate","2017-06-22");
+        items.put("departurePoint","부산");
+        items.put("destPoint","서울");
+        items.put("totalAvailableSeatNum",100);
+        items.put("trainNum", 131);
+        dbhelper.insert("TRAIN_INFO", items);
+
+        checkPaiedTicket_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PaiedTicketSearch.class);
+                startActivity(intent);
+            }
+        });
+        /* 한결  끝*/
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -46,5 +74,11 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbhelper.dropTable();
     }
 }
