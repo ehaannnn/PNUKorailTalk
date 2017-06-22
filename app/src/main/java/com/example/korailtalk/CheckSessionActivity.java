@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 public class CheckSessionActivity extends Activity {
 
-    String menu_string, customer_id;
+    private String menu_string, customer_id;
+    private EditText edittext_user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +24,15 @@ public class CheckSessionActivity extends Activity {
         textView.setText(menu_string);
 
         Button btn_confirm = (Button) findViewById(R.id.confirm_button);
-        EditText edittext_user_id = (EditText) findViewById(R.id.user_account) ;
-        customer_id = edittext_user_id.getText().toString();
+        edittext_user_id = (EditText) findViewById(R.id.user_account);
 
         btn_confirm.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
+                customer_id = edittext_user_id.getText().toString();
                 if(menu_string.equals("mypage")) {
-                    //Intent next_intent = new Intent(CheckSessionActivity.this,MyPageActivity.class);
-                    //next_intent.putExtra("costomID",customer_id);
-                    //startActivity(next_intent);
+                    Intent next_intent = new Intent(CheckSessionActivity.this,MyPageActivity.class);
+                    next_intent.putExtra("customID",customer_id);
+                    startActivity(next_intent);
                 }
                 if(menu_string.equals("paiedTicketSearch")) {
 
