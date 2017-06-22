@@ -23,9 +23,9 @@ public class MainActivity extends Activity {
 
         btn_mypage.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,CheckSessionActivity.class);
-                intent.putExtra("menu","mypage");
-                startActivity(intent);
+                Intent intent2 = new Intent(MainActivity.this,CheckSessionActivity.class);
+                intent2.putExtra("menu","mypage");
+                startActivity(intent2);
             }
         });
         /* 우진  끝*/
