@@ -70,6 +70,44 @@ public class MainActivity extends Activity {
         items2.put("use",1);
         dbhelper.insert("TICKET_INFO", items2);
 
+        // 우진 수정 시작
+        HashMap<String, Object> item1 = new HashMap<String, Object>();
+        item1.put("ID", "admin");
+        item1.put("customID", "1");
+        item1.put("phoneNum", "010-1234-5678");
+        item1.put("password", "admin");
+        dbhelper.insert("MEMBER", item1);
+
+        HashMap<String, Object> item2 = new HashMap<String, Object>();
+        item2.put("ID", "holinder4s");
+        item2.put("customID", "31337");
+        item2.put("phoneNum", "010-7185-7663");
+        item2.put("password", "helloworld");
+        dbhelper.insert("MEMBER", item2);
+
+        HashMap<String, Object> item3 = new HashMap<String, Object>();
+        item3.put("customID", "-1234");
+        item3.put("phoneNum", "010-1111-1111");
+        item3.put("password", "test1234");
+        dbhelper.insert("NON_MEMBER", item3);
+
+        HashMap<String, Object> item4 = new HashMap<String, Object>();
+        item4.put("customID", "-2222");
+        item4.put("phoneNum", "010-2222-2222");
+        item4.put("password", "test2222");
+        dbhelper.insert("NON_MEMBER", item4);
+
+        HashMap<String, Object> item5 = new HashMap<String, Object>();
+        item5.put("CouponNum", "9999");
+        item5.put("KTXMileage", "99999999");
+        dbhelper.insert("MEMBERSHIP_INFO", item5);
+
+        HashMap<String, Object> item6 = new HashMap<String, Object>();
+        item6.put("CouponNum", "3");
+        item6.put("KTXMileage", "23500");
+        dbhelper.insert("MEMBERSHIP_INFO", item6);
+        // 우진 수정 끝
+
         checkPaiedTicket_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

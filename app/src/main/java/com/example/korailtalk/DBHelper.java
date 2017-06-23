@@ -118,9 +118,28 @@ public class DBHelper extends SQLiteOpenHelper {
             }
 
         } else if (table.equalsIgnoreCase("MEMBER")) {
+            cursor = db.rawQuery("SELECT * FROM MEMBER WHERE customID=" +customID, null);
+            int pos = 0;
+            while (cursor.moveToNext()) {
+                HashMap<String,Object> item = new HashMap<String,Object>();
 
+                item.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
+                item.put("ID", cursor.getString(cursor.getColumnIndex("ID")));
+                item.put("phoneNum", cursor.getString(cursor.getColumnIndex("phoneNum")));
+                items.add(item);
+            }
         } else if (table.equalsIgnoreCase("NON_MEMBER")) {
+            cursor = db.rawQuery("SELECT * FROM NON_MEMBER WHERE customID=" +customID, null);
+            int pos = 0;
+            while (cursor.moveToNext()) {
+                HashMap<String,Object> item = new HashMap<String,Object>();
 
+                item.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
+                item.put("phoneNum", cursor.getString(cursor.getColumnIndex("phoneNum")));
+                items.add(item);
+            }
         } else if (table.equalsIgnoreCase("TRAIN_INFO")) {
             cursor = db.rawQuery("SELECT * FROM TRAIN_INFO", null);
             int pos = 0;
@@ -134,7 +153,16 @@ public class DBHelper extends SQLiteOpenHelper {
         } else if (table.equalsIgnoreCase("SEAT_INFO")) {
 
         } else if (table.equalsIgnoreCase("MEMBERSHIP_INFO")) {
+            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE _id=" +customID, null);
+            int pos = 0;
+            while (cursor.moveToNext()) {
+                HashMap<String,Object> item = new HashMap<String,Object>();
 
+                item.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                item.put("CouponNum", cursor.getString(cursor.getColumnIndex("CouponNum")));
+                item.put("KTXMileage", cursor.getString(cursor.getColumnIndex("KTXMileage")));
+                items.add(item);
+            }
         }
 
         return items;
