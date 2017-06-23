@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by 한결 on 2017-06-22.
@@ -31,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO( _id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER, customID INTEGER, trainNum INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO( _id INTEGER PRIMARY KEY AUTOINCREMENT, boardingDate TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER, customID INTEGER, trainNum INTEGER, use INTEGER);");
         db.execSQL("CREATE TABLE IF NOT EXISTS MEMBER( _id INTEGER PRIMARY KEY AUTOINCREMENT, customID INTEGER, ID TEXT, phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS NON_MEMBER( _id INTEGER PRIMARY KEY AUTOINCREMENT, customID INTEGER,phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO( _id INTEGER PRIMARY KEY AUTOINCREMENT, boardingDate TEXT, departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
@@ -43,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues newValues = new ContentValues();
         if (table.equalsIgnoreCase("TICKET_INFO")) {
-            newValues.put("date", items.get("date").toString());
+            newValues.put("boardingDate", items.get("boardingDate").toString());
             newValues.put("destPoint", items.get("destPoint").toString());
             newValues.put("paid", Integer.parseInt(items.get("paid").toString()));
             newValues.put("departurePoint", items.get("departurePoint").toString());
@@ -51,6 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
             newValues.put("ticketID", Integer.parseInt(items.get("ticketID").toString()));
             newValues.put("customID", Integer.parseInt(items.get("customID").toString()));
             newValues.put("trainNum", Integer.parseInt(items.get("trainNum").toString()));
+            newValues.put("use", Integer.parseInt(items.get("use").toString()));
         } else if (table.equalsIgnoreCase("MEMBER")) {
             newValues.put("customID", Integer.parseInt(items.get("customID").toString()));
             newValues.put("ID", items.get("ID").toString());
@@ -81,6 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void delete() {
 
     }
+
     public void dropTable() {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("drop table if exists TICKET_INFO");
@@ -92,21 +96,40 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public HashMap<String,Object> getResultAt(String table) {
+    public List<HashMap<String, Object>> getResultAt(String table, int customID) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
-        HashMap<String,Object> items = new HashMap<String,Object>();
+        List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
         if (table.equalsIgnoreCase("TICKET_INFO")) {
+            cursor = db.rawQuery("SELECT * FROM TICKET_INFO WHERE customID=" +customID, null);
+            int pos = 0;
+            while (cursor.moveToNext()) {
+                HashMap<String,Object> item = new HashMap<String,Object>();
+
+                item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
+                item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
+                item.put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
+                item.put("seatNum", cursor.getString(cursor.getColumnIndex("seatNum")));
+                item.put("ticketID", cursor.getString(cursor.getColumnIndex("ticketID")));
+                item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
+                item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
+                item.put("use", cursor.getString(cursor.getColumnIndex("use")));
+                items.add(item);
+            }
 
         } else if (table.equalsIgnoreCase("MEMBER")) {
 
         } else if (table.equalsIgnoreCase("NON_MEMBER")) {
 
         } else if (table.equalsIgnoreCase("TRAIN_INFO")) {
-            cursor = db.rawQuery("SELECT * FROM TRAIN_INFO",null);
+            cursor = db.rawQuery("SELECT * FROM TRAIN_INFO", null);
+            int pos = 0;
             while (cursor.moveToNext()) {
-                items.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
-                Log.i("열차 정보 가져오기",items.get("boardingDate").toString());
+                items.get(pos).put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
+                items.get(pos).put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
+                items.get(pos).put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
+                items.get(pos).put("totalAvailableSeatNum", cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum")));
+                items.get(pos).put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
             }
         } else if (table.equalsIgnoreCase("SEAT_INFO")) {
 

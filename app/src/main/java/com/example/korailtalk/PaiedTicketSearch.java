@@ -1,30 +1,116 @@
 package com.example.korailtalk;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PaiedTicketSearch extends Activity {
     private DBHelper dbhelper;
-    private TextView boardingDate;
+
     private ListViewAdapter adapter;
     private Button paidTicketSearchButton;
+    private Button startDateButton;
+    private Button endDateButton;
+    private TextView startDate;
+    private TextView endDate;
+    private ListView listView;
+    private static final int START_DATE = 1;
+    private static final int END_DATE = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paied_ticket_search);
 
-        dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db",null,1);
+        dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
+
+        listView = (ListView) findViewById(R.id.listView);
+        adapter = new ListViewAdapter();
+        listView.setAdapter(adapter);
+
+        int customID = 1;
+        //List<HashMap<String,Object>> train_info = dbhelper.getResultAt("TRAIN_INFO",customID);
+        final List<HashMap<String,Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO",customID);
 
         paidTicketSearchButton = (Button) findViewById(R.id.paidTicketSearchButton);
+        paidTicketSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //DB에서 startDate부터 endDate사이의 티켓정보 출력
+                //티켓정보 : 출발역, 도착역, 인원, 열차번호, 출발날짜
+                for (int i = 0; i < ticket_info.size(); ++i) {
+                    if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0) {
+                        adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(),ticket_info.get(i).get("departurePoint").toString(),ticket_info.get(i).get("destPoint").toString(),
+                                ticket_info.get(i).get("seatNum").toString(),Integer.parseInt(ticket_info.get(i).get("trainNum").toString() ) ) );
+                    }
+                }
+                listView.setAdapter(adapter);
+            }
+        });
 
+        startDate = (TextView) findViewById(R.id.startDate);
+        startDateButton = (Button) findViewById(R.id.startDateButton);
+        startDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PaiedTicketSearch.this, DatePickerActivity.class);
+                startActivityForResult(intent, START_DATE);
+            }
+        });
+
+        endDate = (TextView) findViewById(R.id.endDate);
+        endDateButton = (Button) findViewById(R.id.endDateButton);
+        endDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PaiedTicketSearch.this, DatePickerActivity.class);
+                startActivityForResult(intent,END_DATE);
+            }
+        });
         /*HashMap<String,Object> items = dbhelper.getResultAt("TRAIN_INFO");
 
         boardingDate = (TextView) findViewById(R.id.boardingDate);
         boardingDate.setText(items.get("boardingDate").toString());*/
+    }
+
+    public Map<String,Object> createItem(String boardingDate, String departurePoint, String destPoint, String seatNum, int trainNum) {
+        Map<String,Object> item = new HashMap<String,Object>();
+        item.put("boardingDate", boardingDate);
+        item.put("departurePoint", departurePoint);
+        item.put("destPoint", destPoint);
+        item.put("seatNum", seatNum);
+        item.put("trainNum", trainNum);
+        return item;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == START_DATE) {
+            String boardingDate = data.getStringExtra("boardingDate");
+           // Log.i("test",tmp.length()+"");
+            //String date = tmp.charAt(0)+tmp.charAt(1)+tmp.charAt(2)+tmp.charAt(3) + "-"+tmp.charAt(4)+tmp.charAt(5)+"-"+tmp.charAt(6)+tmp.charAt(7);
+            startDate.setText(boardingDate);
+        }
+        else if (requestCode == END_DATE){
+            String boardingDate = data.getStringExtra("boardingDate");
+            //String date = tmp.charAt(0)+tmp.charAt(1)+tmp.charAt(2)+tmp.charAt(3) + "-"+tmp.charAt(4)+tmp.charAt(5)+"-"+tmp.charAt(6)+tmp.charAt(7);
+            endDate.setText(boardingDate);
+        }
+        else {
+            Log.i("실행됨?", "여기는 에러");
+        }
     }
 
     @Override
@@ -44,6 +130,7 @@ public class PaiedTicketSearch extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
