@@ -33,8 +33,7 @@ public class MyPageActivity extends Activity {
 
         if(isMember(customer_id)) {
             member_info = dbhelper.getResultAt("MEMBER",Integer.parseInt(customer_id));
-            String primary_id = member_info.get(0).get("_id").toString();
-            membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO",Integer.parseInt(primary_id));
+            membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO",Integer.parseInt(customer_id));
 
             /*
             member_info.get(0).put("ID", "holinder4s");

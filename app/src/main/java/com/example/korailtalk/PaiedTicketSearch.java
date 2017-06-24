@@ -16,12 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 public class PaiedTicketSearch extends Activity {
+    private int customID;
     private DBHelper dbhelper;
-
+    private SessionDBHelper sessionDBhelper;
     private ListViewAdapter adapter;
     private Button paidTicketSearchButton;
     private Button startDateButton;
     private Button endDateButton;
+    private Button mainButton;
     private TextView startDate;
     private TextView endDate;
     private ListView listView;
@@ -31,14 +33,13 @@ public class PaiedTicketSearch extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paied_ticket_search);
+        Intent intent = getIntent();
+        customID = intent.getIntExtra("customID",0);
 
         dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
-
         listView = (ListView) findViewById(R.id.listView);
-
         listView.setAdapter(adapter);
 
-        int customID = 1;
         //List<HashMap<String,Object>> train_info = dbhelper.getResultAt("TRAIN_INFO",customID);
         final List<HashMap<String,Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO",customID);
 
@@ -82,6 +83,26 @@ public class PaiedTicketSearch extends Activity {
 
         boardingDate = (TextView) findViewById(R.id.boardingDate);
         boardingDate.setText(items.get("boardingDate").toString());*/
+
+        mainButton = (Button) findViewById(R.id.main);
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PaiedTicketSearch.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
+        Button sessionButton = (Button) findViewById(R.id.sessionDelete);
+        sessionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionDBhelper.dropTable();
+            }
+        });
     }
 
     public Map<String,Object> createItem(String boardingDate, String departurePoint, String destPoint, String seatNum, int trainNum) {

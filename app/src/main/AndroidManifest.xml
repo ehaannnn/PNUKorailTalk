@@ -25,7 +25,11 @@
         <activity android:name=".MyPageActivity" />
         <activity
             android:name=".DatePickerActivity"
-            android:label="@string/title_activity_date_picker" >
+            android:label="@string/title_activity_date_picker" />
+        <activity android:name=".TicketCancelActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name=".TrainSearch"

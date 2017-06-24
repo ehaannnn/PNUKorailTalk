@@ -49,4 +49,20 @@
         android:gravity="center"
 
         android:text="조회" />
+
+    <Button
+        android:id="@+id/main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center"
+
+        android:text="메인화면" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="세션 삭제"
+        android:id="@+id/sessionDelete"
+        android:textAllCaps="false" />
 </LinearLayout>

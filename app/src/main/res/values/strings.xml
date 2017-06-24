@@ -8,4 +8,6 @@
     <string name="title_activity_date_picker">DatePickerActivity</string>
     <string name="title_activity_train_search">TrainSearch</string>
     <string name="title_activity_seat_search">SeatSearch</string>
-    </resources>
+    <string name="title_activity_login">LoginActivity</string>
+</resources>
+
