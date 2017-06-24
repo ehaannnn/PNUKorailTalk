@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.korailtalk.PaiedTicketSearch">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="2017-01-01"
+            android:id="@+id/unpaidstartDate"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/unpaidstartDateButton"
+            android:text="날짜선택"/>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/unpaidlistView" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="2017-01-01"
+            android:id="@+id/unpaidendDate"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/unpaidendDateButton"
+            android:text="날짜선택"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/unpaidTicketSearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="조회" />
+
+    <Button
+        android:id="@+id/main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:text="메인화면" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="세션 삭제"
+        android:id="@+id/sessionDelete"
+        android:textAllCaps="false" />
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by 한결 on 2017-06-22.
@@ -97,6 +98,28 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists SEAT_INFO");
         db.execSQL("drop table if exists MEMBERSHIP_INFO");
         onCreate(db);
+    }
+
+    public List<HashMap<String, Object>> getResultAtTrainTable(int departdate ,String departPoint,
+                                                               String destinationPoint, int nbofseats){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+        HashMap<String, Object> item = new HashMap<String, Object>();
+        List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
+
+        cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE departurePoint='" + departPoint +
+        "' and destPoint='" + destinationPoint+ "'" + " and totalAvailableSeatNum>=" + nbofseats +
+                " and CAST(boardingDate AS INTEGER)>=" + departdate , null);
+
+        while(cursor.moveToNext()){
+            item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
+            item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
+            item.put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
+            item.put("totalAvailableSeatNum", cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum")));
+            item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
+            items.add(item);
+        }
+        return items;
     }
 
     public HashMap<String, Object> getResultAtMemberTable(String ID, String PW) {

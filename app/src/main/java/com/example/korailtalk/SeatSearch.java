@@ -16,7 +16,6 @@ public class SeatSearch extends Activity {
     private Button btn;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.i("좌석","선택");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_search);
 

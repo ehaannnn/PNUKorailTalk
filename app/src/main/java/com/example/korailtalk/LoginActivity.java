@@ -110,7 +110,11 @@ public class LoginActivity extends Activity {
             finish();
         } else if (activityFrom.equalsIgnoreCase("ticketHistory")) {
 
-        } else if (activityFrom.equalsIgnoreCase("unpaidTicketSearch")) {
+        } else if (activityFrom.equalsIgnoreCase("UNPAID_TICKET_BUTTON")) {
+            Intent intent = new Intent(LoginActivity.this, UnPaiedTicketSearch.class);
+            intent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+            startActivity(intent);
+            finish();
 
         } else if (activityFrom.equalsIgnoreCase("trainSearch")) {
 

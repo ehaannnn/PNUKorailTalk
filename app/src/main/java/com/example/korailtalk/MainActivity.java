@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
     private DBHelper dbhelper;
     public Button btn_trainsearch;
     private Button checkPaiedTicket_button;
+    private Button checkUnPaidTicket_button;
 
     private static final String PAID_TICKET_BUTTON = "PAID_TICKET_BUTTON";
     private static final String TICKET_HISTORY = "TICKET_HISTORY";
@@ -36,6 +37,16 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 Intent intent3 = new Intent(MainActivity.this, TrainSearch.class);
                 startActivity(intent3);
+            }
+        });
+
+        checkUnPaidTicket_button = (Button) findViewById(R.id.checkUnpaiedTicket_button);
+        checkUnPaidTicket_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent4 = new Intent(MainActivity.this, CheckSessionActivity.class);
+                intent4.putExtra("ActivityFrom","unpaidTicketSearch");
+                startActivity(intent4);
             }
         });
         /* 태원 끝 */
@@ -75,6 +86,14 @@ public class MainActivity extends Activity {
         items.put("totalAvailableSeatNum", 100);
         items.put("trainNum", 131);
         dbhelper.insert("TRAIN_INFO", items);
+
+        HashMap<String, Object> item0 = new HashMap<String, Object>();
+        item0.put("boardingDate", "2017623");
+        item0.put("departurePoint", "부산");
+        item0.put("destPoint", "서울");
+        item0.put("totalAvailableSeatNum", 100);
+        item0.put("trainNum", 133);
+        dbhelper.insert("TRAIN_INFO", item0);
 
         HashMap<String, Object> items1 = new HashMap<String, Object>();
         items1.put("boardingDate", "2017622");

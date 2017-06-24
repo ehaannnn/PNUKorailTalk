@@ -43,6 +43,17 @@ public class CheckSessionActivity extends Activity {
         } else if (activityFrom.equalsIgnoreCase("ticketHistory")) {
 
         } else if (activityFrom.equalsIgnoreCase("unpaidTicketSearch")) {
+            HashMap<String, String> session = sessionDBhelper.getSession();
+            if (session.size() != 0) {  //session작동
+                HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
+                Intent newIntent = new Intent(CheckSessionActivity.this, UnPaiedTicketSearch.class);
+                newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+                startActivity(newIntent);
+            } else {
+                Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
+                newIntent.putExtra("ActivityFrom", UNPAID_TICKET_BUTTON);
+                startActivity(newIntent);
+            }
 
         } else if (activityFrom.equalsIgnoreCase("trainSearch")) {
 

@@ -37,6 +37,9 @@
         <activity
             android:name=".SeatSearch"
             android:label="SeatSearch" />
+        <activity
+            android:name=".AvailableTrainLists"
+            android:label="AvailableTrainLists" />
 
     </application>
 

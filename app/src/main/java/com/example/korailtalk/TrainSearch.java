@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,8 @@ public class TrainSearch extends Activity {
 
     private String departPointstr;
     private String destinationPointstr;
+    private TrainArray trainarray;
+    private ArrayList<TrainArray> trainarraylist;
 
     private DBHelper dbhelper;
 
@@ -75,33 +78,48 @@ public class TrainSearch extends Activity {
         seatNum = (EditText) findViewById(R.id.seatNum);
         btnSerch = (Button)findViewById(R.id.trainsearch);
 
-        dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db",null,1);
-
-
-        final List<HashMap<String,Object>> train_info = dbhelper.getResultAt("TRAIN_INFO",131);
+        dbhelper = new DBHelper(getApplicationContext(),"PNUKorailTalk.db",null,1);
 
         btnSerch.setOnClickListener(new Button.OnClickListener(){
             boolean available = false;
 
+
+            //final List<HashMap<String,Object>> train_info = dbhelper.getResultAt("TRAIN_INFO",131);
             @Override
             public void onClick(View view) {
-                for(int i =0; i < train_info.size(); i++){
+                int tempnbofseat = Integer.parseInt(seatNum.getText().toString());
+                int departdate = Integer.parseInt(departDatestr);
+                Log.i("date",departDatestr);
+                Log.i("seat",seatNum.getText().toString());
+                final List<HashMap<String,Object>> train_info = dbhelper.getResultAtTrainTable(departdate,departPointstr,
+                        destinationPointstr, tempnbofseat);
+                /*for(int i =0; i < train_info.size(); i++){
                     if(Integer.parseInt(departDatestr) ==
                             Integer.parseInt(train_info.get(i).get("boardingDate").toString())){
                         if(departPointstr.equals(train_info.get(i).get("departurePoint").toString())
                                 && destinationPointstr.equals(train_info.get(i).get("destPoint").toString())){
                             if(Integer.parseInt(train_info.get(i).get("totalAvailableSeatNum").toString())
-                                    >= Integer.parseInt(seatNum.toString())){
+                                    >= Integer.parseInt(seatNum.getText().toString())){
                                 available = true;
                             }
                         }
                     }
-                }
-                if(available){
-                    available = false;
-                    Log.i("점검","성공");
-                    Intent intent = new Intent(TrainSearch.this , SeatSearch.class);
-                    startActivity(intent);
+                }*/
+                if(train_info != null){
+                    Intent intent2 = new Intent(TrainSearch.this , AvailableTrainLists.class);
+                    trainarraylist = new ArrayList<TrainArray>();
+                    for(int i = 0; i < train_info.size(); i++){
+                        Log.i("출발날짜", train_info.get(i).get("boardingDate").toString());
+                        trainarray = new TrainArray(Integer.parseInt(train_info.get(i).get("boardingDate").toString()),
+                                train_info.get(i).get("departurePoint").toString(),
+                                train_info.get(i).get("destPoint").toString(),
+                                Integer.parseInt(train_info.get(i).get("totalAvailableSeatNum").toString()),
+                                Integer.parseInt(train_info.get(i).get("trainNum").toString()),
+                                tempnbofseat);
+                        trainarraylist.add(trainarray);
+                    }
+                    intent2.putExtra("trainlist",trainarraylist);
+                    startActivity(intent2);
                 }
                 else{
                     AlertDialog.Builder alert = new AlertDialog.Builder(TrainSearch.this);
