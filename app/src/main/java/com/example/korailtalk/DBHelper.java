@@ -99,15 +99,31 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public HashMap<String, Object> getResultAtMemberTable(String ID, String PW) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+        HashMap<String, Object> item = new HashMap<String, Object>();
+
+        cursor = db.rawQuery("SELECT * FROM MEMBER WHERE ID=" + ID + " and password=" + PW, null);
+
+        while (cursor.moveToNext()) {
+            item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
+            item.put("ID", cursor.getString(cursor.getColumnIndex("ID")));
+            item.put("phoneNum", cursor.getString(cursor.getColumnIndex("phoneNum")));
+        }
+
+        return item;
+    }
+
     public List<HashMap<String, Object>> getResultAt(String table, int customID) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
         List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
         if (table.equalsIgnoreCase("TICKET_INFO")) {
-            cursor = db.rawQuery("SELECT * FROM TICKET_INFO WHERE customID=" +customID, null);
+            cursor = db.rawQuery("SELECT * FROM TICKET_INFO WHERE customID=" + customID, null);
 
             while (cursor.moveToNext()) {
-                HashMap<String,Object> item = new HashMap<String,Object>();
+                HashMap<String, Object> item = new HashMap<String, Object>();
                 item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
                 item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
                 item.put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
@@ -120,10 +136,10 @@ public class DBHelper extends SQLiteOpenHelper {
             }
 
         } else if (table.equalsIgnoreCase("MEMBER")) {
-            cursor = db.rawQuery("SELECT * FROM MEMBER WHERE customID=" +customID, null);
+            cursor = db.rawQuery("SELECT * FROM MEMBER WHERE customID=" + customID, null);
 
             while (cursor.moveToNext()) {
-                HashMap<String,Object> item = new HashMap<String,Object>();
+                HashMap<String, Object> item = new HashMap<String, Object>();
 
                 item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
                 item.put("ID", cursor.getString(cursor.getColumnIndex("ID")));
@@ -131,20 +147,20 @@ public class DBHelper extends SQLiteOpenHelper {
                 items.add(item);
             }
         } else if (table.equalsIgnoreCase("NON_MEMBER")) {
-            cursor = db.rawQuery("SELECT * FROM NON_MEMBER WHERE customID=" +customID, null);
+            cursor = db.rawQuery("SELECT * FROM NON_MEMBER WHERE customID=" + customID, null);
 
             while (cursor.moveToNext()) {
-                HashMap<String,Object> item = new HashMap<String,Object>();
+                HashMap<String, Object> item = new HashMap<String, Object>();
 
                 item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
                 item.put("phoneNum", cursor.getString(cursor.getColumnIndex("phoneNum")));
                 items.add(item);
             }
         } else if (table.equalsIgnoreCase("TRAIN_INFO")) {
-            cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE customID=" +customID, null);
+            cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE customID=" + customID, null);
 
             while (cursor.moveToNext()) {
-                HashMap<String,Object> item = new HashMap<String,Object>();
+                HashMap<String, Object> item = new HashMap<String, Object>();
 
                 item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
                 item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
@@ -155,10 +171,10 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         } else if (table.equalsIgnoreCase("SEAT_INFO")) {
 
-            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE customID=" +customID, null);
+            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE customID=" + customID, null);
 
             while (cursor.moveToNext()) {
-                HashMap<String,Object> item = new HashMap<String,Object>();
+                HashMap<String, Object> item = new HashMap<String, Object>();
                 item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
                 item.put("availableSeat", cursor.getString(cursor.getColumnIndex("availableSeat")));
                 item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
@@ -166,10 +182,10 @@ public class DBHelper extends SQLiteOpenHelper {
             }
 
         } else if (table.equalsIgnoreCase("MEMBERSHIP_INFO")) {
-            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE customID=" +customID, null);
+            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE customID=" + customID, null);
 
             while (cursor.moveToNext()) {
-                HashMap<String,Object> item = new HashMap<String,Object>();
+                HashMap<String, Object> item = new HashMap<String, Object>();
                 item.put("CouponNum", cursor.getString(cursor.getColumnIndex("CouponNum")));
                 item.put("KTXMileage", cursor.getString(cursor.getColumnIndex("KTXMileage")));
                 item.put("ID", cursor.getString(cursor.getColumnIndex("ID")));

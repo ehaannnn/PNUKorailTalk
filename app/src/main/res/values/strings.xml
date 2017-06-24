@@ -6,4 +6,5 @@
     <string name="title_activity_check_session">CheckSessionActivity</string>
     <string name="title_activity_paied_ticket_search">PaiedTicketSearch</string>
     <string name="title_activity_date_picker">DatePickerActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
