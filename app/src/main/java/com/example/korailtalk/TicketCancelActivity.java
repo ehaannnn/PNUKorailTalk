@@ -56,9 +56,9 @@ public class TicketCancelActivity extends AppCompatActivity {
             textView_isPaid.setText("N");
 
         if(isUse((int)ticket_info.get("use"))) {
-            textView_isUsable.setText("Y");
-        } else
             textView_isUsable.setText("N");
+        } else
+            textView_isUsable.setText("Y");
     }
 
     // 승차권이 사용된 승차권인지 확인
@@ -66,7 +66,7 @@ public class TicketCancelActivity extends AppCompatActivity {
         if(use == 1) return true;
         else return false;
     }
-
+    // 승차권이 결제되었는지 확인
     public boolean paidCheck(int paid) {
         if(paid == 1) return true;
         else return false;

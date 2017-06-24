@@ -110,6 +110,31 @@ public class MainActivity extends Activity {
         item6.put("ID", "1234");
         item6.put("customID", "1");
         dbhelper.insert("MEMBERSHIP_INFO", item6);
+
+        HashMap<String,Object> item7 = new HashMap<String,Object>();
+        item7.put("boardingDate","2017622");
+        //Log.i("test",items1.get("boardingDate")+"");
+        item7.put("departurePoint","부산");
+        item7.put("destPoint", "서울");
+        item7.put("paid", 1);
+        item7.put("seatNum", "A23");
+        item7.put("ticketID", 1312);
+        item7.put("customID", 31337);
+        item7.put("trainNum", 131);
+        item7.put("use", 0);
+        dbhelper.insert("TICKET_INFO", item7);
+
+        HashMap<String,Object> item8 = new HashMap<String,Object>();
+        item8.put("boardingDate","2017622");
+        item8.put("departurePoint","부산");
+        item8.put("destPoint","서울");
+        item8.put("paid", 1);
+        item8.put("seatNum","A25");
+        item8.put("ticketID", 1312);
+        item8.put("customID", 31337);
+        item8.put("trainNum", 131);
+        item8.put("use",1);
+        dbhelper.insert("TICKET_INFO", item8);
         // 우진 수정 끝
 
         checkPaiedTicket_button.setOnClickListener(new View.OnClickListener() {
