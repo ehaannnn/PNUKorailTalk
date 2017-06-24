@@ -74,8 +74,6 @@ public class MainActivity extends Activity {
 
         dbhelper.dropTable();
 
-        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
-        sessionDBhelper.dropTable();
         HashMap<String, Object> member = new HashMap<String, Object>();
         member.put("ID", "1234");
         member.put("password", "1234");
