@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 public class MainActivity extends Activity {
     private DBHelper dbhelper;
+    private SessionDBHelper sessionDBhelper;
     public Button btn_trainsearch;
     private Button checkPaiedTicket_button;
 
@@ -46,7 +47,7 @@ public class MainActivity extends Activity {
         btn_mypage.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View view) {
                 Intent intent2 = new Intent(MainActivity.this, CheckSessionActivity.class);
-                intent2.putExtra("menu", "mypage");
+                intent2.putExtra("ActivityFrom", MY_PAGE);
                 startActivity(intent2);
             }
         });
@@ -73,6 +74,8 @@ public class MainActivity extends Activity {
 
         dbhelper.dropTable();
 
+        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
+        sessionDBhelper.dropTable();
         HashMap<String, Object> member = new HashMap<String, Object>();
         member.put("ID", "1234");
         member.put("password", "1234");
@@ -153,7 +156,7 @@ public class MainActivity extends Activity {
         item6.put("CouponNum", "3");
         item6.put("KTXMileage", "23500");
         item6.put("ID", "1234");
-        item6.put("customID", "1");
+        item6.put("customID", "31337");
         dbhelper.insert("MEMBERSHIP_INFO", item6);
 
         HashMap<String, Object> item7 = new HashMap<String, Object>();

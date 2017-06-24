@@ -57,8 +57,18 @@ public class CheckSessionActivity extends Activity {
 
         } else if (activityFrom.equalsIgnoreCase("trainSearch")) {
 
-        } else if (activityFrom.equalsIgnoreCase("mypage")) {
-
+        } else if (activityFrom.equalsIgnoreCase("MY_PAGE")) {
+            HashMap<String, String> session = sessionDBhelper.getSession();
+            if (session.size() != 0) {  //session작동
+                HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
+                Intent newIntent = new Intent(CheckSessionActivity.this, MyPageActivity.class);
+                newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+                startActivity(newIntent);
+            } else {
+                Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
+                newIntent.putExtra("ActivityFrom", MY_PAGE);
+                startActivity(newIntent);
+            }
         }
 
 
