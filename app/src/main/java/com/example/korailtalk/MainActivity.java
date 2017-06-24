@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
     private Button checkPaiedTicket_button;
 
     private static final String PAID_TICKET_BUTTON = "PAID_TICKET_BUTTON";
-    private static final String TICKET_HISTORY = "TICKET_HISTORY";
+    private static final String TICKET_HISTORY_BUTTON = "TICKET_HISTORY_BUTTON";
     private static final String UNPAID_TICKET_BUTTON = "UNPAID_TICKET_BUTTON";
     private static final String TRAIN_SEARCH = "TRAIN_SEARCH";
     private static final String MY_PAGE = "MY_PAGE";
@@ -58,8 +58,9 @@ public class MainActivity extends Activity {
         btn_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CheckSessionActivity.class);
-                intent.putExtra("ActivityFrom", TICKET_HISTORY);
+//                Intent intent = new Intent(MainActivity.this, CheckSessionActivity.class);
+                Intent intent = new Intent(MainActivity.this, TicketHistoryActivity.class);
+                intent.putExtra("ActivityFrom", TICKET_HISTORY_BUTTON);
                 startActivity(intent);
             }
         });

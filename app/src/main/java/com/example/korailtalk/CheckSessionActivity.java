@@ -44,7 +44,7 @@ public class CheckSessionActivity extends Activity {
             HashMap<String, String> session = sessionDBhelper.getSession();
             if (session.size() != 0) {  //session작동
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
-                Intent newIntent = new Intent(CheckSessionActivity.this, TicketHistory.class);
+                Intent newIntent = new Intent(CheckSessionActivity.this, TicketHistoryActivity.class);
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
             } else {

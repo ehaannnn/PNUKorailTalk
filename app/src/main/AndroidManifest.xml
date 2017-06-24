@@ -39,6 +39,10 @@
         <activity
             android:name=".SeatSearch"
             android:label="SeatSearch" />
+        <activity
+            android:name=".TicketHistoryActivity"
+            android:label="TicketHistoryActivity"
+            android:theme="@style/Theme.AppCompat"/>
     </application>
 
 </manifest>
