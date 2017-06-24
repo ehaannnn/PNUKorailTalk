@@ -3,6 +3,8 @@ package com.example.korailtalk;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -12,7 +14,9 @@ import java.util.Objects;
 public class MyPageActivity extends Activity {
 
     private DBHelper dbhelper;
+    private SessionDBHelper sessionDBhelper;
     private String customer_id;
+    private Button mainButton;
     private List<HashMap<String,Object>> membership_info, member_info;
     private String ID, phoneNum, KTXmileage, couponNum;
     private int customID;
@@ -57,6 +61,25 @@ public class MyPageActivity extends Activity {
             textView_KTXmileage.setText("Korail 멤버가 아닙니다.");
             textView_couponNum.setText("Korail 멤버가 아닙니다.");
         }
+
+        mainButton = (Button) findViewById(R.id.mainButton);
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyPageActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
+        Button sessionButton = (Button) findViewById(R.id.sessionDeleteButton);
+        sessionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionDBhelper.dropTable();
+            }
+        });
     }
 
     private boolean isMember(String customer_id) {

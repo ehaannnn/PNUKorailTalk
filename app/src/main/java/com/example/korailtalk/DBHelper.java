@@ -104,7 +104,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor;
         HashMap<String, Object> item = new HashMap<String, Object>();
 
-        cursor = db.rawQuery("SELECT * FROM MEMBER WHERE ID=" + ID + " and password=" + PW, null);
+        cursor = db.rawQuery("SELECT * FROM MEMBER WHERE ID='" + ID + "' and password='" + PW + "'", null);
 
         while (cursor.moveToNext()) {
             item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
