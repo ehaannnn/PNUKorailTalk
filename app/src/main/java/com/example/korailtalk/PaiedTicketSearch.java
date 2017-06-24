@@ -35,7 +35,7 @@ public class PaiedTicketSearch extends Activity {
         dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
 
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ListViewAdapter();
+
         listView.setAdapter(adapter);
 
         int customID = 1;
@@ -48,6 +48,7 @@ public class PaiedTicketSearch extends Activity {
             public void onClick(View v) {
                 //DB에서 startDate부터 endDate사이의 티켓정보 출력
                 //티켓정보 : 출발역, 도착역, 인원, 열차번호, 출발날짜
+                adapter = new ListViewAdapter();
                 for (int i = 0; i < ticket_info.size(); ++i) {
                     if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0) {
                         adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(),ticket_info.get(i).get("departurePoint").toString(),ticket_info.get(i).get("destPoint").toString(),

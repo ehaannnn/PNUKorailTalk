@@ -33,12 +33,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO( _id INTEGER PRIMARY KEY AUTOINCREMENT, boardingDate TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER, customID INTEGER, trainNum INTEGER, use INTEGER);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS MEMBER( _id INTEGER PRIMARY KEY AUTOINCREMENT, customID INTEGER, ID TEXT, phoneNum TEXT, password TEXT);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS NON_MEMBER( _id INTEGER PRIMARY KEY AUTOINCREMENT, customID INTEGER,phoneNum TEXT, password TEXT);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO( _id INTEGER PRIMARY KEY AUTOINCREMENT, boardingDate TEXT, departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS SEAT_INFO( _id INTEGER PRIMARY KEY AUTOINCREMENT, availableSeat TEXT, trainNum INTEGER);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS MEMBERSHIP_INFO( _id INTEGER PRIMARY KEY AUTOINCREMENT, CouponNum INTEGER, KTXMileage INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO(  boardingDate TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER, customID INTEGER, trainNum INTEGER, use INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS MEMBER( customID INTEGER, ID TEXT, phoneNum TEXT, password TEXT);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS NON_MEMBER(  customID INTEGER,phoneNum TEXT, password TEXT);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO(  boardingDate TEXT, departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS SEAT_INFO( boardingDate TEXT, availableSeat TEXT, trainNum INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS MEMBERSHIP_INFO(  CouponNum INTEGER, KTXMileage INTEGER, ID TEXT, customID TEXT);");
     }
 
     public void insert(String table, HashMap<String, Object> items) {
@@ -72,11 +72,14 @@ public class DBHelper extends SQLiteOpenHelper {
             newValues.put("totalAvailableSeatNum", Integer.parseInt(items.get("totalAvailableSeatNum").toString()));
             newValues.put("trainNum", Integer.parseInt(items.get("trainNum").toString()));
         } else if (table.equalsIgnoreCase("SEAT_INFO")) {
+            newValues.put("boardingDate", items.get("boardingDate").toString());
             newValues.put("availableSeat", items.get("availableSeat").toString());
             newValues.put("trainNum", Integer.parseInt(items.get("trainNum").toString()));
         } else if (table.equalsIgnoreCase("MEMBERSHIP_INFO")) {
             newValues.put("CouponNum", Integer.parseInt(items.get("CouponNum").toString()));
             newValues.put("KTXMileage", Integer.parseInt(items.get("KTXMileage").toString()));
+            newValues.put("ID", Integer.parseInt(items.get("ID").toString()));
+            newValues.put("customID", Integer.parseInt(items.get("customID").toString()));
         }
         db.insert(table, null, newValues);
     }
@@ -102,10 +105,9 @@ public class DBHelper extends SQLiteOpenHelper {
         List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
         if (table.equalsIgnoreCase("TICKET_INFO")) {
             cursor = db.rawQuery("SELECT * FROM TICKET_INFO WHERE customID=" +customID, null);
-            int pos = 0;
+
             while (cursor.moveToNext()) {
                 HashMap<String,Object> item = new HashMap<String,Object>();
-
                 item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
                 item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
                 item.put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
@@ -119,11 +121,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         } else if (table.equalsIgnoreCase("MEMBER")) {
             cursor = db.rawQuery("SELECT * FROM MEMBER WHERE customID=" +customID, null);
-            int pos = 0;
+
             while (cursor.moveToNext()) {
                 HashMap<String,Object> item = new HashMap<String,Object>();
 
-                item.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
                 item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
                 item.put("ID", cursor.getString(cursor.getColumnIndex("ID")));
                 item.put("phoneNum", cursor.getString(cursor.getColumnIndex("phoneNum")));
@@ -131,36 +132,48 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         } else if (table.equalsIgnoreCase("NON_MEMBER")) {
             cursor = db.rawQuery("SELECT * FROM NON_MEMBER WHERE customID=" +customID, null);
-            int pos = 0;
+
             while (cursor.moveToNext()) {
                 HashMap<String,Object> item = new HashMap<String,Object>();
 
-                item.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
                 item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
                 item.put("phoneNum", cursor.getString(cursor.getColumnIndex("phoneNum")));
                 items.add(item);
             }
         } else if (table.equalsIgnoreCase("TRAIN_INFO")) {
-            cursor = db.rawQuery("SELECT * FROM TRAIN_INFO", null);
-            int pos = 0;
-            while (cursor.moveToNext()) {
-                items.get(pos).put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
-                items.get(pos).put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
-                items.get(pos).put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
-                items.get(pos).put("totalAvailableSeatNum", cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum")));
-                items.get(pos).put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
-            }
-        } else if (table.equalsIgnoreCase("SEAT_INFO")) {
+            cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE customID=" +customID, null);
 
-        } else if (table.equalsIgnoreCase("MEMBERSHIP_INFO")) {
-            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE _id=" +customID, null);
-            int pos = 0;
             while (cursor.moveToNext()) {
                 HashMap<String,Object> item = new HashMap<String,Object>();
 
-                item.put("_id", cursor.getString(cursor.getColumnIndex("_id")));
+                item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
+                item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
+                item.put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
+                item.put("totalAvailableSeatNum", cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum")));
+                item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
+                items.add(item);
+            }
+        } else if (table.equalsIgnoreCase("SEAT_INFO")) {
+
+            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE customID=" +customID, null);
+
+            while (cursor.moveToNext()) {
+                HashMap<String,Object> item = new HashMap<String,Object>();
+                item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
+                item.put("availableSeat", cursor.getString(cursor.getColumnIndex("availableSeat")));
+                item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
+                items.add(item);
+            }
+
+        } else if (table.equalsIgnoreCase("MEMBERSHIP_INFO")) {
+            cursor = db.rawQuery("SELECT * FROM MEMBERSHIP_INFO WHERE customID=" +customID, null);
+
+            while (cursor.moveToNext()) {
+                HashMap<String,Object> item = new HashMap<String,Object>();
                 item.put("CouponNum", cursor.getString(cursor.getColumnIndex("CouponNum")));
                 item.put("KTXMileage", cursor.getString(cursor.getColumnIndex("KTXMileage")));
+                item.put("ID", cursor.getString(cursor.getColumnIndex("ID")));
+                item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
                 items.add(item);
             }
         }

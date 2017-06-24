@@ -100,11 +100,15 @@ public class MainActivity extends Activity {
         HashMap<String, Object> item5 = new HashMap<String, Object>();
         item5.put("CouponNum", "9999");
         item5.put("KTXMileage", "99999999");
+        item5.put("ID", "1234");
+        item5.put("customID", "1");
         dbhelper.insert("MEMBERSHIP_INFO", item5);
 
         HashMap<String, Object> item6 = new HashMap<String, Object>();
         item6.put("CouponNum", "3");
         item6.put("KTXMileage", "23500");
+        item6.put("ID", "1234");
+        item6.put("customID", "1");
         dbhelper.insert("MEMBERSHIP_INFO", item6);
         // 우진 수정 끝
 
