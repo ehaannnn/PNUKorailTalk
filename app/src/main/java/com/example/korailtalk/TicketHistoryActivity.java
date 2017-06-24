@@ -1,7 +1,10 @@
 package com.example.korailtalk;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -31,5 +34,17 @@ public class TicketHistoryActivity extends ActionBarActivity {
         HistoryListviewAdapter adapter = new HistoryListviewAdapter(this, R.layout.activity_ticket_history_item, data);
         listView.setAdapter(adapter);
 
+
+        Button b = (Button)findViewById(R.id.history_to_main);
+        b.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(
+                        getApplicationContext(),
+                        MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 }
