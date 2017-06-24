@@ -1,3 +1,5 @@
+/*DBHelper*/
+
 package com.example.korailtalk;
 
 import android.content.ContentValues;
@@ -115,6 +117,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return item;
     }
 
+    public void DeleteTicketInfoTablebyticketID(String ticketID, String customID) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        cursor = db.rawQuery("DELETE FROM TICKET_INFO WHERE ticketID='" + ticketID + "' and customID='" + customID + "'", null);
+    }
+
+    public void UpdateTrainInfoTotalAvailableSN(String trainNum, String boardingDate, String totalAvailableSeatNum) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        cursor = db.rawQuery("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
+    }
+
     public List<HashMap<String, Object>> getResultAt(String table, int customID) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
@@ -193,6 +209,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 items.add(item);
             }
         }
+
+
 
         return items;
     }
