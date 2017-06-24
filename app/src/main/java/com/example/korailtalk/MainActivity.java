@@ -52,6 +52,20 @@ public class MainActivity extends Activity {
         });
         /* 우진  끝*/
 
+        // 동기 시작
+        Button btn_history = (Button) findViewById(R.id.ticketHistory_button);
+
+        btn_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CheckSessionActivity.class);
+                intent.putExtra("ActivityFrom", TICKET_HISTORY);
+                startActivity(intent);
+            }
+        });
+
+        //동기 끝
+
         /* 한결  시작*/
         checkPaiedTicket_button = (Button) findViewById(R.id.checkPaiedTicket_button);
 
