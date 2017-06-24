@@ -58,4 +58,11 @@
         android:gravity="center"
 
         android:text="메인화면" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="세션 삭제"
+        android:id="@+id/sessionDelete"
+        android:textAllCaps="false" />
 </LinearLayout>

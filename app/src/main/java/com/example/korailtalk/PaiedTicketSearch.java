@@ -18,7 +18,7 @@ import java.util.Map;
 public class PaiedTicketSearch extends Activity {
     private int customID;
     private DBHelper dbhelper;
-
+    private SessionDBHelper sessionDBhelper;
     private ListViewAdapter adapter;
     private Button paidTicketSearchButton;
     private Button startDateButton;
@@ -91,6 +91,16 @@ public class PaiedTicketSearch extends Activity {
                 Intent intent = new Intent(PaiedTicketSearch.this,MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+
+        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
+        Button sessionButton = (Button) findViewById(R.id.sessionDelete);
+        sessionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionDBhelper.dropTable();
             }
         });
     }

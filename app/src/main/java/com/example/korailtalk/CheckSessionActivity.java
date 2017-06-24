@@ -1,54 +1,57 @@
 package com.example.korailtalk;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import java.util.HashMap;
 
 public class CheckSessionActivity extends Activity {
 
-    private String menu_string, customer_id;
-    private EditText edittext_user_id;
+    private SessionDBHelper sessionDBhelper;
+    private DBHelper dbhelper;
+    private String activityFrom;
+
+    private static final String PAID_TICKET_BUTTON = "PAID_TICKET_BUTTON";
+    private static final String TICKET_HISTORY = "TICKET_HISTORY";
+    private static final String UNPAID_TICKET_BUTTON = "UNPAID_TICKET_BUTTON";
+    private static final String TRAIN_SEARCH = "TRAIN_SEARCH";
+    private static final String MY_PAGE = "MY_PAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_session);
 
-        Intent intent = new Intent(this.getIntent());
-        menu_string = intent.getStringExtra("menu");
-        TextView textView=(TextView)findViewById(R.id.menu);
-        textView.setText(menu_string);
+        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
+        dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
+        Intent intent = getIntent();
+        activityFrom = intent.getStringExtra("ActivityFrom");
 
-        Button btn_confirm = (Button) findViewById(R.id.confirm_button);
-        edittext_user_id = (EditText) findViewById(R.id.user_account);
-
-        btn_confirm.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View view) {
-                customer_id = edittext_user_id.getText().toString();
-                if(menu_string.equals("mypage")) {
-                    Intent next_intent = new Intent(CheckSessionActivity.this,MyPageActivity.class);
-                    next_intent.putExtra("customID",customer_id);
-                    startActivity(next_intent);
-                }
-                if(menu_string.equals("paiedTicketSearch")) {
-
-                }
-                if(menu_string.equals("unpaiedTicketSearch")) {
-
-                }
-                if(menu_string.equals("ticketHistory")) {
-
-                }
-                if(menu_string.equals("trainSearch")) {
-
-                }
-
+        if (activityFrom.equalsIgnoreCase("PAID_TICKET_BUTTON")) {
+            HashMap<String, String> session = sessionDBhelper.getSession();
+            if (session.size() != 0) {  //session작동
+                HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
+                Intent newIntent = new Intent(CheckSessionActivity.this, PaiedTicketSearch.class);
+                newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+                startActivity(newIntent);
+            } else {
+                Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
+                newIntent.putExtra("ActivityFrom", PAID_TICKET_BUTTON);
+                startActivity(newIntent);
             }
-        });
+        } else if (activityFrom.equalsIgnoreCase("ticketHistory")) {
+
+        } else if (activityFrom.equalsIgnoreCase("unpaidTicketSearch")) {
+
+        } else if (activityFrom.equalsIgnoreCase("trainSearch")) {
+
+        } else if (activityFrom.equalsIgnoreCase("mypage")) {
+
+        }
+
+
+
     }
 
 }

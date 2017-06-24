@@ -17,6 +17,7 @@ public class LoginActivity extends Activity {
     private EditText ID;
     private EditText password;
     private Button signup;
+    private Button sessionButton;
     private Button signin;
     private String activityFrom;
     private DBHelper dbhelper;
@@ -26,12 +27,20 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Intent intent = getIntent();
-        activityFrom = intent.getStringExtra("ActivityFrom");
 
+        activityFrom = intent.getStringExtra("ActivityFrom");
         ID = (EditText)findViewById(R.id.IDInput);
         password = (EditText)findViewById(R.id.passwordInput);
 
         sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db",null,1);
+
+        sessionButton = (Button) findViewById(R.id.sessionDelete);
+        sessionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionDBhelper.dropTable();
+            }
+        });
         /*
         HashMap<String,String> session = sessionDBhelper.getSession();
         if (session.size() != 0) {  //session작동
@@ -81,7 +90,6 @@ public class LoginActivity extends Activity {
                 else {  //로그인 성공
                     sessionDBhelper.insert(inputID,inputPassword);
                     HashMap<String, Object> item = dbhelper.getResultAtMemberTable(inputID,inputPassword);
-                    Log.i("test",activityFrom);
                     if (item.size() != 0) {
                         goActivityAt(item);
                     } else {    //유저 없음

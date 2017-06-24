@@ -13,7 +13,6 @@ import java.util.HashMap;
 public class MainActivity extends Activity {
     private DBHelper dbhelper;
     private Button checkPaiedTicket_button;
-    private SessionDBHelper sessionDBhelper;
 
     private static final String PAID_TICKET_BUTTON = "PAID_TICKET_BUTTON";
     private static final String TICKET_HISTORY = "TICKET_HISTORY";
@@ -25,7 +24,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
+
 
         /* 우진  시작*/
         Button btn_mypage = (Button) findViewById(R.id.myPage_button);
@@ -158,17 +157,9 @@ public class MainActivity extends Activity {
         checkPaiedTicket_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, String> session = sessionDBhelper.getSession();
-                if (session.size() != 0) {  //session작동
-                    HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
-                    Intent intent = new Intent(MainActivity.this, PaiedTicketSearch.class);
-                    intent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    intent.putExtra("ActivityFrom", PAID_TICKET_BUTTON);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(MainActivity.this, CheckSessionActivity.class);
+                intent.putExtra("ActivityFrom", PAID_TICKET_BUTTON);
+                startActivity(intent);
             }
         });
 

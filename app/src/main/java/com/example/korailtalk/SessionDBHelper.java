@@ -20,7 +20,7 @@ public class SessionDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("drop table if exists SESSION");
         onCreate(db);
     }
 
@@ -39,6 +39,12 @@ public class SessionDBHelper extends SQLiteOpenHelper {
         newValues.put("time", date.toString());
 
         db.insert("SESSION", null, newValues);
+    }
+
+    public void dropTable() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("drop table if exists SESSION");
+        onCreate(db);
     }
 
     public HashMap<String, String> getSession() {
