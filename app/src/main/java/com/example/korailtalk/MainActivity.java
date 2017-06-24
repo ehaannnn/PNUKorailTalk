@@ -3,6 +3,7 @@ package com.example.korailtalk;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,10 +14,23 @@ import java.util.HashMap;
 public class MainActivity extends Activity {
     private DBHelper dbhelper;
     public Button checkPaiedTicket_button;
+    public Button btn_trainsearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /* 태원 시작 */
+        btn_trainsearch = (Button) findViewById(R.id.trainSearch_button);
+        //Log.i("fff","열차조회");
+        btn_trainsearch.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(MainActivity.this, TrainSearch.class);
+                startActivity(intent3);
+            }
+        });
+        /* 태원 끝 */
 
         /* 우진  시작*/
         Button btn_mypage = (Button) findViewById(R.id.myPage_button);

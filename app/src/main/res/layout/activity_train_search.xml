@@ -24,16 +24,17 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/departureList"
-        android:layout_alignBaseline="@+id/arrivalList"
-        android:layout_alignBottom="@+id/arrivalList"
+        android:id="@+id/arrivalList"
+        android:entries="@array/departurePoint"
+        android:layout_above="@+id/departureDateText"
         android:layout_toEndOf="@+id/trainsearch">
     </Spinner>
 
     <Spinner
-        android:id="@+id/arrivalList"
+        android:id="@+id/departureList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:entries="@array/departurePoint"
         android:layout_below="@+id/departurePointText"
         android:layout_marginTop="19dp"
         android:layout_toStartOf="@+id/trainsearch">
@@ -49,15 +50,27 @@
         android:layout_marginTop="32dp"
         android:id="@+id/departureDateText"/>
 
-    <DatePicker
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dateList"
+        android:id="@+id/departdateButton"
+        android:text="날짜선택"
         android:datePickerMode="spinner"
         android:calendarViewShown="false"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
-    </DatePicker>
+        android:layout_below="@+id/departureDateText"
+        android:layout_toEndOf="@+id/departureList"
+        android:layout_marginTop="12dp">
+    </Button>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-6-3"
+        android:textSize="20sp"
+        android:layout_below="@+id/departdateButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:id="@+id/departDate"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,24 +78,25 @@
         android:textSize="20sp"
         android:text="Seat Number"
         android:id="@+id/seatNumText"
-        android:layout_marginTop="13dp"
-        android:layout_below="@+id/dateList"
+        android:layout_marginTop="77dp"
+        android:layout_below="@+id/departdateButton"
         android:layout_toEndOf="@+id/departurePointText" />
 
     <EditText
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/trainsearch"
+        android:id="@+id/seatNum"
+        android:layout_below="@+id/seatNumText"
         android:layout_centerHorizontal="true"
-        android:id="@+id/seatNum"/>
+        android:layout_marginTop="25dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="조회"
         android:id="@+id/trainsearch"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/seatNum"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp" />
 
 </RelativeLayout>

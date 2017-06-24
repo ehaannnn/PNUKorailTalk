@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="departurePoint">
+            <item >서울</item>
+            <item >부산</item>
+        </string-array>
+</resources>

@@ -27,6 +27,13 @@
             android:name=".DatePickerActivity"
             android:label="@string/title_activity_date_picker" >
         </activity>
+        <activity
+            android:name=".TrainSearch"
+            android:label="TrainSearch" />
+        <activity
+            android:name=".SeatSearch"
+            android:label="SeatSearch" />
+
     </application>
 
 </manifest>

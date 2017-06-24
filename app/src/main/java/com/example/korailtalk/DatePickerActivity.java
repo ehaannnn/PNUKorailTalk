@@ -13,6 +13,7 @@ public class DatePickerActivity extends Activity {
     private DatePicker datePicker;
     private Button checkConfirm;
     private String boardingDate;
+    private String boardingDateNoformat;
     private static final int RESULT_CODE = 1;
 
     @Override
@@ -27,6 +28,7 @@ public class DatePickerActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.putExtra("boardingDate", boardingDate);
+                intent.putExtra("boardingDatestr", boardingDateNoformat);
 
                 setResult(RESULT_CODE, intent);
                 finish();
@@ -43,11 +45,13 @@ public class DatePickerActivity extends Activity {
                 new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        boardingDate = String.format("%d-%d-%d", year, monthOfYear, dayOfMonth);
+                        boardingDate = String.format("%d-%d-%d", year, monthOfYear + 1, dayOfMonth);//6월 선택했는데 5월로 나와 +1로 태원수정
+                        boardingDateNoformat = String.format("%d%d%d",year,monthOfYear + 1, dayOfMonth);
                     }
                 });
 
         boardingDate = String.format("%d-%d-%d",datePicker.getYear(),datePicker.getMonth(), datePicker.getDayOfMonth());
+        boardingDateNoformat = String.format("%d%d%d",datePicker.getYear(),datePicker.getMonth(), datePicker.getDayOfMonth());
     }
 
     @Override
