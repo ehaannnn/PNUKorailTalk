@@ -19,6 +19,7 @@
         android:layout_height="50dp"
         android:id="@+id/passwordInput"
         android:layout_centerHorizontal="true"
+        android:inputType="textPassword"
         android:hint="Password"
         android:layout_below="@+id/IDInput" />
 

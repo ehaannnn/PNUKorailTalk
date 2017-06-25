@@ -1,6 +1,8 @@
 package com.example.korailtalk;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -78,26 +79,51 @@ public class LoginActivity extends Activity {
                 //디비에서 유저 확인
 
                 String inputID = ID.getText().toString();
-                Log.i("test",inputID);
+                Log.i("test", inputID);
                 String inputPassword = password.getText().toString();
-
                 if (inputID.equalsIgnoreCase("")) {
-                    Toast.makeText(getApplicationContext(), "아이디를 입력해주세요.", Toast.LENGTH_SHORT);
+                    Log.i("test2", inputID);
+
+                   // Toast.makeText(LoginActivity.this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();     //닫기
+                        }
+                    });
+                    alert.setMessage("아이디를 입력해주세요.");
+                    alert.show();
+
                 }
                 else if (inputPassword.equalsIgnoreCase("")) {
-                    Toast.makeText(getApplicationContext(),"비밀번호를 입력해주세요.",Toast.LENGTH_SHORT);
+                   // Toast.makeText(getApplicationContext(),"비밀번호를 입력해주세요.",Toast.LENGTH_SHORT);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                    alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();     //닫기
+                        }
+                    });
+                    alert.setMessage("비밀번호를 입력해주세요.");
+                    alert.show();
                 }
                 else {  //로그인 성공
-
                     HashMap<String, Object> item = dbhelper.getResultAtMemberTable(inputID,inputPassword);
                     if (item.size() != 0) {
                         sessionDBhelper.insert(inputID,inputPassword);
                         goActivityAt(item);
                     } else {    //유저 없음
-                        Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();     //닫기
+                            }
+                        });
+                        alert.setMessage("");
+                        alert.show();
                     }
-
-
                 }
             }
         });
