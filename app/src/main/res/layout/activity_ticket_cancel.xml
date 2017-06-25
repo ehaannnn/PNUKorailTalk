@@ -94,7 +94,7 @@
                 android:background="#ffffff"
                 android:padding="3dp"
                 android:gravity="center"
-                android:text="출발지" />
+                android:text="출발역" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 android:background="#ffffff"
                 android:padding="3dp"
                 android:gravity="center"
-                android:text="도착지" />
+                android:text="도착역" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
