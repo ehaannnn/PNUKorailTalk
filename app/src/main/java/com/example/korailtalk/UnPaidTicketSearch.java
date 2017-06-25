@@ -63,12 +63,13 @@ public class UnPaidTicketSearch extends Activity {
         final List<HashMap<String, Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO", customID);
         adapter = new ListViewAdapter();
         for (int i = 0; i < ticket_info.size(); ++i) {
-            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0 && Integer.parseInt(ticket_info.get(i).get("paid").toString()) == 0) {
+            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0 && Integer.parseInt(ticket_info.get(i).get("paid").toString()) == 1) {
                 adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
-                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString()), "UnPaidTicketSearch" ));
+                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString()), Integer.parseInt(ticket_info.get(i).get("customID").toString()),Integer.parseInt(ticket_info.get(i).get("ticketID").toString()),"UnPaidTicketSearch"));
             }
         }
         listView.setAdapter(adapter);
+
 
         mainButton = (Button) findViewById(R.id.main);
         mainButton.setOnClickListener(new View.OnClickListener() {
@@ -115,15 +116,31 @@ public class UnPaidTicketSearch extends Activity {
         });
     }
 
-    public Map<String,Object> createItem(String boardingDate, String departurePoint, String destPoint, String seatNum, int trainNum, String from) {
-        Map<String,Object> item = new HashMap<String,Object>();
+    public Map<String, Object> createItem(String boardingDate, String departurePoint, String destPoint, String seatNum, int trainNum,int ticketID, int customID,String from) {
+        Map<String, Object> item = new HashMap<String, Object>();
         item.put("boardingDate", boardingDate);
         item.put("departurePoint", departurePoint);
         item.put("destPoint", destPoint);
         item.put("seatNum", seatNum);
         item.put("trainNum", trainNum);
+        item.put("customID", customID);
+        item.put("ticketID", ticketID);
         item.put("from", from);
         return item;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final List<HashMap<String, Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO", customID);
+        adapter = new ListViewAdapter();
+        for (int i = 0; i < ticket_info.size(); ++i) {
+            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0 && Integer.parseInt(ticket_info.get(i).get("paid").toString()) == 1) {
+                adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
+                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString()), Integer.parseInt(ticket_info.get(i).get("customID").toString()),Integer.parseInt(ticket_info.get(i).get("ticketID").toString()),"UnPaidTicketSearch"));
+            }
+        }
+        listView.setAdapter(adapter);
     }
 
     @Override
