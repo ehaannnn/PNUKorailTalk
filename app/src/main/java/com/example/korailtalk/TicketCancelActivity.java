@@ -68,7 +68,7 @@ public class TicketCancelActivity extends Activity {
             @Override
             public void onClick(View v) {
                 train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
-                dbhelper.DeleteTicketInfoTablebyticketID(ticket_info.get("ticketID").toString(), customID+"");
+                dbhelper.DeleteTicketInfoTablebyticketID(ticketID, customID);
                 Integer newTASN = Integer.parseInt(train_info.get("totalAvailableSeatNum").toString()) + 1;
                 dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
 
