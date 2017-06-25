@@ -64,10 +64,12 @@ public class CheckSessionActivity extends Activity {
                 Intent newIntent = new Intent(CheckSessionActivity.this, UnPaidTicketSearch.class);
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
+                finish();
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
                 newIntent.putExtra("ActivityFrom", UNPAID_TICKET_BUTTON);
                 startActivity(newIntent);
+                finish();
             }
 
         } else if (activityFrom.equalsIgnoreCase("SEAT_SEARCH")) {
