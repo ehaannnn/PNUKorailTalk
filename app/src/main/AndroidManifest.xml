@@ -55,6 +55,15 @@
             android:label="TicketHistoryActivity"
             android:theme="@style/Theme.AppCompat"/>
 
+        <activity
+            android:name=".SelectPeriodActivity"
+            android:label="SelectPeriodActivity" />
+
+        <activity
+            android:name=".PaymentActivity"
+            android:label="PaymentActivity"
+            android:theme="@style/Theme.AppCompat" />
+
 
     </application>
 
