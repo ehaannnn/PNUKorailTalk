@@ -87,19 +87,13 @@ public class UnPaidTicketSearch extends Activity {
                 ticketCancelButton.setEnabled(true);
                 ticketCancelButton = (Button) findViewById(R.id.ticketCancel);
 
+                ticketPayButton.setEnabled(true);
+                ticketPayButton = (Button) findViewById(R.id.ticketPay);
+
                 HashMap<String, Object> item = ticket_info.get(position);
                 selectedCustomID = Integer.parseInt(item.get("customID").toString());
                 selectedTicketID = Integer.parseInt(item.get("ticketID").toString());
 
-            }
-        });
-
-        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
-        Button sessionButton = (Button) findViewById(R.id.sessionDelete);
-        sessionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionDBhelper.dropTable();
             }
         });
 

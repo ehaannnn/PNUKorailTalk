@@ -125,14 +125,7 @@ public class PaidTicketSearch extends Activity {
         });
 
 
-        sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db", null, 1);
-        Button sessionButton = (Button) findViewById(R.id.sessionDelete);
-        sessionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionDBhelper.dropTable();
-            }
-        });
+
 
 
     }
