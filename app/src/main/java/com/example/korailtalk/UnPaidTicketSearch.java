@@ -108,7 +108,6 @@ public class UnPaidTicketSearch extends Activity {
                 intent.putExtra("ticketID",String.valueOf(selectedTicketID));
                 intent.putExtra("customID",String.valueOf(selectedCustomID));
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -130,6 +129,7 @@ public class UnPaidTicketSearch extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
         final List<HashMap<String, Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO", customID);
         adapter = new ListViewAdapter();
         for (int i = 0; i < ticket_info.size(); ++i) {
