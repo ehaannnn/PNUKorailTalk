@@ -1,10 +1,10 @@
-/*TicketCancelActivity.java*/
-
 package com.example.korailtalk;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -16,6 +16,7 @@ public class TicketCancelActivity extends AppCompatActivity {
     private DBHelper dbhelper;
     private List<HashMap<String,Object>> ticket_infos;
     private HashMap<String, Object> ticket_info;
+    private Button yesButton, noButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,36 @@ public class TicketCancelActivity extends AppCompatActivity {
             textView_isUsable.setText("N");
         } else
             textView_isUsable.setText("Y");
+
+        yesButton = (Button) findViewById(R.id.yesButton);
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbhelper.DeleteTicketInfoTablebyticketID(ticket_info.get("ticketID").toString(), customer_id);
+                Integer newTASN = Integer.parseInt(ticket_info.get("totalAvailableSeatNum").toString()) + 1;
+                dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
+
+                HashMap<String, Object> item = new HashMap<String, Object>();
+                item.put("boardingDate", ticket_info.get("boardingDate").toString());
+                item.put("availableSeat", ticket_info.get("seatNum").toString());
+                item.put("trainNum", Integer.parseInt(ticket_info.get("trainNum").toString()));
+                dbhelper.insert("SEAT_INFO", item);
+
+                Intent intent = new Intent(TicketCancelActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        noButton = (Button) findViewById(R.id.noButton);
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TicketCancelActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     // 승차권이 사용된 승차권인지 확인

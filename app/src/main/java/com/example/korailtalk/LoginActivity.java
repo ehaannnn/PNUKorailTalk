@@ -118,8 +118,11 @@ public class LoginActivity extends Activity {
 
         } else if (activityFrom.equalsIgnoreCase("trainSearch")) {
 
-        } else if (activityFrom.equalsIgnoreCase("mypage")) {
-
+        } else if (activityFrom.equalsIgnoreCase("MY_PAGE")) {
+            Intent intent = new Intent(LoginActivity.this, MyPageActivity.class);
+            intent.putExtra("customID", item.get("customID").toString());
+            startActivity(intent);
+            finish();
         }
     }
 

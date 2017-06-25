@@ -1,3 +1,5 @@
+/*DBHelper*/
+
 package com.example.korailtalk;
 
 import android.content.ContentValues;
@@ -149,7 +151,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor;
         HashMap<String, Object> item = new HashMap<String, Object>();
 
-        cursor = db.rawQuery("SELECT * FROM MEMBER WHERE ID=" + ID + " and password=" + PW, null);
+        cursor = db.rawQuery("SELECT * FROM MEMBER WHERE ID='" + ID + "' and password='" + PW + "'", null);
 
         while (cursor.moveToNext()) {
             item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
@@ -158,6 +160,20 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return item;
+    }
+
+    public void DeleteTicketInfoTablebyticketID(String ticketID, String customID) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        cursor = db.rawQuery("DELETE FROM TICKET_INFO WHERE ticketID='" + ticketID + "' and customID='" + customID + "'", null);
+    }
+
+    public void UpdateTrainInfoTotalAvailableSN(String trainNum, String boardingDate, String totalAvailableSeatNum) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        cursor = db.rawQuery("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
     }
 
     public List<HashMap<String, Object>> getResultAt(String table, int customID) {
@@ -238,6 +254,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 items.add(item);
             }
         }
+
+
 
         return items;
     }
