@@ -11,18 +11,66 @@
             android:id="@+id/paymentStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="119dp"
             android:text="결제" />
 
         <Button
             android:id="@+id/paymentReturn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/paymentStart"
-            android:layout_marginEnd="54dp"
+            android:layout_marginBottom="131dp"
             android:text="결제취소" />
+
+        <TextView
+            android:id="@+id/bordingDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="30sp"
+            android:layout_above="@+id/seatQuentity"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="39dp" />
+
+        <TextView
+            android:id="@+id/seatQuentity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/paymentStart"
+            android:layout_alignParentStart="true"
+            android:text="TextView"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/seatInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/seatQuentity"
+            android:layout_marginTop="47dp"
+            android:text="TextView"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/timeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/paymentReturn"
+            android:layout_alignParentStart="true"
+            android:text="TextView"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/mileageInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/timeInfo"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="68dp"
+            android:text="TextView"
+            android:textSize="30sp" />
     </RelativeLayout>
 </LinearLayout>
