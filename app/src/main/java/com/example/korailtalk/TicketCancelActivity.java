@@ -22,7 +22,7 @@ public class TicketCancelActivity extends Activity {
     final Context context = this;
     private int ticketID, customID;
     private DBHelper dbhelper;
-    private List<HashMap<String,Object>> ticket_infos;
+    private List<HashMap<String,Object>> ticket_infos, membership_info;
     private HashMap<String, Object> ticket_info, train_info;
     private Button yesButton, noButton;
 
@@ -86,9 +86,12 @@ public class TicketCancelActivity extends Activity {
                 BigInteger boadingtime_big = new BigInteger(ticket_info.get("boardingDate").toString());
                 if(nowtime_big.compareTo(boadingtime_big) == -1) {
                     train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
+                    membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO", customID);
                     dbhelper.DeleteTicketInfoTablebyticketID(ticketID, customID);
                     Integer newTASN = Integer.parseInt(train_info.get("totalAvailableSeatNum").toString()) + 1;
+                    Integer newKTXMileage = Integer.parseInt(membership_info.get(0).get("KTXMileage").toString()) - 300;
                     dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
+                    dbhelper.UpdateKTXMileageSub300(customID, newKTXMileage);
 
                     HashMap<String, Object> item = new HashMap<String, Object>();
                     item.put("boardingDate", ticket_info.get("boardingDate").toString());

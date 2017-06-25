@@ -193,6 +193,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'");
     }
 
+    public void UpdateKTXMileageSub300(int customID, int KTXMileage) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        db.execSQL("UPDATE MEMBERSHIP_INFO SET KTXMileage = '" + KTXMileage + "' WHERE customID='" + customID + "'");
+    }
+
     public List<HashMap<String, Object>> getResultAt(String table, int customID) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
