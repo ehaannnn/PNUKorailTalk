@@ -40,5 +40,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="승차권취소" />
+        android:text="예약취소" />
+
+    <Button
+        android:id="@+id/ticketPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="승차권 결제/발권" />
 </LinearLayout>

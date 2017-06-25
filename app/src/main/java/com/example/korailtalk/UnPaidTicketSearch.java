@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +31,7 @@ public class UnPaidTicketSearch extends Activity {
 
     private Button mainButton;
     private Button ticketCancelButton;
+    private Button ticketPayButton;
 
     private ListView listView;
 
@@ -55,7 +55,6 @@ public class UnPaidTicketSearch extends Activity {
             public void onClick(View v) {
                 Intent newIntent = new Intent(UnPaidTicketSearch.this, TicketCancelActivity.class);
                 newIntent.putExtra("customID", selectedCustomID);
-                Log.i("selectedCustomID", selectedCustomID + "");
                 newIntent.putExtra("ticketID", selectedTicketID);
                 startActivity(newIntent);
             }
@@ -102,6 +101,16 @@ public class UnPaidTicketSearch extends Activity {
             @Override
             public void onClick(View v) {
                 sessionDBhelper.dropTable();
+            }
+        });
+
+
+        ticketPayButton = (Button) findViewById(R.id.ticketPay);
+        ticketPayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //결제화면으로 넘어가기
+
             }
         });
     }
