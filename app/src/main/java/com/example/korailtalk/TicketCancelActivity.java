@@ -25,6 +25,7 @@ public class TicketCancelActivity extends Activity {
     private List<HashMap<String,Object>> ticket_infos, membership_info;
     private HashMap<String, Object> ticket_info, train_info;
     private Button yesButton, noButton;
+    private String[] selected_seat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class TicketCancelActivity extends Activity {
         textView_destPoint.setText(ticket_info.get("destPoint").toString());
         textView_seatNum.setText(ticket_info.get("seatNum").toString());
 
-        String[] selected_seat = ticket_info.get("seatNum").toString().split(",");
+        selected_seat = ticket_info.get("seatNum").toString().split(",");
         textView_passengerNum.setText(String.valueOf(selected_seat.length));
 
         if(paidCheck(Integer.parseInt(ticket_info.get("paid").toString())))
@@ -88,16 +89,18 @@ public class TicketCancelActivity extends Activity {
                     train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
                     membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO", customID);
                     dbhelper.DeleteTicketInfoTablebyticketID(ticketID, customID);
-                    Integer newTASN = Integer.parseInt(train_info.get("totalAvailableSeatNum").toString()) + 1;
-                    Integer newKTXMileage = Integer.parseInt(membership_info.get(0).get("KTXMileage").toString()) - 300;
+                    Integer newTASN = Integer.parseInt(train_info.get("totalAvailableSeatNum").toString()) + selected_seat.length;
+                    Integer newKTXMileage = Integer.parseInt(membership_info.get(0).get("KTXMileage").toString()) - 300*selected_seat.length;
                     dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
                     dbhelper.UpdateKTXMileageSub300(customID, newKTXMileage);
 
-                    HashMap<String, Object> item = new HashMap<String, Object>();
-                    item.put("boardingDate", ticket_info.get("boardingDate").toString());
-                    item.put("availableSeat", ticket_info.get("seatNum").toString());
-                    item.put("trainNum", Integer.parseInt(ticket_info.get("trainNum").toString()));
-                    dbhelper.insert("SEAT_INFO", item);
+                    for(int i=0; i<selected_seat.length; i++) {
+                        HashMap<String, Object> item = new HashMap<String, Object>();
+                        item.put("boardingDate", ticket_info.get("boardingDate").toString());
+                        item.put("availableSeat", selected_seat[i]);
+                        item.put("trainNum", Integer.parseInt(ticket_info.get("trainNum").toString()));
+                        dbhelper.insert("SEAT_INFO", item);
+                    }
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                     alertDialogBuilder.setTitle("승차권 취소 결과");
