@@ -104,171 +104,173 @@ public class MainActivity extends Activity {
 
             dbhelper.dropTable();
 
-            HashMap<String, Object> member = new HashMap<String, Object>();
-            member.put("ID", "1234");
-            member.put("password", "1234");
-            member.put("customID", "1");
-            member.put("phoneNum", "010-1234-1234");
-
-            dbhelper.insert("MEMBER", member);
-
-
-            HashMap<String, Object> items = new HashMap<String, Object>();
-            items.put("boardingDate", "2017622");
-            items.put("departurePoint", "부산");
-            items.put("destPoint", "서울");
-            items.put("totalAvailableSeatNum", 0);
-            items.put("trainNum", 131);
-            dbhelper.insert("TRAIN_INFO", items);
-
-            HashMap<String, Object> item0 = new HashMap<String, Object>();
-            item0.put("boardingDate", "2017623");
-            item0.put("departurePoint", "부산");
-            item0.put("destPoint", "서울");
-            item0.put("totalAvailableSeatNum", 0);
-            item0.put("trainNum", 133);
-            dbhelper.insert("TRAIN_INFO", item0);
-
-            HashMap<String, Object> items1 = new HashMap<String, Object>();
-            items1.put("boardingDate", "2017622");
-            //Log.i("test",items1.get("boardingDate")+"");
-            items1.put("departurePoint", "부산");
-            items1.put("destPoint", "서울");
-            items1.put("paid", 1);
-            items1.put("seatNum", "2A5");
-            items1.put("ticketID", 1312);
-            items1.put("customID", 1);
-            items1.put("trainNum", 131);
-            items1.put("use", 0);
-            dbhelper.insert("TICKET_INFO", items1);
-
-            HashMap<String, Object> items2 = new HashMap<String, Object>();
-            items2.put("boardingDate", "2017622");
-            items2.put("departurePoint", "부산");
-            items2.put("destPoint", "서울");
-            items2.put("paid", 1);
-            items2.put("seatNum", "1A8,1A9");
-            items2.put("ticketID", 1312);
-            items2.put("customID", 1);
-            items2.put("trainNum", 131);
-            items2.put("use", 1);
-            dbhelper.insert("TICKET_INFO", items2);
-
             // 우진 수정 시작
-            HashMap<String, Object> item1 = new HashMap<String, Object>();
-            item1.put("ID", "admin");
-            item1.put("customID", "1");
-            item1.put("phoneNum", "010-1234-5678");
-            item1.put("password", "admin");
-            dbhelper.insert("MEMBER", item1);
+            HashMap<String, Object> member1 = new HashMap<String, Object>();
+            member1.put("ID", "admin");
+            member1.put("customID", "1");
+            member1.put("phoneNum", "010-1234-5678");
+            member1.put("password", "admin");
+            dbhelper.insert("MEMBER", member1);
 
-            HashMap<String, Object> item2 = new HashMap<String, Object>();
-            item2.put("ID", "holinder4s");
-            item2.put("customID", "31337");
-            item2.put("phoneNum", "010-7185-7663");
-            item2.put("password", "helloworld");
-            dbhelper.insert("MEMBER", item2);
+            HashMap<String, Object> member2 = new HashMap<String, Object>();
+            member2.put("ID", "holinder4s");
+            member2.put("customID", "31337");
+            member2.put("phoneNum", "010-7185-7663");
+            member2.put("password", "helloworld");
+            dbhelper.insert("MEMBER", member2);
 
-            HashMap<String, Object> item3 = new HashMap<String, Object>();
-            item3.put("customID", "-1234");
-            item3.put("phoneNum", "010-1111-1111");
-            item3.put("password", "test1234");
-            dbhelper.insert("NON_MEMBER", item3);
+            HashMap<String, Object> member3 = new HashMap<String, Object>();
+            member3.put("ID", "holinder4s");
+            member3.put("customID", "31337");
+            member3.put("phoneNum", "010-7185-7663");
+            member3.put("password", "helloworld");
+            dbhelper.insert("MEMBER", member3);
 
-            HashMap<String, Object> item4 = new HashMap<String, Object>();
-            item4.put("customID", "-2222");
-            item4.put("phoneNum", "010-2222-2222");
-            item4.put("password", "test2222");
-            dbhelper.insert("NON_MEMBER", item4);
+            HashMap<String, Object> nonmember1 = new HashMap<String, Object>();
+            nonmember1.put("customID", "-1234");
+            nonmember1.put("phoneNum", "010-1111-1111");
+            nonmember1.put("password", "test1234");
+            dbhelper.insert("NON_MEMBER", nonmember1);
 
-            HashMap<String, Object> item5 = new HashMap<String, Object>();
-            item5.put("CouponNum", "9999");
-            item5.put("KTXMileage", "99999999");
-            item5.put("ID", "1234");
-            item5.put("customID", "1");
-            dbhelper.insert("MEMBERSHIP_INFO", item5);
+            HashMap<String, Object> nonmember2 = new HashMap<String, Object>();
+            nonmember2.put("customID", "-2222");
+            nonmember2.put("phoneNum", "010-2222-2222");
+            nonmember2.put("password", "test2222");
+            dbhelper.insert("NON_MEMBER", nonmember2);
 
-            HashMap<String, Object> item6 = new HashMap<String, Object>();
-            item6.put("CouponNum", "3");
-            item6.put("KTXMileage", "23500");
-            item6.put("ID", "1234");
-            item6.put("customID", "31337");
-            dbhelper.insert("MEMBERSHIP_INFO", item6);
+            HashMap<String, Object> membershipinfo1 = new HashMap<String, Object>();
+            membershipinfo1.put("CouponNum", "9999");
+            membershipinfo1.put("KTXMileage", "99999999");
+            membershipinfo1.put("ID", "admin");
+            membershipinfo1.put("customID", "1");
+            dbhelper.insert("MEMBERSHIP_INFO", membershipinfo1);
 
-            HashMap<String, Object> item7 = new HashMap<String, Object>();
-            item7.put("boardingDate", "2017625");
+            HashMap<String, Object> membershipinfo2 = new HashMap<String, Object>();
+            membershipinfo2.put("CouponNum", "3");
+            membershipinfo2.put("KTXMileage", "23500");
+            membershipinfo2.put("ID", "holinder4s");
+            membershipinfo2.put("customID", "31337");
+            dbhelper.insert("MEMBERSHIP_INFO", membershipinfo2);
+
+            HashMap<String, Object> ticketinfo1 = new HashMap<String, Object>();
+            ticketinfo1.put("boardingDate", "201706251300");
             //Log.i("test",items1.get("boardingDate")+"");
-            item7.put("departurePoint", "부산");
-            item7.put("destPoint", "인천");
-            item7.put("paid", 1);
-            item7.put("seatNum", "3A3");
-            item7.put("ticketID", 1337);
-            item7.put("customID", 31337);
-            item7.put("trainNum", 123);
-            item7.put("use", 0);
-            dbhelper.insert("TICKET_INFO", item7);
+            ticketinfo1.put("departurePoint", "부산");
+            ticketinfo1.put("destPoint", "서울");
+            ticketinfo1.put("paid", 1);
+            ticketinfo1.put("seatNum", "3A3,3A4");
+            ticketinfo1.put("ticketID", 1337);
+            ticketinfo1.put("customID", 31337);
+            ticketinfo1.put("trainNum", 123);
+            ticketinfo1.put("use", 0);
+            dbhelper.insert("TICKET_INFO", ticketinfo1);
 
-            HashMap<String, Object> item8 = new HashMap<String, Object>();
-            item8.put("boardingDate", "2017625");
-            item8.put("departurePoint", "부산");
-            item8.put("destPoint", "서울");
-            item8.put("paid", 1);
-            item8.put("seatNum", "3A5");
-            item8.put("ticketID", 1337);
-            item8.put("customID", 31337);
-            item8.put("trainNum", 123);
-            item8.put("use", 1);
-            dbhelper.insert("TICKET_INFO", item8);
+            HashMap<String, Object> ticketinfo2 = new HashMap<String, Object>();
+            ticketinfo2.put("boardingDate", "201706251300");
+            ticketinfo2.put("departurePoint", "부산");
+            ticketinfo2.put("destPoint", "서울");
+            ticketinfo2.put("paid", 0);
+            ticketinfo2.put("deadLine", "201706241300");
+            ticketinfo2.put("seatNum", "3A5");
+            ticketinfo2.put("ticketID", 1338);
+            ticketinfo2.put("customID", 31337);
+            ticketinfo2.put("trainNum", 123);
+            ticketinfo2.put("use", 0);
+            dbhelper.insert("TICKET_INFO", ticketinfo2);
 
-            HashMap<String, Object> item9 = new HashMap<String, Object>();
-            item9.put("boardingDate", "2017625");
-            item9.put("departurePoint", "부산");
-            item9.put("destPoint", "서울");
-            item9.put("totalAvailableSeatNum", 120);
-            item9.put("trainNum", 123);
-            dbhelper.insert("TRAIN_INFO", item9);
+            HashMap<String, Object> ticketinfo3 = new HashMap<String, Object>();
+            ticketinfo3.put("boardingDate", "20176231300");
+            ticketinfo3.put("departurePoint", "부산");
+            ticketinfo3.put("destPoint", "서울");
+            ticketinfo3.put("paid", 1);
+            ticketinfo3.put("seatNum", "1A5");
+            ticketinfo3.put("ticketID", 1337);
+            ticketinfo3.put("customID", 31337);
+            ticketinfo3.put("trainNum", 123);
+            ticketinfo3.put("use", 1);
+            dbhelper.insert("TICKET_INFO", ticketinfo3);
 
-            HashMap<String, Object> item10 = new HashMap<String, Object>();
-            item10.put("boardingDate", "2017625");
-            item10.put("availableSeat", "1A0");
-            item10.put("trainNum", 123);
-            dbhelper.insert("SEAT_INFO", item10);
+            HashMap<String, Object> traininfo1 = new HashMap<String, Object>();
+            traininfo1.put("boardingDate", "201706251300");
+            traininfo1.put("departurePoint", "부산");
+            traininfo1.put("destPoint", "서울");
+            traininfo1.put("totalAvailableSeatNum", 117);
+            traininfo1.put("trainNum", 123);
+            dbhelper.insert("TRAIN_INFO", traininfo1);
 
-            HashMap<String, Object> item11 = new HashMap<String, Object>();
-            item11.put("boardingDate", "2017625");
-            item11.put("availableSeat", "1A1");
-            item11.put("trainNum", 123);
-            dbhelper.insert("SEAT_INFO", item11);
+            HashMap<String, Object> traininfo2 = new HashMap<String, Object>();
+            traininfo2.put("boardingDate", "201706231300");
+            traininfo2.put("departurePoint", "부산");
+            traininfo2.put("destPoint", "서울");
+            traininfo2.put("totalAvailableSeatNum", 119);
+            traininfo2.put("trainNum", 123);
+            dbhelper.insert("TRAIN_INFO", traininfo2);
 
-            HashMap<String, Object> item12 = new HashMap<String, Object>();
-            item12.put("boardingDate", "2017625");
-            item12.put("availableSeat", "1A3");
-            item12.put("trainNum", 123);
-            dbhelper.insert("SEAT_INFO", item12);
+            HashMap<String, Object> traininfo3 = new HashMap<String, Object>();
+            traininfo3.put("boardingDate", "201706251500");
+            traininfo3.put("departurePoint", "부산");
+            traininfo3.put("destPoint", "서울");
+            traininfo3.put("totalAvailableSeatNum", 3);
+            traininfo3.put("trainNum", 133);
+            dbhelper.insert("TRAIN_INFO", traininfo3);
 
-            HashMap<String, Object> item13 = new HashMap<String, Object>();
-            item13.put("boardingDate", "2017625");
-            item13.put("availableSeat", "1A4");
-            item13.put("trainNum", 123);
-            dbhelper.insert("SEAT_INFO", item13);
+            for(int order=0; order<3; order++) {
+                for(int alpha=0; alpha<4; alpha++) {
+                    for (int num = 0; num < 10; num++) {
+                        HashMap<String, Object> seatinfo1 = new HashMap<String, Object>();
+                        seatinfo1.put("boardingDate", "201706251300");
+                        String availableSeat = String.valueOf(order+1);
+                        if(alpha == 0) availableSeat += "A";
+                        else if(alpha == 1) availableSeat += "B";
+                        else if(alpha == 2) availableSeat += "C";
+                        else if(alpha == 3) availableSeat += "D";
+                        availableSeat += String.valueOf(num);
+                        if(availableSeat.equals("3A3") || availableSeat.equals("3A4") || availableSeat.equals("3A5")) break;
+                        seatinfo1.put("availableSeat", availableSeat);
+                        seatinfo1.put("trainNum", 123);
+                        dbhelper.insert("SEAT_INFO", seatinfo1);
+                    }
+                }
+            }
 
-            HashMap<String, Object> item14 = new HashMap<String, Object>();
-            item14.put("boardingDate", "2017625");
-            item14.put("availableSeat", "1A5");
-            item14.put("trainNum", 123);
-            dbhelper.insert("SEAT_INFO", item14);
+            for(int order=0; order<3; order++) {
+                for(int alpha=0; alpha<4; alpha++) {
+                    for (int num = 0; num < 10; num++) {
+                        HashMap<String, Object> seatinfo2 = new HashMap<String, Object>();
+                        seatinfo2.put("boardingDate", "201706231300");
+                        String availableSeat = String.valueOf(order+1);
+                        if(alpha == 0) availableSeat += "A";
+                        else if(alpha == 1) availableSeat += "B";
+                        else if(alpha == 2) availableSeat += "C";
+                        else if(alpha == 3) availableSeat += "D";
+                        availableSeat += String.valueOf(num);
+                        if(availableSeat.equals("1A5")) break;
+                        seatinfo2.put("availableSeat", availableSeat);
+                        seatinfo2.put("trainNum", 123);
+                        dbhelper.insert("SEAT_INFO", seatinfo2);
+                    }
+                }
+            }
 
-            HashMap<String, Object> item15 = new HashMap<String, Object>();
-            item15.put("boardingDate", "2017625");
-            item15.put("availableSeat", "1A6");
-            item15.put("trainNum", 123);
-            dbhelper.insert("SEAT_INFO", item15);
-
-            HashMap<String, Object> item16 = new HashMap<String, Object>();
-            item16.put("boardingDate", "2017625");
-            item16.put("availableSeat", "1A7");
-            item16.put("trainNum", 123);
-            dbhelper.insert("SEAT_INFO", item16);
+            for(int order=0; order<3; order++) {
+                for(int alpha=0; alpha<4; alpha++) {
+                    for (int num = 0; num < 10; num++) {
+                        HashMap<String, Object> seatinfo3 = new HashMap<String, Object>();
+                        seatinfo3.put("boardingDate", "201706251500");
+                        String availableSeat = String.valueOf(order+1);
+                        if(alpha == 0) availableSeat += "A";
+                        else if(alpha == 1) availableSeat += "B";
+                        else if(alpha == 2) availableSeat += "C";
+                        else if(alpha == 3) availableSeat += "D";
+                        availableSeat += String.valueOf(num);
+                        if(availableSeat.equals("1A2") || availableSeat.equals("1A3") || availableSeat.equals("1A4")) {
+                            seatinfo3.put("availableSeat", availableSeat);
+                            seatinfo3.put("trainNum", 123);
+                            dbhelper.insert("SEAT_INFO", seatinfo3);
+                        }
+                    }
+                }
+            }
             // 우진 수정 끝
 
             dbinit_flag = true;
