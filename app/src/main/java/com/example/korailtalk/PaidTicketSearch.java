@@ -86,7 +86,7 @@ public class PaidTicketSearch extends Activity {
                 ticketCancelButton.setEnabled(true);
                 ticketCancelButton = (Button) findViewById(R.id.ticketCancel);
 
-                HashMap<String,Object> item = ticket_info.get(position);
+                HashMap<String,Object> item = (HashMap<String,Object>)adapter.getItem(position);
                 selectedCustomID = Integer.parseInt(item.get("customID").toString());
                 selectedTicketID = Integer.parseInt(item.get("ticketID").toString());
 
