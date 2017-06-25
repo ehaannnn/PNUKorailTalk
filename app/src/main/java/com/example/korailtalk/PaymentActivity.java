@@ -89,7 +89,7 @@ public class PaymentActivity extends AppCompatActivity {
                 }
 
                 //available seat 수정
-                train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
+                train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(trainNumber, boardingDate);
 
                 String[] selected_seat = ticket_info.get("seatNum").toString().split(",");
                 String availableSeatNumber = train_info.get("totalAvailableSeatNum").toString();
