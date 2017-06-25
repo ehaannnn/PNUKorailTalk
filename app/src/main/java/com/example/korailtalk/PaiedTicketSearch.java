@@ -2,6 +2,7 @@ package com.example.korailtalk;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -62,34 +63,38 @@ public class PaiedTicketSearch extends Activity {
 
         //List<HashMap<String,Object>> train_info = dbhelper.getResultAt("TRAIN_INFO",customID);
         final List<HashMap<String, Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO", customID);
+        adapter = new ListViewAdapter();
+        for (int i = 0; i < ticket_info.size(); ++i) {
+            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0) {
+                adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
+                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString())));
+            }
+        }
+        listView.setAdapter(adapter);
 
-        paidTicketSearchButton = (Button) findViewById(R.id.paidTicketSearchButton);
+
+        /*paidTicketSearchButton = (Button) findViewById(R.id.paidTicketSearchButton);
         paidTicketSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //DB에서 startDate부터 endDate사이의 티켓정보 출력
                 //티켓정보 : 출발역, 도착역, 인원, 열차번호, 출발날짜
-                adapter = new ListViewAdapter();
-                for (int i = 0; i < ticket_info.size(); ++i) {
-                    if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0) {
-                        adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
-                                ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString())));
-                    }
-                }
-                listView.setAdapter(adapter);
+
             }
         });
-
+*/
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 ticketCancelButton.setEnabled(true);
+                ticketCancelButton = (Button) findViewById(R.id.ticketCancel);
 
                 HashMap<String,Object> item = ticket_info.get(position);
                 selectedCustomID = Integer.parseInt(item.get("customID").toString());
                 selectedTicketID = Integer.parseInt(item.get("ticketID").toString());
 
-
+                view.setBackgroundColor(Color.GRAY);
             }
         });
 
