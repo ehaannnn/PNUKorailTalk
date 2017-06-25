@@ -53,19 +53,6 @@
             android:name=".TicketHistoryActivity"
             android:label="TicketHistoryActivity"
             android:theme="@style/Theme.AppCompat"/>
-        <activity
-            android:name=".SendSMSAlarmActivity"
-            android:label="SendSMSAlarmActivity" />
-        <activity
-            android:name=".PaymentActivity"
-            android:label="PaymentActivity" />
-        <activity
-            android:name=".SelectPeriodActivity"
-            android:label="SelectPeriodActivity"/>
-        <activity
-            android:name=".PaymentSuccessActivity"
-            android:label="PaymentSuccessActivity"/>
-
 
     </application>
 
