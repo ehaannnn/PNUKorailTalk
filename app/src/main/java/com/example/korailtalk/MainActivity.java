@@ -266,7 +266,7 @@ public class MainActivity extends Activity {
                         availableSeat += String.valueOf(num);
                         if(availableSeat.equals("1A2") || availableSeat.equals("1A3") || availableSeat.equals("1A4")) {
                             seatinfo3.put("availableSeat", availableSeat);
-                            seatinfo3.put("trainNum", 123);
+                            seatinfo3.put("trainNum", 133);
                             dbhelper.insert("SEAT_INFO", seatinfo3);
                         }
                     }

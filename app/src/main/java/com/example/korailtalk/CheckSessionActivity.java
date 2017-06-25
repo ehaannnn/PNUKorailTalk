@@ -72,14 +72,39 @@ public class CheckSessionActivity extends Activity {
 
         } else if (activityFrom.equalsIgnoreCase("SEAT_SEARCH")) {
             HashMap<String, String> session = sessionDBhelper.getSession();
-            Log.i("세션확인",String.valueOf(session.size()));
+            Intent getintent = getIntent();
+            String departPoint = getintent.getStringExtra("departPoint");
+            String destPoint = getintent.getStringExtra("destPoint");
+            String departDate = getintent.getStringExtra("departdate");
+            String traiNum = getintent.getStringExtra("trainum");
+            String nbofTicket = getintent.getStringExtra("nbofticket");
+            String seatInfo = getintent.getStringExtra("seatinfo");
+
             if (session.size() != 0) {  //session작동
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
-                Intent newIntent = new Intent(CheckSessionActivity.this, UnPaidTicketSearch.class);//TicketPayment로 고쳐야함
-                newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+
+                Intent newIntent = new Intent(CheckSessionActivity.this, PaymentActivity.class);//TicketPayment로 고쳐야함
+                newIntent.putExtra("departPoint", departPoint);
+                newIntent.putExtra("destPoint", destPoint);
+                newIntent.putExtra("departdate", departDate);
+                newIntent.putExtra("trainum", traiNum);
+                newIntent.putExtra("nbofticket", nbofTicket);
+                newIntent.putExtra("seatinfo", seatInfo);
+                Log.i("departPoint",departPoint);
+                Log.i("destPoint",destPoint);
+                Log.i("departDate",departDate);
+                Log.i("traiNum",traiNum);
+                Log.i("nbofTicket",nbofTicket);
+                Log.i("seatInfo",seatInfo);
                 startActivity(newIntent);
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
+                newIntent.putExtra("departPoint", departPoint);
+                newIntent.putExtra("destPoint", destPoint);
+                newIntent.putExtra("departdate", departDate);
+                newIntent.putExtra("trainum", traiNum);
+                newIntent.putExtra("nbofticket", nbofTicket);
+                newIntent.putExtra("seatinfo", seatInfo);
                 newIntent.putExtra("ActivityFrom", SEAT_SEARCH);
                 startActivity(newIntent);
             }

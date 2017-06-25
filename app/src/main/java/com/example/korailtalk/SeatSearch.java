@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -31,11 +34,12 @@ import static java.lang.System.in;
 public class SeatSearch extends Activity {
     private int trainNum;
     private int nbofticket;
-    private int departDate;
+    private String departdatestr;
     private int trainordernum;
     private Spinner trainorderspinner;
     final static int DEFAULT_NUM = 1;
     private DBHelper dbhelper;
+    private DBHelper dbhelper2;
     private LinearLayout im;
     private int firstime;
     private int totalselectnb;
@@ -43,10 +47,7 @@ public class SeatSearch extends Activity {
     private ArrayList seatinfo;
     private String seats;
     private static final String SEAT_SEARCH = "SEAT_SEARCH";
-    private Boolean alreadycheck;
-
-    private ListView listView;
-    private ArrayList<ButtonListViewAdapter> buttonListViewAdapters;
+    private HashMap<String, Object> train_info;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,59 +57,51 @@ public class SeatSearch extends Activity {
         Intent intent = getIntent();
         trainNum = intent.getIntExtra("trainum", 0);
         nbofticket = intent.getIntExtra("nbofticket", 0);
-        departDate = intent.getIntExtra("departdate", 0);
+        departdatestr = intent.getStringExtra("departdate");
         firstime = 0;
         totalselectnb = 0;
         seatinfo = new ArrayList();
 
+        dbhelper2 = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
+
+        train_info = dbhelper2.getResultAtTrainInfoTableby_TN_BD(String.valueOf(trainNum), departdatestr);
         btnbuyticket = (Button) findViewById(R.id.buyticket);
 
         btnbuyticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent2 = new Intent(SeatSearch.this, CheckSessionActivity.class);
-                for (int i = 0; i < seatinfo.size(); i++) {
-                    seats += seatinfo.get(i);
+                seats = seatinfo.get(0).toString();
+                seats += ',';
+                for (int i = 1; i < seatinfo.size(); i++) {
+                    seats += seatinfo.get(i).toString();
+                    seats += ',';
                 }
-                intent2.putExtra("departdate", departDate);
-                intent2.putExtra("trainum", trainNum);
-                intent2.putExtra("nbofticket", nbofticket);
+                /*Log.i("departPoint", train_info.get("departurePoint").toString());
+                Log.i("destPoint", train_info.get("destPoint").toString());
+                Log.i("departdate", departdatestr);
+                Log.i("trainum", String.valueOf(trainNum));
+                Log.i("nbofticket", String.valueOf(nbofticket));
+                Log.i("seatinfo", seats);*/
+
+                intent2.putExtra("departPoint", train_info.get("departurePoint").toString());
+                intent2.putExtra("destPoint", train_info.get("destPoint").toString());
+                intent2.putExtra("departdate", departdatestr);
+                intent2.putExtra("trainum", String.valueOf(trainNum));
+                intent2.putExtra("nbofticket", String.valueOf(nbofticket));
                 intent2.putExtra("seatinfo", seats);
                 intent2.putExtra("ActivityFrom", SEAT_SEARCH);
                 startActivity(intent2);
             }
         });
 
-        buttonListViewAdapters = new ArrayList<ButtonListViewAdapter>();
-        buttonListViewAdapters.add(new ButtonListViewAdapter());
-        buttonListViewAdapters.add(new ButtonListViewAdapter());
-        buttonListViewAdapters.add(new ButtonListViewAdapter());
-
-
-        for (ButtonListViewAdapter adapter : buttonListViewAdapters) {
-            for (int i = 0; i < 10; ++i) {
-                adapter.addItem(createItem(i));
-            }
-
-        }
-
-        listView = (ListView) findViewById(R.id.listView);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                view.setBackgroundColor(Color.BLUE);
-            }
-        });
 
         trainorderspinner = (Spinner) findViewById(R.id.trainorderspinner);
         trainorderspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 trainordernum = position + 1;
-                //makeButton(trainordernum, firstime);
-                listView.setAdapter(buttonListViewAdapters.get(position));
+                makeButton(trainordernum, firstime);
                 firstime++;
             }
 
@@ -139,8 +132,8 @@ public class SeatSearch extends Activity {
 
         dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
 
-        final List<HashMap<String, Object>> seat_info = dbhelper.getResultAtSeatTable(departDate, trainNum);
-
+        final List<HashMap<String, Object>> seat_info = dbhelper.getResultAtSeatTable(departdatestr, trainNum);
+        Log.i("가능한좌석수", String.valueOf(seat_info.size()));
         List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
         for (int i = 0; i < seat_info.size(); i++) {
             String first_char = seat_info.get(i).get("availableSeat").toString().substring(0, 1);
@@ -197,15 +190,13 @@ public class SeatSearch extends Activity {
 
                         @Override
                         public void onClick(View view) {
+                            ColorDrawable drawable = (ColorDrawable)btn.getBackground();
+                            int color = drawable.getColor();
+                            if(color == Color.BLUE) click = 1;
+                            else click = 0;
                             if (click == 0) {
                                 if (totalselectnb < nbofticket) {
-                                    /*view.buildDrawingCache();
-                                    Bitmap bitmap = view.getDrawingCache();
-                                    int color = bitmap.getPixel(0, 0);
-                                    Log.e("ChecktedText","Background Color: " + color);
-                                    view.destroyDrawingCache();*/
-                                    /*Log("버튼색깔", String.valueOf(btn.getDrawingCacheBackgroundColor());
-                                    btn.setBackgroundColor(Color.BLUE);*/
+                                    btn.setBackgroundColor(Color.BLUE);
                                     tempseatinfo += btn.getText().toString();
                                     seatinfo.add(totalselectnb, tempseatinfo);
                                     totalselectnb++;

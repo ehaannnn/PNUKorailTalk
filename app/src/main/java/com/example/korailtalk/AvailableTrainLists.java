@@ -50,9 +50,10 @@ public class AvailableTrainLists extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 view.setBackgroundColor(Color.GRAY);
                 Intent intent = new Intent(AvailableTrainLists.this, SeatSearch.class);
+                String tmpstr = String.valueOf(ticket_info.get(i).getDepartdate());
                 intent.putExtra("trainum",ticket_info.get(i).getTrainnum());
                 intent.putExtra("nbofticket",ticket_info.get(i).getNbofticket());
-                intent.putExtra("departdate",ticket_info.get(i).getDepartdate());
+                intent.putExtra("departdate",tmpstr);
                 startActivity(intent);
             }
         });

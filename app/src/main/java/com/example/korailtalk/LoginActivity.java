@@ -118,9 +118,27 @@ public class LoginActivity extends Activity {
             finish();
 
         } else if (activityFrom.equalsIgnoreCase("SEAT_SEARCH")) {
-            Intent intent = new Intent(LoginActivity.this, UnPaidTicketSearch.class);//TicketPayment로 고쳐야함
-            intent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
-            startActivity(intent);
+            Intent getintent = getIntent();
+            String departPoint = getintent.getStringExtra("departPoint");
+            String destPoint = getintent.getStringExtra("destPoint");
+            String departDate = getintent.getStringExtra("departdate");
+            String traiNum = getintent.getStringExtra("trainum");
+            String nbofTicket = getintent.getStringExtra("nbofticket");
+            String seatInfo = getintent.getStringExtra("seatinfo");
+            Log.i("departPoint",departPoint);
+            Log.i("destPoint",destPoint);
+            Log.i("departDate",departDate);
+            Log.i("traiNum",traiNum);
+            Log.i("nbofTicket",nbofTicket);
+            Log.i("seatInfo",seatInfo);
+            Intent newIntent = new Intent(LoginActivity.this, PaymentActivity.class);
+            newIntent.putExtra("departPoint", departPoint);
+            newIntent.putExtra("destPoint", destPoint);
+            newIntent.putExtra("departdate", departDate);
+            newIntent.putExtra("trainum", traiNum);
+            newIntent.putExtra("nbofticket", nbofTicket);
+            newIntent.putExtra("seatinfo", seatInfo);
+            startActivity(newIntent);
             finish();
 
         } else if (activityFrom.equalsIgnoreCase("MY_PAGE")) {

@@ -105,15 +105,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* 태원 수정 */
 
-    public List<HashMap<String, Object>> getResultAtSeatTable(int departdate, int trainnum){
+    public List<HashMap<String, Object>> getResultAtSeatTable(String departdate, int trainnum){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
 
         List<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
 
-        cursor = db.rawQuery("SELECT * FROM SEAT_INFO WHERE boardingDate=" + departdate +
-                " and trainNum=" + trainnum , null);
-
+        cursor = db.rawQuery("SELECT * FROM SEAT_INFO WHERE boardingDate = '" + departdate +
+                "' and trainNum=" + trainnum , null);
+        Log.i("출발날짜db",departdate);
+        Log.i("열차번호db",String.valueOf(trainnum));
         //여기서 좌석 잘라서 사용하기.
 
         while(cursor.moveToNext()){
@@ -174,6 +175,8 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
 
         while (cursor.moveToNext()) {
+            item.put("departurePoint",cursor.getString(cursor.getColumnIndex("departurePoint")));
+            item.put("destPoint",cursor.getString(cursor.getColumnIndex("destPoint")));
             item.put("totalAvailableSeatNum", cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum")));
         }
 
