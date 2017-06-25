@@ -3,6 +3,7 @@ package com.example.korailtalk;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -44,6 +45,7 @@ public class CheckSessionActivity extends Activity {
 
         } else if (activityFrom.equalsIgnoreCase("unpaidTicketSearch")) {
             HashMap<String, String> session = sessionDBhelper.getSession();
+            Log.i("세션확인",String.valueOf(session.size()));
             if (session.size() != 0) {  //session작동
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
                 Intent newIntent = new Intent(CheckSessionActivity.this, UnPaiedTicketSearch.class);

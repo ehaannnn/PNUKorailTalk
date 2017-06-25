@@ -38,7 +38,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS MEMBER( customID INTEGER, ID TEXT, phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS NON_MEMBER(  customID INTEGER,phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO(  boardingDate TEXT, departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS SEAT_INFO( boardingDate TEXT, availableSeat TEXT, trainNum INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS SEAT_INFO( boardingDate TEXT, availableSeat TEXT, trainNum INTEGER);");//availableSeat : 구매한 좌석으로 바꿔야할듯
         db.execSQL("CREATE TABLE IF NOT EXISTS MEMBERSHIP_INFO(  CouponNum INTEGER, KTXMileage INTEGER, ID TEXT, customID TEXT);");
     }
 
@@ -100,6 +100,26 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /* 태원 수정 */
+
+    public List<HashMap<String, Object>> getResultAtSeatTable(int departdate, int trainnum){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+        HashMap<String, Object> item = new HashMap<String, Object>();
+        List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
+
+        cursor = db.rawQuery("SELECT * FROM SEAT_INFO WHERE boardingDate=" + departdate +
+                " and trainNum='" + trainnum , null);
+
+        while(cursor.moveToNext()){
+            //item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
+            item.put("availableSeat", cursor.getString(cursor.getColumnIndex("availableSeat")));
+            //item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
+            items.add(item);
+        }
+        return items;
+    }
+
     public List<HashMap<String, Object>> getResultAtTrainTable(int departdate ,String departPoint,
                                                                String destinationPoint, int nbofseats){
         SQLiteDatabase db = getReadableDatabase();
@@ -121,6 +141,8 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return items;
     }
+
+    /* 태원 수정 끝 */
 
     public HashMap<String, Object> getResultAtMemberTable(String ID, String PW) {
         SQLiteDatabase db = getReadableDatabase();

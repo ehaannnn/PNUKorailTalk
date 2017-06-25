@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/arrivalList"
-        android:entries="@array/departurePoint"
+        android:entries="@array/destinationPoint"
         android:layout_above="@+id/departureDateText"
         android:layout_toEndOf="@+id/trainsearch">
     </Spinner>

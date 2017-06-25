@@ -1,9 +1,12 @@
 package com.example.korailtalk;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ public class AvailableTrainLists extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train_available_lists);
 
-        ArrayList<TrainArray> ticket_info = (ArrayList<TrainArray>) getIntent().getSerializableExtra("trainlist");
+        final ArrayList<TrainArray> ticket_info = (ArrayList<TrainArray>) getIntent().getSerializableExtra("trainlist");
 
 
         dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
@@ -38,9 +41,19 @@ public class AvailableTrainLists extends Activity {
                 adapter.addItem(createItem(ticket_info.get(i).getDepartdate(),ticket_info.get(i).getDeparturePoint(),
                         ticket_info.get(i).getDestPoint(), ticket_info.get(i).getTotalAvailableSeatNum(),
                         ticket_info.get(i).getTrainnum() ) );
-                Log.i("출발날짜",  String.valueOf(ticket_info.get(i).getDepartdate()));
         }
         trainlistview.setAdapter(adapter);
+
+        trainlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(AvailableTrainLists.this, SeatSearch.class);
+                intent.putExtra("trainum",ticket_info.get(i).getTrainnum());
+                intent.putExtra("nbofticket",ticket_info.get(i).getNbofticket());
+                intent.putExtra("departdate",ticket_info.get(i).getDepartdate());
+                startActivity(intent);
+            }
+        });
 
     }
 

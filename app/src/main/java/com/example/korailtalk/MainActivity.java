@@ -101,7 +101,7 @@ public class MainActivity extends Activity {
         items1.put("departurePoint", "부산");
         items1.put("destPoint", "서울");
         items1.put("paid", 1);
-        items1.put("seatNum", "A23");
+        items1.put("seatNum", "2A5");
         items1.put("ticketID", 1312);
         items1.put("customID", 1);
         items1.put("trainNum", 131);
@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
         items2.put("departurePoint", "부산");
         items2.put("destPoint", "서울");
         items2.put("paid", 1);
-        items2.put("seatNum", "A25");
+        items2.put("seatNum", "1A8");
         items2.put("ticketID", 1312);
         items2.put("customID", 1);
         items2.put("trainNum", 131);

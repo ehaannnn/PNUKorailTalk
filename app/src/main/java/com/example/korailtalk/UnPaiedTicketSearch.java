@@ -32,6 +32,8 @@ public class UnPaiedTicketSearch extends Activity {
     private TextView startDate;
     private TextView endDate;
     private ListView listView;
+    private String startDatestr;
+    private String endDatestr;
     private static final int START_DATE = 1;
     private static final int END_DATE = 2;
     @Override
@@ -55,10 +57,14 @@ public class UnPaiedTicketSearch extends Activity {
                 //DB에서 startDate부터 endDate사이의 티켓정보 출력
                 //티켓정보 : 출발역, 도착역, 인원, 열차번호, 출발날짜
                 adapter = new ListViewAdapter();
-                for (int i = 0; i < ticket_info.size(); ++i) {
-                    if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0) {
-                        adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(),ticket_info.get(i).get("departurePoint").toString(),ticket_info.get(i).get("destPoint").toString(),
-                                ticket_info.get(i).get("seatNum").toString(),Integer.parseInt(ticket_info.get(i).get("trainNum").toString() ) ) );
+                for (int i = 0; i < ticket_info.size(); i++) {
+                    if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 1) {
+                        if(Integer.parseInt(ticket_info.get(i).get("boardingDate").toString())<= Integer.parseInt(startDatestr)
+                                && Integer.parseInt(endDatestr) >= Integer.parseInt(ticket_info.get(i).get("boardingDate").toString())
+                                ) {
+                            adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
+                                    ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString())));
+                        }
                     }
                 }
                 listView.setAdapter(adapter);
@@ -129,11 +135,13 @@ public class UnPaiedTicketSearch extends Activity {
             // Log.i("test",tmp.length()+"");
             //String date = tmp.charAt(0)+tmp.charAt(1)+tmp.charAt(2)+tmp.charAt(3) + "-"+tmp.charAt(4)+tmp.charAt(5)+"-"+tmp.charAt(6)+tmp.charAt(7);
             startDate.setText(boardingDate);
+            startDatestr = data.getStringExtra("boardingDatestr");
         }
         else if (requestCode == END_DATE){
             String boardingDate = data.getStringExtra("boardingDate");
             //String date = tmp.charAt(0)+tmp.charAt(1)+tmp.charAt(2)+tmp.charAt(3) + "-"+tmp.charAt(4)+tmp.charAt(5)+"-"+tmp.charAt(6)+tmp.charAt(7);
             endDate.setText(boardingDate);
+            endDatestr = data.getStringExtra("boardingDatestr");
         }
         else {
             Log.i("실행됨?", "여기는 에러");

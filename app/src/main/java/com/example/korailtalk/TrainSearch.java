@@ -83,7 +83,6 @@ public class TrainSearch extends Activity {
         btnSerch.setOnClickListener(new Button.OnClickListener(){
             boolean available = false;
 
-
             //final List<HashMap<String,Object>> train_info = dbhelper.getResultAt("TRAIN_INFO",131);
             @Override
             public void onClick(View view) {
@@ -93,18 +92,7 @@ public class TrainSearch extends Activity {
                 Log.i("seat",seatNum.getText().toString());
                 final List<HashMap<String,Object>> train_info = dbhelper.getResultAtTrainTable(departdate,departPointstr,
                         destinationPointstr, tempnbofseat);
-                /*for(int i =0; i < train_info.size(); i++){
-                    if(Integer.parseInt(departDatestr) ==
-                            Integer.parseInt(train_info.get(i).get("boardingDate").toString())){
-                        if(departPointstr.equals(train_info.get(i).get("departurePoint").toString())
-                                && destinationPointstr.equals(train_info.get(i).get("destPoint").toString())){
-                            if(Integer.parseInt(train_info.get(i).get("totalAvailableSeatNum").toString())
-                                    >= Integer.parseInt(seatNum.getText().toString())){
-                                available = true;
-                            }
-                        }
-                    }
-                }*/
+
                 if(train_info != null){
                     Intent intent2 = new Intent(TrainSearch.this , AvailableTrainLists.class);
                     trainarraylist = new ArrayList<TrainArray>();

@@ -4,4 +4,13 @@
             <item >서울</item>
             <item >부산</item>
         </string-array>
+    <string-array name="destinationPoint">
+        <item >서울</item>
+        <item >부산</item>
+    </string-array>
+    <string-array name="trainorder">
+        <item >1호차</item>
+        <item >2호차</item>
+        <item >3호차</item>
+    </string-array>
 </resources>
