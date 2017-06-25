@@ -59,6 +59,13 @@
         <activity
             android:name=".PaymentActivity"
             android:label="PaymentActivity" />
+        <activity
+            android:name=".SelectPeriodActivity"
+            android:label="SelectPeriodActivity"/>
+        <activity
+            android:name=".PaymentSuccessActivity"
+            android:label="PaymentSuccessActivity"/>
+
 
     </application>
 
