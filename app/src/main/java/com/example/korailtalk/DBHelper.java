@@ -184,6 +184,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return item;
     }
 
+    public String getResultTrainAvailableSeat(String trainNum, String boardingDate) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+        cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
+
+        return cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum"));
+    }
+
     public void DeleteTicketInfoTablebyticketID(int ticketID, int customID) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
