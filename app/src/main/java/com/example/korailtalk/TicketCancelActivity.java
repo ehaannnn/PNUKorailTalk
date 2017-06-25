@@ -1,6 +1,9 @@
 package com.example.korailtalk;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +16,7 @@ import java.util.List;
 
 public class TicketCancelActivity extends Activity {
 
+    final Context context = this;
     private int ticketID, customID;
     private DBHelper dbhelper;
     private List<HashMap<String,Object>> ticket_infos;
@@ -82,9 +86,23 @@ public class TicketCancelActivity extends Activity {
                 item.put("trainNum", Integer.parseInt(ticket_info.get("trainNum").toString()));
                 dbhelper.insert("SEAT_INFO", item);
 
-                Intent intent = new Intent(TicketCancelActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setTitle("승차권 취소 결과");
+                alertDialogBuilder
+                        .setMessage("승차권을 취소하였습니다 :)")
+                        .setCancelable(false)
+                        .setPositiveButton("취소 확인",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        finish();
+                                    }
+                                }
+                        );
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                //Intent intent = new Intent(TicketCancelActivity.this,MainActivity.class);
+                //startActivity(intent);
+                //finish();
             }
         });
 
