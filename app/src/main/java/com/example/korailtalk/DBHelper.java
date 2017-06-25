@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by 한결 on 2017-06-22.
@@ -37,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO(  boardingDate TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER, customID INTEGER, trainNum INTEGER, use INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO( deadLine TEXT, boardingDate TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER, customID INTEGER, trainNum INTEGER, use INTEGER);");
         db.execSQL("CREATE TABLE IF NOT EXISTS MEMBER( customID INTEGER, ID TEXT, phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS NON_MEMBER(  customID INTEGER,phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO(  boardingDate TEXT, departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
@@ -82,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } else if (table.equalsIgnoreCase("MEMBERSHIP_INFO")) {
             newValues.put("CouponNum", Integer.parseInt(items.get("CouponNum").toString()));
             newValues.put("KTXMileage", Integer.parseInt(items.get("KTXMileage").toString()));
-            newValues.put("ID", Integer.parseInt(items.get("ID").toString()));
+            newValues.put("ID", items.get("ID").toString());
             newValues.put("customID", Integer.parseInt(items.get("customID").toString()));
         }
         db.insert(table, null, newValues);

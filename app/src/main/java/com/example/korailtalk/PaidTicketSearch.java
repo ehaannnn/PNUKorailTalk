@@ -63,7 +63,7 @@ public class PaidTicketSearch extends Activity {
         for (int i = 0; i < ticket_info.size(); ++i) {
             if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0 && Integer.parseInt(ticket_info.get(i).get("paid").toString()) == 1) {
                 adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
-                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString())));
+                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString()), "PaidTicketSearch"));
             }
         }
         listView.setAdapter(adapter);
@@ -141,13 +141,14 @@ public class PaidTicketSearch extends Activity {
 
     }
 
-    public Map<String, Object> createItem(String boardingDate, String departurePoint, String destPoint, String seatNum, int trainNum) {
+    public Map<String, Object> createItem(String boardingDate, String departurePoint, String destPoint, String seatNum, int trainNum, String from) {
         Map<String, Object> item = new HashMap<String, Object>();
         item.put("boardingDate", boardingDate);
         item.put("departurePoint", departurePoint);
         item.put("destPoint", destPoint);
         item.put("seatNum", seatNum);
         item.put("trainNum", trainNum);
+        item.put("from", from);
         return item;
     }
 

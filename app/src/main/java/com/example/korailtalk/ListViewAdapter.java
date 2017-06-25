@@ -35,21 +35,31 @@ public class ListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.list_items, parent, false);
         }
 
-
         TextView boardingDate = (TextView) convertView.findViewById(R.id.boardingDate);
         TextView departurePoint = (TextView) convertView.findViewById(R.id.departurePoint);
         TextView destPoint = (TextView) convertView.findViewById(R.id.destPoint);
         TextView seatNum = (TextView) convertView.findViewById(R.id.seatNum);
         TextView trainNum = (TextView) convertView.findViewById(R.id.trainNum);
+        TextView numOfPeople = (TextView) convertView.findViewById(R.id.numOfPeople);
+        TextView deadLine = (TextView) convertView.findViewById(R.id.deadLine);
 
+        String tmp = listViewItemList.get(position).get("boardingDate").toString();
+        String date = tmp.substring(0, 4) + "/" + tmp.substring(4, 6) + "/" + tmp.substring(6, 8) + " " + tmp.substring(8, 10) + ":" + tmp.substring(10, 12);
+        boardingDate.setText(date);
 
-        boardingDate.setText(listViewItemList.get(position).get("boardingDate").toString());
         departurePoint.setText(listViewItemList.get(position).get("departurePoint").toString());
 
         destPoint.setText(listViewItemList.get(position).get("destPoint").toString());
         seatNum.setText(listViewItemList.get(position).get("seatNum").toString());
         trainNum.setText(listViewItemList.get(position).get("trainNum").toString());
 
+        String[] seats = listViewItemList.get(position).get("seatNum").toString().split(",");
+        numOfPeople.setText(String.valueOf(seats.length));
+        if (listViewItemList.get(position).get("seatNum").toString().equalsIgnoreCase("UnPaidTicketSearch")) {
+            //
+            deadLine.setText(listViewItemList.get(position).get("deadLine").toString());
+            ;
+        }
         return convertView;
     }
 
