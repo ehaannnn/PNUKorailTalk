@@ -16,7 +16,7 @@ public class TicketCancelActivity extends Activity {
     private int ticketID, customID;
     private DBHelper dbhelper;
     private List<HashMap<String,Object>> ticket_infos;
-    private HashMap<String, Object> ticket_info;
+    private HashMap<String, Object> ticket_info, train_info;
     private Button yesButton, noButton;
 
     @Override
@@ -41,7 +41,7 @@ public class TicketCancelActivity extends Activity {
 
         ticket_infos = dbhelper.getResultAt("TICKET_INFO",customID);
         for(int i=0; i<ticket_infos.size(); i++) {
-            if(ticket_infos.get(i).get("ticketID").toString().equals(ticketID)) {
+            if(Integer.parseInt(ticket_infos.get(i).get("ticketID").toString())==ticketID) {
                 ticket_info = ticket_infos.get(i);
             }
         }
@@ -53,12 +53,12 @@ public class TicketCancelActivity extends Activity {
         textView_destPoint.setText(ticket_info.get("destPoint").toString());
         textView_seatNum.setText(ticket_info.get("seatNum").toString());
 
-        if(paidCheck((int)ticket_info.get("paid")))
+        if(paidCheck(Integer.parseInt(ticket_info.get("paid").toString())))
             textView_isPaid.setText("Y");
         else
             textView_isPaid.setText("N");
 
-        if(isUse((int)ticket_info.get("use"))) {
+        if(isUse(Integer.parseInt(ticket_info.get("use").toString()))) {
             textView_isUsable.setText("N");
         } else
             textView_isUsable.setText("Y");
@@ -67,8 +67,9 @@ public class TicketCancelActivity extends Activity {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
                 dbhelper.DeleteTicketInfoTablebyticketID(ticket_info.get("ticketID").toString(), customID+"");
-                Integer newTASN = Integer.parseInt(ticket_info.get("totalAvailableSeatNum").toString()) + 1;
+                Integer newTASN = Integer.parseInt(train_info.get("totalAvailableSeatNum").toString()) + 1;
                 dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
 
                 HashMap<String, Object> item = new HashMap<String, Object>();
