@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -107,13 +108,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public List<HashMap<String, Object>> getResultAtSeatTable(int departdate, int trainnum){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
-        HashMap<String, Object> item = new HashMap<String, Object>();
-        List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
+
+        List<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
 
         cursor = db.rawQuery("SELECT * FROM SEAT_INFO WHERE boardingDate=" + departdate +
-                " and trainNum='" + trainnum , null);
+                " and trainNum=" + trainnum , null);
+
+        //여기서 좌석 잘라서 사용하기.
 
         while(cursor.moveToNext()){
+            HashMap<String, Object> item = new HashMap<String, Object>();
             //item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
             item.put("availableSeat", cursor.getString(cursor.getColumnIndex("availableSeat")));
             //item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
@@ -126,14 +130,14 @@ public class DBHelper extends SQLiteOpenHelper {
                                                                String destinationPoint, int nbofseats){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
-        HashMap<String, Object> item = new HashMap<String, Object>();
-        List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
+        List<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
 
         cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE departurePoint='" + departPoint +
         "' and destPoint='" + destinationPoint+ "'" + " and totalAvailableSeatNum>=" + nbofseats +
                 " and CAST(boardingDate AS INTEGER)>=" + departdate , null);
 
         while(cursor.moveToNext()){
+            HashMap<String, Object> item = new HashMap<String, Object>();
             item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
             item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
             item.put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));

@@ -88,8 +88,6 @@ public class TrainSearch extends Activity {
             public void onClick(View view) {
                 int tempnbofseat = Integer.parseInt(seatNum.getText().toString());
                 int departdate = Integer.parseInt(departDatestr);
-                Log.i("date",departDatestr);
-                Log.i("seat",seatNum.getText().toString());
                 final List<HashMap<String,Object>> train_info = dbhelper.getResultAtTrainTable(departdate,departPointstr,
                         destinationPointstr, tempnbofseat);
 
@@ -97,7 +95,6 @@ public class TrainSearch extends Activity {
                     Intent intent2 = new Intent(TrainSearch.this , AvailableTrainLists.class);
                     trainarraylist = new ArrayList<TrainArray>();
                     for(int i = 0; i < train_info.size(); i++){
-                        Log.i("출발날짜", train_info.get(i).get("boardingDate").toString());
                         trainarray = new TrainArray(Integer.parseInt(train_info.get(i).get("boardingDate").toString()),
                                 train_info.get(i).get("departurePoint").toString(),
                                 train_info.get(i).get("destPoint").toString(),

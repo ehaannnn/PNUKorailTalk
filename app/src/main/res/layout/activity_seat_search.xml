@@ -7,13 +7,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/trainorderspinner"
         android:entries="@array/trainorder"
+        android:scrollbarSize="25dp"
         >
     </Spinner>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="439dp"
         android:id="@+id/seatposition"
         android:orientation="horizontal"
         >
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/buyticket"
+        android:text="Purchase"
+        android:background="#CCFFFF"/>
 </LinearLayout>

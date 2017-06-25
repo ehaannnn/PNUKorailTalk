@@ -116,7 +116,11 @@ public class LoginActivity extends Activity {
             startActivity(intent);
             finish();
 
-        } else if (activityFrom.equalsIgnoreCase("trainSearch")) {
+        } else if (activityFrom.equalsIgnoreCase("SEAT_SEARCH")) {
+            Intent intent = new Intent(LoginActivity.this, UnPaiedTicketSearch.class);//TicketPayment로 고쳐야함
+            intent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+            startActivity(intent);
+            finish();
 
         } else if (activityFrom.equalsIgnoreCase("MY_PAGE")) {
             Intent intent = new Intent(LoginActivity.this, MyPageActivity.class);

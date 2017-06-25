@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +31,14 @@ public class SeatSearch extends Activity {
     private Spinner trainorderspinner;
     final static int DEFAULT_NUM = 1;
     private DBHelper dbhelper;
+    private LinearLayout im;
+    private int firstime;
+    private int totalselectnb;
+    private Button btnbuyticket;
+    private ArrayList seatinfo;
+    private String seats;
+    private static final String SEAT_SEARCH = "SEAT_SEARCH";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,44 +48,75 @@ public class SeatSearch extends Activity {
         trainNum = intent.getIntExtra("trainum",0);
         nbofticket = intent.getIntExtra("nbofticket",0);
         departDate = intent.getIntExtra("departdate",0);
+        firstime = 0;
+        totalselectnb = 0;
+
+        btnbuyticket = (Button)findViewById(R.id.buyticket);
+
+        btnbuyticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(SeatSearch.this, CheckSessionActivity.class);
+                for(int i =0; i < seatinfo.size(); i++){
+                    seats += seatinfo.get(i);
+                }
+                intent2.putExtra("departdate",departDate);
+                intent2.putExtra("trainum", trainNum);
+                intent2.putExtra("nbofticket", nbofticket);
+                intent2.putExtra("seatinfo", seats);
+                intent2.putExtra("ActivityFrom", SEAT_SEARCH);
+                startActivity(intent2);
+            }
+        });
 
         trainorderspinner = (Spinner)findViewById(R.id.trainorderspinner);
         trainorderspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 trainordernum = position+1;
-                makeButton(trainordernum);
-
+                makeButton(trainordernum, firstime);
+                firstime++;
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                makeButton(DEFAULT_NUM);
+
             }
         });
 
 
     }
 
-    public void makeButton(int order){
-        final LinearLayout im = (LinearLayout)findViewById(R.id.seatposition);
+    public void makeButton(int order, int firstcheck){
+        boolean paidseat = false;
+        im = (LinearLayout)findViewById(R.id.seatposition);
+
+        if(firstcheck != 0) {
+            im.removeAllViews();
+        }
+
         dbhelper = new DBHelper(getApplicationContext(),"PNUKorailTalk.db",null,1);
 
         final List<HashMap<String,Object>> seat_info = dbhelper.getResultAtSeatTable(departDate,trainNum);
 
-        HashMap<String, Object> item = new HashMap<String, Object>();
         List<HashMap<String, Object>> items = new LinkedList<HashMap<String, Object>>();
-
         for(int i = 0; i < seat_info.size(); i++){
-            String first_char = seat_info.get(i).get("availableSeat").toString().substring(1,1);
+            String first_char = seat_info.get(i).get("availableSeat").toString().substring(0,1);
+
             if(order == Integer.valueOf(first_char)){
-                item.put("secondstr",seat_info.get(i).get("availableSeat").toString().substring(2,2));
-                item.put("laststr",seat_info.get(i).get("availableSeat").toString().substring(3,3));
+                Log.i("두번쨰객차의 좌석 열",seat_info.get(i).get("availableSeat").toString().substring(1,2));
+                Log.i("세번쨰객차의 좌석 열",seat_info.get(i).get("availableSeat").toString().substring(2,3));
+                HashMap<String, Object> item = new HashMap<String, Object>();
+                item.put("secondstr",seat_info.get(i).get("availableSeat").toString().substring(1,2));
+                item.put("laststr",seat_info.get(i).get("availableSeat").toString().substring(2,3));
                 items.add(item);
             }
         }
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT ,ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(2,2,0,0);
+            params.height = 80;
+            params.width = 150;
 
             for (int i = 0; i < 4; i++) {
                 LinearLayout lv = new LinearLayout(this);
@@ -93,23 +134,50 @@ public class SeatSearch extends Activity {
                     } else {
                         btntxt = "D";
                     }
+                    for(int k =0; k < items.size(); k++){
+                        if(btntxt.equals(items.get(k).get("secondstr").toString()) &&
+                                j == Integer.parseInt(items.get(k).get("laststr").toString())){
+                            paidseat = true;
+                        }
+                    }
                     btntxt += String.valueOf(j);
                     btn.setText(btntxt);
-                    btn.setBackgroundColor(Color.WHITE);
+                    if(paidseat) {
+                        btn.setBackgroundColor(Color.WHITE);
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            int click = 0;
+
+                            @Override
+                            public void onClick(View view) {
+
+                                if(click == 0) {
+                                    if(totalselectnb < nbofticket) {
+                                        btn.setBackgroundColor(Color.BLUE);
+                                        seatinfo.add(totalselectnb,btn.getText().toString());
+                                        totalselectnb++;
+                                        click++;
+                                    }
+                                }
+                                else{
+                                    btn.setBackgroundColor(Color.WHITE);
+                                    totalselectnb--;
+                                    seatinfo.remove(totalselectnb);
+                                    click--;
+                                }
+                            }
+                        });
+                        paidseat = false;
+                    }
+                    else{
+                        btn.setBackgroundColor(Color.DKGRAY);
+                    }
                     btn.setLayoutParams(params);
-
-                    btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    });
                     lv.addView(btn);
                 }
                 im.addView(lv);
+                im.setGravity(Gravity.CENTER);
+
             }
-            for(int i =0; i < items.size(); i++){
-                
-            }
+
     }
 }

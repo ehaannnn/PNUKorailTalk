@@ -16,7 +16,7 @@ public class CheckSessionActivity extends Activity {
     private static final String PAID_TICKET_BUTTON = "PAID_TICKET_BUTTON";
     private static final String TICKET_HISTORY_BUTTON = "TICKET_HISTORY_BUTTON";
     private static final String UNPAID_TICKET_BUTTON = "UNPAID_TICKET_BUTTON";
-    private static final String TRAIN_SEARCH = "TRAIN_SEARCH";
+    private static final String SEAT_SEARCH = "SEAT_SEARCH";
     private static final String MY_PAGE = "MY_PAGE";
 
     @Override
@@ -70,8 +70,19 @@ public class CheckSessionActivity extends Activity {
                 startActivity(newIntent);
             }
 
-        } else if (activityFrom.equalsIgnoreCase("trainSearch")) {
-
+        } else if (activityFrom.equalsIgnoreCase("SEAT_SEARCH")) {
+            HashMap<String, String> session = sessionDBhelper.getSession();
+            Log.i("세션확인",String.valueOf(session.size()));
+            if (session.size() != 0) {  //session작동
+                HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
+                Intent newIntent = new Intent(CheckSessionActivity.this, UnPaiedTicketSearch.class);//TicketPayment로 고쳐야함
+                newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+                startActivity(newIntent);
+            } else {
+                Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
+                newIntent.putExtra("ActivityFrom", SEAT_SEARCH);
+                startActivity(newIntent);
+            }
         } else if (activityFrom.equalsIgnoreCase("MY_PAGE")) {
             HashMap<String, String> session = sessionDBhelper.getSession();
             if (session.size() != 0) {  //session작동
