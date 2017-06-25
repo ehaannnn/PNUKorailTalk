@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent4 = new Intent(MainActivity.this, CheckSessionActivity.class);
-                intent4.putExtra("ActivityFrom","unpaidTicketSearch");
+                intent4.putExtra("ActivityFrom",UNPAID_TICKET_BUTTON);
                 startActivity(intent4);
             }
         });
@@ -270,6 +270,8 @@ public class MainActivity extends Activity {
             item16.put("trainNum", 123);
             dbhelper.insert("SEAT_INFO", item16);
             // 우진 수정 끝
+
+            dbinit_flag = true;
         }
     }
 

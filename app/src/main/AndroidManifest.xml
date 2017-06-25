@@ -45,6 +45,11 @@
             android:label="AvailableTrainLists" />
 
         <activity
+
+            android:name=".UnPaidTicketSearch"
+            android:label="UnPaidTicketSearch" />
+
+        <activity
             android:name=".TicketHistoryActivity"
             android:label="TicketHistoryActivity"
             android:theme="@style/Theme.AppCompat"/>
