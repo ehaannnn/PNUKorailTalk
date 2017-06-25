@@ -18,11 +18,9 @@ public class SendSMSAlarmActivity extends Activity {
         setContentView(R.layout.activity_payment_waiting);
 
         Intent intent = getIntent();
-//        String phoneNumber = intent.getStringExtra("PHONE_NUMBER");
-//        String msg = intent.getStringExtra("MESSAGE");
+        String phoneNumber = intent.getStringExtra("PHONE_NUMBER");
+        String msg = intent.getStringExtra("MESSAGE");
 
-        String phoneNumber = "01071857663";
-        String msg = "no mean";
 
 
         SmsManager smsManager = SmsManager.getDefault();

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +26,9 @@ public class PaymentActivity extends AppCompatActivity {
     private DBHelper dbhelper;
     private int customNum;
     static int createID = 10000;
+    private String ticketNumberOutput;
 
-    private List<HashMap<String,Object>> ticket_infos, membership_info;
+    private List<HashMap<String,Object>> ticket_infos, membership_info, member_info;
     private HashMap<String, Object> ticket_info, train_info;
 
 
@@ -64,6 +66,7 @@ public class PaymentActivity extends AppCompatActivity {
                     ticketInfo.put("deadLine", null);
                     ticketInfo.put("seatNum", seatNum);
                     ticketInfo.put("ticketID", createID);
+                    ticketNumberOutput = String.valueOf(createID);
                     createID++;
                     ticketInfo.put("customID", customNum);
                     ticketInfo.put("trainNum", Integer.parseInt(trainNumber));
@@ -73,6 +76,7 @@ public class PaymentActivity extends AppCompatActivity {
 
                 else if(newTicket.equals("old")) {//티켓 페이 변경
                     ticketNumber = i.getStringExtra("ticketID");
+                    ticketNumberOutput = ticketNumber;
                     ticket_infos = dbhelper.getResultAt("TICKET_INFO",customNum);
                     for(int i=0; i<ticket_infos.size(); i++) {
                         if(Integer.parseInt(ticket_infos.get(i).get("ticketID").toString())==Integer.parseInt(ticketNumber)) {
@@ -103,6 +107,7 @@ public class PaymentActivity extends AppCompatActivity {
                 //공통 변경 부분 사용가능
 
                 //마일리지 증가
+                member_info = dbhelper.getResultAt("MEMBER", customNum);
                 membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO", customNum);
                 int mileage = Integer.parseInt(membership_info.get(0).get("KTXMileage").toString());
                 mileage += 300 * selected_seat.length;
@@ -111,11 +116,11 @@ public class PaymentActivity extends AppCompatActivity {
                 //좌석 리스트 수정
 
 
-
-
                 Intent intent = new Intent(
                         getApplicationContext(),
                         SendSMSAlarmActivity.class);
+                intent.putExtra("PHONE_NUMBER", member_info.get(0).get("phoneNum").toString());
+                intent.putExtra("MESSAGE", ticketNumberOutput + "번 티켓이 예약되었습니다.");
                 startActivity(intent);
             }
         });
