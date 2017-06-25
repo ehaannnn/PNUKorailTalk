@@ -64,6 +64,13 @@
             android:label="PaymentActivity"
             android:theme="@style/Theme.AppCompat" />
 
+        <activity
+            android:name=".SendSMSAlarmActivity"
+            android:label="SendSMSAlarmActivity" />
+
+        <activity
+            android:name=".PaymentSuccessActivity"
+            android:label="PaymentSuccessActivity" />
 
     </application>
 
