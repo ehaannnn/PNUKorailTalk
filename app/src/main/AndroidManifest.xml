@@ -53,6 +53,12 @@
             android:name=".TicketHistoryActivity"
             android:label="TicketHistoryActivity"
             android:theme="@style/Theme.AppCompat"/>
+        <activity
+            android:name=".SendSMSAlarmActivity"
+            android:label="SendSMSAlarmActivity" />
+        <activity
+            android:name=".PaymentActivity"
+            android:label="PaymentActivity" />
 
     </application>
 
