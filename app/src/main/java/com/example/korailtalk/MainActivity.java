@@ -184,7 +184,7 @@ public class MainActivity extends Activity {
             ticketinfo3.put("destPoint", "서울");
             ticketinfo3.put("paid", 1);
             ticketinfo3.put("seatNum", "1A5");
-            ticketinfo3.put("ticketID", 1337);
+            ticketinfo3.put("ticketID", 1336);
             ticketinfo3.put("customID", 31337);
             ticketinfo3.put("trainNum", 123);
             ticketinfo3.put("use", 1);
