@@ -84,8 +84,13 @@ public class TicketCancelActivity extends Activity {
                 String nowtime = time.substring(0,4) + time.substring(5,7) + time.substring(8,10) + time.substring(11,13) + time.substring(14,16);
 
                 BigInteger nowtime_big = new BigInteger(nowtime);
-                BigInteger boadingtime_big = new BigInteger(ticket_info.get("boardingDate").toString());
-                if(nowtime_big.compareTo(boadingtime_big) == -1) {
+                BigInteger cmptime_big;
+                if(paidCheck(Integer.parseInt(ticket_info.get("paid").toString())))
+                    cmptime_big = new BigInteger(ticket_info.get("boardingDate").toString());
+                else
+                    cmptime_big = new BigInteger(ticket_info.get("deadLine").toString());
+
+                if(nowtime_big.compareTo(cmptime_big) == -1) {
                     train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
                     membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO", customID);
                     dbhelper.DeleteTicketInfoTablebyticketID(ticketID, customID);
@@ -120,16 +125,29 @@ public class TicketCancelActivity extends Activity {
                 else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                     alertDialogBuilder.setTitle("승차권 취소 에러");
-                    alertDialogBuilder
-                            .setMessage("탑승날짜가 지난 승차권입니다 :(")
-                            .setCancelable(false)
-                            .setPositiveButton("확인",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            finish();
+                    if(paidCheck(Integer.parseInt(ticket_info.get("paid").toString()))) {
+                        alertDialogBuilder
+                                .setMessage("탑승날짜가 지난 승차권입니다 :(")
+                                .setCancelable(false)
+                                .setPositiveButton("확인",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                finish();
+                                            }
                                         }
-                                    }
-                            );
+                                );
+                    } else {
+                        alertDialogBuilder
+                                .setMessage("결제기한이 지난 승차권입니다 :(")
+                                .setCancelable(false)
+                                .setPositiveButton("확인",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                finish();
+                                            }
+                                        }
+                                );
+                    }
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
                 }
