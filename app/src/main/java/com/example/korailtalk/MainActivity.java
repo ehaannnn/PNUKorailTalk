@@ -100,8 +100,10 @@ public class MainActivity extends Activity {
     private void dbinit() {
         if(dbinit_flag == false) {
             dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db", null, 1);
+            sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db",null,1);
 
             dbhelper.dropTable();
+            sessionDBhelper.dropTable();
 
             // 우진 수정 시작
             HashMap<String, Object> member1 = new HashMap<String, Object>();
