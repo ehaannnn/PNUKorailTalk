@@ -54,7 +54,7 @@ public class ListViewAdapter extends BaseAdapter {
         trainNum.setText(listViewItemList.get(position).get("trainNum").toString());
 
         String[] seats = listViewItemList.get(position).get("seatNum").toString().split(",");
-        numOfPeople.setText(seats.length);
+        numOfPeople.setText(String.valueOf(seats.length));
         if (listViewItemList.get(position).get("seatNum").toString().equalsIgnoreCase("UnPaidTicketSearch")) {
             //
             deadLine.setText(listViewItemList.get(position).get("deadLine").toString());

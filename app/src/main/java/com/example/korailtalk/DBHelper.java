@@ -81,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
         } else if (table.equalsIgnoreCase("MEMBERSHIP_INFO")) {
             newValues.put("CouponNum", Integer.parseInt(items.get("CouponNum").toString()));
             newValues.put("KTXMileage", Integer.parseInt(items.get("KTXMileage").toString()));
-            newValues.put("ID", Integer.parseInt(items.get("ID").toString()));
+            newValues.put("ID", items.get("ID").toString());
             newValues.put("customID", Integer.parseInt(items.get("customID").toString()));
         }
         db.insert(table, null, newValues);
