@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +22,7 @@ public class TicketCancelActivity extends Activity {
     final Context context = this;
     private int ticketID, customID;
     private DBHelper dbhelper;
-    private List<HashMap<String,Object>> ticket_infos;
+    private List<HashMap<String,Object>> ticket_infos, membership_info;
     private HashMap<String, Object> ticket_info, train_info;
     private Button yesButton, noButton;
 
@@ -67,42 +70,66 @@ public class TicketCancelActivity extends Activity {
             textView_isPaid.setText("N");
 
         if(isUse(Integer.parseInt(ticket_info.get("use").toString()))) {
-            textView_isUsable.setText("N");
-        } else
             textView_isUsable.setText("Y");
+        } else
+            textView_isUsable.setText("N");
 
         yesButton = (Button) findViewById(R.id.yesButton);
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
-                dbhelper.DeleteTicketInfoTablebyticketID(ticketID, customID);
-                Integer newTASN = Integer.parseInt(train_info.get("totalAvailableSeatNum").toString()) + 1;
-                dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
+                SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String time = sdfNow.format(new Date(System.currentTimeMillis()));
+                String nowtime = time.substring(0,4) + time.substring(5,7) + time.substring(8,10) + time.substring(11,13) + time.substring(14,16);
 
-                HashMap<String, Object> item = new HashMap<String, Object>();
-                item.put("boardingDate", ticket_info.get("boardingDate").toString());
-                item.put("availableSeat", ticket_info.get("seatNum").toString());
-                item.put("trainNum", Integer.parseInt(ticket_info.get("trainNum").toString()));
-                dbhelper.insert("SEAT_INFO", item);
+                BigInteger nowtime_big = new BigInteger(nowtime);
+                BigInteger boadingtime_big = new BigInteger(ticket_info.get("boardingDate").toString());
+                if(nowtime_big.compareTo(boadingtime_big) == -1) {
+                    train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
+                    membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO", customID);
+                    dbhelper.DeleteTicketInfoTablebyticketID(ticketID, customID);
+                    Integer newTASN = Integer.parseInt(train_info.get("totalAvailableSeatNum").toString()) + 1;
+                    Integer newKTXMileage = Integer.parseInt(membership_info.get(0).get("KTXMileage").toString()) - 300;
+                    dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
+                    dbhelper.UpdateKTXMileageSub300(customID, newKTXMileage);
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("승차권 취소 결과");
-                alertDialogBuilder
-                        .setMessage("승차권을 취소하였습니다 :)")
-                        .setCancelable(false)
-                        .setPositiveButton("취소 확인",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        finish();
+                    HashMap<String, Object> item = new HashMap<String, Object>();
+                    item.put("boardingDate", ticket_info.get("boardingDate").toString());
+                    item.put("availableSeat", ticket_info.get("seatNum").toString());
+                    item.put("trainNum", Integer.parseInt(ticket_info.get("trainNum").toString()));
+                    dbhelper.insert("SEAT_INFO", item);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("승차권 취소 결과");
+                    alertDialogBuilder
+                            .setMessage("승차권을 취소하였습니다 :)")
+                            .setCancelable(false)
+                            .setPositiveButton("취소 확인",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            finish();
+                                        }
                                     }
-                                }
-                        );
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-                //Intent intent = new Intent(TicketCancelActivity.this,MainActivity.class);
-                //startActivity(intent);
-                //finish();
+                            );
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+                else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle("승차권 취소 에러");
+                    alertDialogBuilder
+                            .setMessage("탑승날짜가 지난 승차권입니다 :(")
+                            .setCancelable(false)
+                            .setPositiveButton("확인",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            finish();
+                                        }
+                                    }
+                            );
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
         });
 

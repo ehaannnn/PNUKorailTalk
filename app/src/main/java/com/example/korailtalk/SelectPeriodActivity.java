@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
  * Created by dlehd on 2017-06-25.
  */
 
-public class SelectPeriod extends Activity implements View.OnClickListener {
+public class SelectPeriodActivity extends Activity implements View.OnClickListener {
 
 
     private DatePicker startDate;
