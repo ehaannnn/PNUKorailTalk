@@ -125,12 +125,7 @@ public class LoginActivity extends Activity {
             String traiNum = getintent.getStringExtra("trainum");
             String nbofTicket = getintent.getStringExtra("nbofticket");
             String seatInfo = getintent.getStringExtra("seatinfo");
-            Log.i("departPoint",departPoint);
-            Log.i("destPoint",destPoint);
-            Log.i("departDate",departDate);
-            Log.i("traiNum",traiNum);
-            Log.i("nbofTicket",nbofTicket);
-            Log.i("seatInfo",seatInfo);
+
             Intent newIntent = new Intent(LoginActivity.this, PaymentActivity.class);
             newIntent.putExtra("departPoint", departPoint);
             newIntent.putExtra("destPoint", destPoint);
@@ -138,6 +133,7 @@ public class LoginActivity extends Activity {
             newIntent.putExtra("trainum", traiNum);
             newIntent.putExtra("nbofticket", nbofTicket);
             newIntent.putExtra("seatinfo", seatInfo);
+            newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
             startActivity(newIntent);
             finish();
 
