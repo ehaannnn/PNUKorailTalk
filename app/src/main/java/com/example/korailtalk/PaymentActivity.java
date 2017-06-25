@@ -24,6 +24,7 @@ public class PaymentActivity extends AppCompatActivity {
     private String newTicket;
     private DBHelper dbhelper;
     private int customNum;
+    static int createID = 10000;
 
     private List<HashMap<String,Object>> ticket_infos, membership_info;
     private HashMap<String, Object> ticket_info, train_info;
@@ -62,7 +63,8 @@ public class PaymentActivity extends AppCompatActivity {
                     ticketInfo.put("paid", 1);
                     ticketInfo.put("deadLine", null);
                     ticketInfo.put("seatNum", seatNum);
-                    ticketInfo.put("ticketID", null);
+                    ticketInfo.put("ticketID", createID);
+                    createID++;
                     ticketInfo.put("customID", customNum);
                     ticketInfo.put("trainNum", Integer.parseInt(trainNumber));
                     ticketInfo.put("use", 0);
@@ -137,21 +139,23 @@ public class PaymentActivity extends AppCompatActivity {
                     ticketInfo.put("paid", 0);
                     ticketInfo.put("deadLine", null);
                     ticketInfo.put("seatNum", seatNum);
-                    ticketInfo.put("ticketID", null);
+                    ticketInfo.put("ticketID", createID);
+                    createID++;
                     ticketInfo.put("customID", customNum);
                     ticketInfo.put("trainNum", Integer.parseInt(trainNumber));
                     ticketInfo.put("use", 0);
                     dbhelper.insert("TICKET_INFO", ticketInfo);
+
+                    Intent intent = new Intent(
+                            getApplicationContext(),
+                            MainActivity.class);
+                    startActivity(intent);
                 }
 
                 else if(newTicket.equals("old")) {//바로 예약승차권으로 감
-                    //no action.
+                    finish();
                 }
 
-                Intent intent = new Intent(
-                        getApplicationContext(),
-                        UnPaidTicketSearch.class);
-                startActivity(intent);
             }
         });
     }
