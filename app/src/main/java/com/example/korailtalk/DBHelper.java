@@ -203,6 +203,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM TICKET_INFO WHERE ticketID='" + ticketID + "' and customID='" + customID + "'");
     }
 
+    public void DeleteSeatInfo(String boardingDate, String availableSeat, int trainNum) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        db.execSQL("DELETE FROM SEAT_INFO WHERE boardingDate='" + boardingDate + "' and availableSeat='" + availableSeat + "' and trainNum='"+trainNum+"'");
+    }
+
     public void UpdateTrainInfoTotalAvailableSN(String trainNum, String boardingDate, String totalAvailableSeatNum) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
