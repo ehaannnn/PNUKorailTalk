@@ -6,7 +6,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -38,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO( deadLine TEXT, boardingDate TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER, customID INTEGER, trainNum INTEGER, use INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS TICKET_INFO( deadLine TEXT, boardingDate TEXT, destPoint TEXT, paid INTEGER, departurePoint TEXT,seatNum TEXT, ticketID INTEGER , customID INTEGER, trainNum INTEGER, use INTEGER);");
         db.execSQL("CREATE TABLE IF NOT EXISTS MEMBER( customID INTEGER, ID TEXT, phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS NON_MEMBER(  customID INTEGER,phoneNum TEXT, password TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO(  boardingDate TEXT, departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
@@ -50,6 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues newValues = new ContentValues();
         if (table.equalsIgnoreCase("TICKET_INFO")) {
+            if (items.get("deadLine")!=null) newValues.put("deadLine", items.get("deadLine").toString());
             newValues.put("boardingDate", items.get("boardingDate").toString());
             newValues.put("destPoint", items.get("destPoint").toString());
             newValues.put("paid", Integer.parseInt(items.get("paid").toString()));
@@ -229,6 +229,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
             while (cursor.moveToNext()) {
                 HashMap<String, Object> item = new HashMap<String, Object>();
+                item.put("deadLine", cursor.getString(cursor.getColumnIndex("deadLine")));
+                //Log.i("test", cursor.getString(cursor.getColumnIndex("deadLine")));
                 item.put("boardingDate", cursor.getString(cursor.getColumnIndex("boardingDate")));
                 item.put("departurePoint", cursor.getString(cursor.getColumnIndex("departurePoint")));
                 item.put("destPoint", cursor.getString(cursor.getColumnIndex("destPoint")));
