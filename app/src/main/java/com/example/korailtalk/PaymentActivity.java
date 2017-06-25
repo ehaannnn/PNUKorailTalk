@@ -70,7 +70,7 @@ public class PaymentActivity extends AppCompatActivity {
                 }
 
                 else if(newTicket.equals("old")) {//티켓 페이 변경
-                    ticketNumber = i.getStringExtra("TICKET_NUMBER");
+                    ticketNumber = i.getStringExtra("ticketID");
                     ticket_infos = dbhelper.getResultAt("TICKET_INFO",customNum);
                     for(int i=0; i<ticket_infos.size(); i++) {
                         if(Integer.parseInt(ticket_infos.get(i).get("ticketID").toString())==Integer.parseInt(ticketNumber)) {

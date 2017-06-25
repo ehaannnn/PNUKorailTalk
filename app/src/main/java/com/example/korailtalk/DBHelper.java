@@ -188,8 +188,12 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
         cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
+        String result = new String();
+        while(cursor.moveToNext()) {
+            result = cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum"));
+        }
 
-        return cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum"));
+        return result;
     }
 
     public void DeleteTicketInfoTablebyticketID(int ticketID, int customID) {
