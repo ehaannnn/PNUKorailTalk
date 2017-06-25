@@ -17,8 +17,7 @@ import java.util.Map;
 
 public class ButtonListViewAdapter extends BaseAdapter {
     private List<Map<String, ?>> listViewItemList = new LinkedList<Map<String, ?>>();
-    private SeatSearch seatSearch;
-    private int numOfTickets;
+
     @Override
     public int getCount() {
         return listViewItemList.size();
