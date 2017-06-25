@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.TextView;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +18,8 @@ import java.util.Map;
 
 public class ButtonListViewAdapter extends BaseAdapter {
     private List<Map<String, ?>> listViewItemList = new LinkedList<Map<String, ?>>();
-
+    private SeatSearch seatSearch;
+    private int numOfTickets;
     @Override
     public int getCount() {
         return listViewItemList.size();
@@ -37,6 +36,8 @@ public class ButtonListViewAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.button_items, parent, false);
 
+
+
             Button btn1 = (Button) convertView.findViewById(R.id.btn1);
             Button btn2 = (Button) convertView.findViewById(R.id.btn2);
             Button btn3 = (Button) convertView.findViewById(R.id.btn3);
@@ -50,26 +51,44 @@ public class ButtonListViewAdapter extends BaseAdapter {
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
+                    if ( seatSearch.numOfTickets>=0) {
+                        view.setBackgroundColor(Color.BLUE);
+                        seatSearch.numOfTickets -= 1;
+                    }
+
                 }
             });
             btn2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
+                    if ( seatSearch.numOfTickets>=0) {
+                        view.setBackgroundColor(Color.BLUE);
+                        seatSearch.numOfTickets -= 1;
+                    }
+
                 }
             });
 
             btn3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
+                    if ( seatSearch.numOfTickets>=0) {
+                        view.setBackgroundColor(Color.BLUE);
+                        seatSearch.numOfTickets -= 1;
+                    }
+
                 }
             });
+
+
             btn4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
+                    if (seatSearch.numOfTickets>=0) {
+                        view.setBackgroundColor(Color.BLUE);
+                        seatSearch.numOfTickets -= 1;
+                    }
+
                 }
             });
             return convertView;

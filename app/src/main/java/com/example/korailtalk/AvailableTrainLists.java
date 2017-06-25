@@ -57,7 +57,7 @@ public class AvailableTrainLists extends Activity {
 
     }
 
-    public Map<String,Object> createItem(int boardingDate, String departurePoint, String destPoint, int seatNum, int trainNum) {
+    public Map<String,Object> createItem(long boardingDate, String departurePoint, String destPoint, int seatNum, int trainNum) {
         Map<String,Object> item = new HashMap<String,Object>();
         item.put("boardingDate", boardingDate);
         item.put("departurePoint", departurePoint);

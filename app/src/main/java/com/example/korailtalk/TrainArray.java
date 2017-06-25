@@ -8,14 +8,14 @@ import java.io.Serializable;
 //db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO(  boardingDate TEXT,
 // departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
 public class TrainArray implements Serializable {
-    int departdate;
+    long departdate;
     String departurePoint;
     String destPoint;
     int totalAvailableSeatNum;
     int trainnum;
     int nbofticket;
 
-    TrainArray(int departdate, String departurePoint, String destPoint, int totalAvailableSeatNum, int trainnum, int nbofticket){
+    TrainArray(long departdate, String departurePoint, String destPoint, int totalAvailableSeatNum, int trainnum, int nbofticket){
         this.departdate = departdate;
         this.departurePoint = departurePoint;
         this.destPoint = destPoint;
@@ -24,7 +24,7 @@ public class TrainArray implements Serializable {
         this.nbofticket = nbofticket;
     }
 
-    int getDepartdate(){
+    long getDepartdate(){
         return departdate;
     }
 
