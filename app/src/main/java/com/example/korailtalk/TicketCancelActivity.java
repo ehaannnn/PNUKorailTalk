@@ -1,8 +1,9 @@
 package com.example.korailtalk;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,9 +11,9 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 
-public class TicketCancelActivity extends AppCompatActivity {
+public class TicketCancelActivity extends Activity {
 
-    private String ticketID, customer_id;
+    private int ticketID, customID;
     private DBHelper dbhelper;
     private List<HashMap<String,Object>> ticket_infos;
     private HashMap<String, Object> ticket_info;
@@ -23,9 +24,10 @@ public class TicketCancelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket_cancel);
 
-        Intent intent = new Intent(this.getIntent());
-        ticketID = intent.getStringExtra("ticketID");
-        customer_id = intent.getStringExtra("customID");
+        Intent intent = this.getIntent();
+        ticketID = intent.getIntExtra("ticketID", 0);
+        customID = intent.getIntExtra("customID", 0);
+        Log.i("test",customID+"");
         TextView textView_ticketID = (TextView)findViewById(R.id.ticketID);
         TextView textView_trainNum = (TextView)findViewById(R.id.trainNum);
         TextView textView_boardingDate = (TextView)findViewById(R.id.boardingDate);
@@ -37,7 +39,7 @@ public class TicketCancelActivity extends AppCompatActivity {
 
         dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db",null,1);
 
-        ticket_infos = dbhelper.getResultAt("TICKET_INFO",Integer.parseInt(customer_id));
+        ticket_infos = dbhelper.getResultAt("TICKET_INFO",customID);
         for(int i=0; i<ticket_infos.size(); i++) {
             if(ticket_infos.get(i).get("ticketID").toString().equals(ticketID)) {
                 ticket_info = ticket_infos.get(i);
@@ -65,7 +67,7 @@ public class TicketCancelActivity extends AppCompatActivity {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbhelper.DeleteTicketInfoTablebyticketID(ticket_info.get("ticketID").toString(), customer_id);
+                dbhelper.DeleteTicketInfoTablebyticketID(ticket_info.get("ticketID").toString(), customID+"");
                 Integer newTASN = Integer.parseInt(ticket_info.get("totalAvailableSeatNum").toString()) + 1;
                 dbhelper.UpdateTrainInfoTotalAvailableSN(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString(), newTASN.toString());
 

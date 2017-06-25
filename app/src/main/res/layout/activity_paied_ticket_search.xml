@@ -65,4 +65,10 @@
         android:text="세션 삭제"
         android:id="@+id/sessionDelete"
         android:textAllCaps="false" />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+
+        android:text="승차권취소"
+        android:id="@+id/ticketCancel" />
 </LinearLayout>
