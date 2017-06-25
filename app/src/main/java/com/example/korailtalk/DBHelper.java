@@ -176,18 +176,18 @@ public class DBHelper extends SQLiteOpenHelper {
         return item;
     }
 
-    public void DeleteTicketInfoTablebyticketID(String ticketID, String customID) {
+    public void DeleteTicketInfoTablebyticketID(int ticketID, int customID) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("DELETE FROM TICKET_INFO WHERE ticketID='" + ticketID + "' and customID='" + customID + "'", null);
+        db.execSQL("DELETE FROM TICKET_INFO WHERE ticketID='" + ticketID + "' and customID='" + customID + "'");
     }
 
     public void UpdateTrainInfoTotalAvailableSN(String trainNum, String boardingDate, String totalAvailableSeatNum) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
+        db.execSQL("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'");
     }
 
     public List<HashMap<String, Object>> getResultAt(String table, int customID) {
