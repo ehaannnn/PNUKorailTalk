@@ -40,11 +40,15 @@
             android:name=".SeatSearch"
             android:label="SeatSearch" />
         <activity
+
             android:name=".AvailableTrainLists"
             android:label="AvailableTrainLists" />
+
+        <activity
             android:name=".TicketHistoryActivity"
             android:label="TicketHistoryActivity"
             android:theme="@style/Theme.AppCompat"/>
+
     </application>
 
 </manifest>

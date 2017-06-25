@@ -3,44 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.korailtalk.PaiedTicketSearch">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="2017-01-01"
-            android:id="@+id/startDate"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/startDateButton"
-            android:text="날짜선택"/>
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView" />
-    </LinearLayout>
+    tools:context="com.example.korailtalk.PaidTicketSearch">
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="2017-01-01"
-            android:id="@+id/endDate"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/endDateButton"
-            android:text="날짜선택"/>
-    </LinearLayout>
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
+<!--
     <Button
         android:id="@+id/paidTicketSearchButton"
         android:layout_width="wrap_content"
@@ -48,7 +19,7 @@
         android:layout_gravity="right"
         android:gravity="center"
 
-        android:text="조회" />
+        android:text="조회" />-->
 
     <Button
         android:id="@+id/main"
@@ -60,9 +31,17 @@
         android:text="메인화면" />
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:text="세션 삭제"
         android:id="@+id/sessionDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="세션 삭제"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/ticketCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="승차권취소" />
+
 </LinearLayout>

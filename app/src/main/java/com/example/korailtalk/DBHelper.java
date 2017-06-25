@@ -166,18 +166,32 @@ public class DBHelper extends SQLiteOpenHelper {
         return item;
     }
 
-    public void DeleteTicketInfoTablebyticketID(String ticketID, String customID) {
+    public HashMap<String, Object> getResultAtTrainInfoTableby_TN_BD(String trainNum, String boardingDate) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+        HashMap<String, Object> item = new HashMap<String, Object>();
+
+        cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
+
+        while (cursor.moveToNext()) {
+            item.put("totalAvailableSeatNum", cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum")));
+        }
+
+        return item;
+    }
+
+    public void DeleteTicketInfoTablebyticketID(int ticketID, int customID) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("DELETE FROM TICKET_INFO WHERE ticketID='" + ticketID + "' and customID='" + customID + "'", null);
+        db.execSQL("DELETE FROM TICKET_INFO WHERE ticketID='" + ticketID + "' and customID='" + customID + "'");
     }
 
     public void UpdateTrainInfoTotalAvailableSN(String trainNum, String boardingDate, String totalAvailableSeatNum) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
 
-        cursor = db.rawQuery("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
+        db.execSQL("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'");
     }
 
     public List<HashMap<String, Object>> getResultAt(String table, int customID) {
@@ -196,6 +210,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 item.put("ticketID", cursor.getString(cursor.getColumnIndex("ticketID")));
                 item.put("customID", cursor.getString(cursor.getColumnIndex("customID")));
                 item.put("trainNum", cursor.getString(cursor.getColumnIndex("trainNum")));
+                item.put("paid", cursor.getString(cursor.getColumnIndex("paid")));
                 item.put("use", cursor.getString(cursor.getColumnIndex("use")));
                 items.add(item);
             }
