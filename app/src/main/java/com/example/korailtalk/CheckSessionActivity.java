@@ -84,7 +84,7 @@ public class CheckSessionActivity extends Activity {
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
 
                 Intent newIntent = new Intent(CheckSessionActivity.this, PaymentActivity.class);//TicketPayment로 고쳐야함
-                newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+                newIntent.putExtra("customID", item.get("customID").toString());
                 newIntent.putExtra("departPoint", departPoint);
                 newIntent.putExtra("destPoint", destPoint);
                 newIntent.putExtra("departdate", departDate);

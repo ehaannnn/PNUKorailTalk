@@ -133,7 +133,7 @@ public class LoginActivity extends Activity {
             newIntent.putExtra("trainum", traiNum);
             newIntent.putExtra("nbofticket", nbofTicket);
             newIntent.putExtra("seatinfo", seatInfo);
-            newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
+            newIntent.putExtra("customID", item.get("customID").toString());
             startActivity(newIntent);
             finish();
 
