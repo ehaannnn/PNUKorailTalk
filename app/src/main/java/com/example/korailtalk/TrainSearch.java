@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +37,8 @@ public class TrainSearch extends Activity {
     private Button btnDepartDate;
     private TextView departDate;
     private String departDatestr;
+    private EditText hour;
+    private EditText minute;
 
     private String departPointstr;
     private String destinationPointstr;
@@ -43,7 +46,6 @@ public class TrainSearch extends Activity {
     private ArrayList<TrainArray> trainarraylist;
 
     private DBHelper dbhelper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,9 @@ public class TrainSearch extends Activity {
 
             }
         });
+        hour = (EditText)findViewById(R.id.hour);
+        minute = (EditText)findViewById(R.id.minute);
+
         seatNum = (EditText) findViewById(R.id.seatNum);
         btnSerch = (Button)findViewById(R.id.trainsearch);
 
@@ -87,7 +92,7 @@ public class TrainSearch extends Activity {
             @Override
             public void onClick(View view) {
                 int tempnbofseat = Integer.parseInt(seatNum.getText().toString());
-                int departdate = Integer.parseInt(departDatestr);
+                BigInteger departdate = new BigInteger(departDatestr);
                 final List<HashMap<String,Object>> train_info = dbhelper.getResultAtTrainTable(departdate,departPointstr,
                         destinationPointstr, tempnbofseat);
 
@@ -95,7 +100,8 @@ public class TrainSearch extends Activity {
                     Intent intent2 = new Intent(TrainSearch.this , AvailableTrainLists.class);
                     trainarraylist = new ArrayList<TrainArray>();
                     for(int i = 0; i < train_info.size(); i++){
-                        trainarray = new TrainArray(Integer.parseInt(train_info.get(i).get("boardingDate").toString()),
+                        BigInteger tmpbigint = new BigInteger(train_info.get(i).get("boardingDate").toString());
+                        trainarray = new TrainArray(tmpbigint,
                                 train_info.get(i).get("departurePoint").toString(),
                                 train_info.get(i).get("destPoint").toString(),
                                 Integer.parseInt(train_info.get(i).get("totalAvailableSeatNum").toString()),
@@ -142,6 +148,8 @@ public class TrainSearch extends Activity {
         if (requestCode == 1) {
             String boardingDate = data.getStringExtra("boardingDate");
             departDatestr = data.getStringExtra("boardingDatestr");
+            departDatestr += hour.getText().toString();
+            departDatestr += minute.getText().toString();
             departDate.setText(boardingDate);
 
 

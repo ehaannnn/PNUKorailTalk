@@ -199,13 +199,6 @@ public class SeatSearch extends Activity {
                         public void onClick(View view) {
                             if (click == 0) {
                                 if (totalselectnb < nbofticket) {
-                                    /*view.buildDrawingCache();
-                                    Bitmap bitmap = view.getDrawingCache();
-                                    int color = bitmap.getPixel(0, 0);
-                                    Log.e("ChecktedText","Background Color: " + color);
-                                    view.destroyDrawingCache();*/
-                                    /*Log("버튼색깔", String.valueOf(btn.getDrawingCacheBackgroundColor());
-                                    btn.setBackgroundColor(Color.BLUE);*/
                                     tempseatinfo += btn.getText().toString();
                                     seatinfo.add(totalselectnb, tempseatinfo);
                                     totalselectnb++;

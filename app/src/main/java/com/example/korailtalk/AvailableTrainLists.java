@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class AvailableTrainLists extends Activity {
 
     }
 
-    public Map<String,Object> createItem(int boardingDate, String departurePoint, String destPoint, int seatNum, int trainNum) {
+    public Map<String,Object> createItem(BigInteger boardingDate, String departurePoint, String destPoint, int seatNum, int trainNum) {
         Map<String,Object> item = new HashMap<String,Object>();
         item.put("boardingDate", boardingDate);
         item.put("departurePoint", departurePoint);
