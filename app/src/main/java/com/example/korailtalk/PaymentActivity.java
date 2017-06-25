@@ -6,27 +6,86 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by 이동기 on 2017-06-25.
  */
 
 public class PaymentActivity extends AppCompatActivity {
 
+    private String ticketNumber;
+    private String trainNumber;
+    private String bordingDate;
+    private String departurePoint;
+    private String destPoint;
+    private String seatNum;
+    private String newTicket;
+    private DBHelper dbhelper;
+    private int customNum;
+
+    private List<HashMap<String,Object>> membership_info;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_payment_select);
+        dbhelper = new DBHelper(getApplicationContext(), "PNUKorailTalk.db",null,1);
 
-        Intent i = getIntent();
+        final Intent i = getIntent();
 
-        int ticketNumber = i.getIntExtra("TICKET_NUMBER", 0);
+        newTicket = i.getStringExtra("NEW_TICKET");
+        customNum = Integer.parseInt(i.getStringExtra("customNum"));
 
         Button btn_payment = (Button) findViewById(R.id.paymentStart);
         btn_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //결제
+
+                if(newTicket.equals("new")) {//새로 티켓을 생성.
+
+                    bordingDate = i.getStringExtra("departdate");
+                    departurePoint = i.getStringExtra("departPoint");
+                    destPoint = i.getStringExtra("destPoint");
+                    seatNum = i.getStringExtra("seatInfo");
+                    trainNumber = i.getStringExtra("trainnum");
+
+                    HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
+                    ticketInfo.put("boardingDate", bordingDate);
+                    ticketInfo.put("departurePoint", departurePoint);
+                    ticketInfo.put("destPoint", destPoint);
+                    ticketInfo.put("paid", 1);
+                    ticketInfo.put("deadLine", null);
+                    ticketInfo.put("seatNum", seatNum);
+                    ticketInfo.put("ticketID", null);
+                    ticketInfo.put("customID", customNum);
+                    ticketInfo.put("trainNum", Integer.parseInt(trainNumber));
+                    ticketInfo.put("use", 0);
+                    dbhelper.insert("TICKET_INFO", ticketInfo);
+                }
+
+                else if(newTicket.equals("old")) {//티켓 페이 변경
+                    ticketNumber = i.getStringExtra("TICKET_NUMBER");
+
+                    dbhelper.UpdateTicketInfoPaidZeroToOne(ticketNumber);
+                }
+
+
+                //공통 변경 부분 사용가능
+
+                //마일리지 증가
+                membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO", customNum);
+                int mileage = Integer.parseInt(membership_info.get(0).get("KTXMileage").toString());
+                mileage += 300;
+                dbhelper.UpdateKTXMileageSub300(customNum, mileage);
+
+                //좌석 리스트 수정
+
+
                 Intent intent = new Intent(
                         getApplicationContext(),
                         SendSMSAlarmActivity.class);
@@ -38,9 +97,37 @@ public class PaymentActivity extends AppCompatActivity {
         btn_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if(newTicket.equals("new")) {//paid 가 false인 티켓을 생성.
+
+                    bordingDate = i.getStringExtra("departdate");
+                    departurePoint = i.getStringExtra("departPoint");
+                    destPoint = i.getStringExtra("destPoint");
+                    seatNum = i.getStringExtra("seatInfo");
+                    trainNumber = i.getStringExtra("trainnum");
+
+                    HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
+                    ticketInfo.put("boardingDate", bordingDate);
+                    ticketInfo.put("departurePoint", departurePoint);
+                    ticketInfo.put("destPoint", destPoint);
+                    ticketInfo.put("paid", 0);
+                    ticketInfo.put("deadLine", null);
+                    ticketInfo.put("seatNum", seatNum);
+                    ticketInfo.put("ticketID", null);
+                    ticketInfo.put("customID", customNum);
+                    ticketInfo.put("trainNum", Integer.parseInt(trainNumber));
+                    ticketInfo.put("use", 0);
+                    dbhelper.insert("TICKET_INFO", ticketInfo);
+                }
+
+                else if(newTicket.equals("old")) {//바로 예약승차권으로 감
+                    //no action.
+                }
+
                 Intent intent = new Intent(
                         getApplicationContext(),
-                        MainActivity.class);
+                        UnPaidTicketSearch.class);
                 startActivity(intent);
             }
         });

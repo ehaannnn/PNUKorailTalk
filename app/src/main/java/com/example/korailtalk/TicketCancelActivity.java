@@ -34,7 +34,7 @@ public class TicketCancelActivity extends Activity {
         Intent intent = this.getIntent();
         ticketID = intent.getIntExtra("ticketID", 0);
         customID = intent.getIntExtra("customID", 0);
-        Log.i("test",customID+"");
+        Log.i("test",customID+" ," +ticketID);
         TextView textView_ticketID = (TextView)findViewById(R.id.ticketID);
         TextView textView_trainNum = (TextView)findViewById(R.id.trainNum);
         TextView textView_boardingDate = (TextView)findViewById(R.id.boardingDate);

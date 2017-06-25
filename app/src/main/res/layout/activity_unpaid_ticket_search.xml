@@ -18,34 +18,34 @@
             android:gravity="center"
 
             android:text="조회" />-->
-
-    <Button
-        android:id="@+id/main"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:gravity="center"
+        android:orientation="horizontal">
 
-        android:text="메인화면" />
+        <Button
+            android:id="@+id/main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="center"
 
-    <Button
-        android:id="@+id/sessionDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="세션 삭제"
-        android:textAllCaps="false" />
+            android:text="메인화면" />
 
-    <Button
-        android:id="@+id/ticketCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="예약취소" />
+        <Button
+            android:id="@+id/ticketCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="승차권취소" />
+        <Button
+            android:id="@+id/ticketPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="승차권 결제/발권" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/ticketPay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="승차권 결제/발권" />
+
+
 </LinearLayout>

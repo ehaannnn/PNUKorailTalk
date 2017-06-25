@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -183,6 +184,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return item;
     }
 
+    public String getResultTrainAvailableSeat(String trainNum, String boardingDate) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor;
+        cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'", null);
+
+        return cursor.getString(cursor.getColumnIndex("totalAvailableSeatNum"));
+    }
+
     public void DeleteTicketInfoTablebyticketID(int ticketID, int customID) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor;
@@ -195,6 +204,13 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor;
 
         db.execSQL("UPDATE TRAIN_INFO SET totalAvailableSeatNum = '" + totalAvailableSeatNum + "' WHERE trainNum='" + trainNum + "' and boardingDate='" + boardingDate + "'");
+    }
+
+    public void UpdateTicketInfoPaidZeroToOne(String ticketNumber) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor;
+
+        db.execSQL("UPDATE TICKET_INFO SET paid = '" + 1 + "' WHERE ticketID='" + ticketNumber + "'");
     }
 
     public void UpdateKTXMileageSub300(int customID, int KTXMileage) {
