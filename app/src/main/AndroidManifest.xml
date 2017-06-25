@@ -40,15 +40,16 @@
             android:name=".SeatSearch"
             android:label="SeatSearch" />
         <activity
-<<<<<<< HEAD
             android:name=".AvailableTrainLists"
             android:label="AvailableTrainLists" />
-
-=======
+        <activity
             android:name=".TicketHistoryActivity"
             android:label="TicketHistoryActivity"
             android:theme="@style/Theme.AppCompat"/>
->>>>>>> origin/master
+
+        <activity
+            android:name=".SelectPeriod"
+            android:label="SelectPeriod" />
     </application>
 
 </manifest>

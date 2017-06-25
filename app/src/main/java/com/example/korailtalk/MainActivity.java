@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(MainActivity.this, CheckSessionActivity.class);
-                Intent intent = new Intent(MainActivity.this, TicketHistoryActivity.class);
+                Intent intent = new Intent(MainActivity.this, SelectPeriod.class);
                 intent.putExtra("ActivityFrom", TICKET_HISTORY_BUTTON);
                 startActivity(intent);
             }
