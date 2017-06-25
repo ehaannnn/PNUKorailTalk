@@ -11,13 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PaiedTicketSearch extends Activity {
+public class PaidTicketSearch extends Activity {
     private int customID;
     private int selectedCustomID;
     private int selectedTicketID;
@@ -26,13 +25,10 @@ public class PaiedTicketSearch extends Activity {
     private DBHelper dbhelper;
     private SessionDBHelper sessionDBhelper;
     private ListViewAdapter adapter;
-    private Button paidTicketSearchButton;
-    private Button startDateButton;
-    private Button endDateButton;
+
     private Button mainButton;
     private Button ticketCancelButton;
-    private TextView startDate;
-    private TextView endDate;
+
     private ListView listView;
     private static final int START_DATE = 1;
     private static final int END_DATE = 2;
@@ -53,7 +49,7 @@ public class PaiedTicketSearch extends Activity {
         ticketCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(PaiedTicketSearch.this, TicketCancelActivity.class);
+                Intent newIntent = new Intent(PaidTicketSearch.this, TicketCancelActivity.class);
                 newIntent.putExtra("customID",selectedCustomID);
                 Log.i("selectedCustomID", selectedCustomID + "");
                 newIntent.putExtra("ticketID",selectedTicketID);
@@ -65,7 +61,7 @@ public class PaiedTicketSearch extends Activity {
         final List<HashMap<String, Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO", customID);
         adapter = new ListViewAdapter();
         for (int i = 0; i < ticket_info.size(); ++i) {
-            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0) {
+            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0 && Integer.parseInt(ticket_info.get(i).get("paid").toString()) == 1) {
                 adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
                         ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString())));
             }
@@ -103,7 +99,7 @@ public class PaiedTicketSearch extends Activity {
         startDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PaiedTicketSearch.this, DatePickerActivity.class);
+                Intent intent = new Intent(PaidTicketSearch.this, DatePickerActivity.class);
                 startActivityForResult(intent, START_DATE);
             }
         });
@@ -113,7 +109,7 @@ public class PaiedTicketSearch extends Activity {
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PaiedTicketSearch.this, DatePickerActivity.class);
+                Intent intent = new Intent(PaidTicketSearch.this, DatePickerActivity.class);
                 startActivityForResult(intent,END_DATE);
             }
         });*/
@@ -126,7 +122,7 @@ public class PaiedTicketSearch extends Activity {
         mainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PaiedTicketSearch.this, MainActivity.class);
+                Intent intent = new Intent(PaidTicketSearch.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -159,7 +155,7 @@ public class PaiedTicketSearch extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == START_DATE) {
+        /*if (requestCode == START_DATE) {
             String boardingDate = data.getStringExtra("boardingDate");
             // Log.i("test",tmp.length()+"");
             //String date = tmp.charAt(0)+tmp.charAt(1)+tmp.charAt(2)+tmp.charAt(3) + "-"+tmp.charAt(4)+tmp.charAt(5)+"-"+tmp.charAt(6)+tmp.charAt(7);
@@ -170,7 +166,7 @@ public class PaiedTicketSearch extends Activity {
             endDate.setText(boardingDate);
         } else {
             Log.i("실행됨?", "여기는 에러");
-        }
+        }*/
     }
 
     @Override

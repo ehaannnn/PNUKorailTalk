@@ -33,7 +33,7 @@ public class CheckSessionActivity extends Activity {
             HashMap<String, String> session = sessionDBhelper.getSession();
             if (session.size() != 0) {  //session작동
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
-                Intent newIntent = new Intent(CheckSessionActivity.this, PaiedTicketSearch.class);
+                Intent newIntent = new Intent(CheckSessionActivity.this, PaidTicketSearch.class);
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
             } else {
@@ -56,12 +56,12 @@ public class CheckSessionActivity extends Activity {
                 startActivity(newIntent);
             }
 
-        } else if (activityFrom.equalsIgnoreCase("unpaidTicketSearch")) {
+        } else if (activityFrom.equalsIgnoreCase("UNPAID_TICKET_BUTTON")) {
             HashMap<String, String> session = sessionDBhelper.getSession();
             Log.i("세션확인",String.valueOf(session.size()));
             if (session.size() != 0) {  //session작동
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
-                Intent newIntent = new Intent(CheckSessionActivity.this, UnPaiedTicketSearch.class);
+                Intent newIntent = new Intent(CheckSessionActivity.this, UnPaidTicketSearch.class);
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
             } else {

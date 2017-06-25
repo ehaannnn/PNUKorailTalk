@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent4 = new Intent(MainActivity.this, CheckSessionActivity.class);
-                intent4.putExtra("ActivityFrom","unpaidTicketSearch");
+                intent4.putExtra("ActivityFrom",UNPAID_TICKET_BUTTON);
                 startActivity(intent4);
             }
         });

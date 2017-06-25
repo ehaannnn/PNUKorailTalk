@@ -104,14 +104,14 @@ public class LoginActivity extends Activity {
 
     private void goActivityAt(HashMap<String, Object> item) {
         if (activityFrom.equalsIgnoreCase("PAID_TICKET_BUTTON")) {
-            Intent intent = new Intent(LoginActivity.this, PaiedTicketSearch.class);
+            Intent intent = new Intent(LoginActivity.this, PaidTicketSearch.class);
             intent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
             startActivity(intent);
             finish();
         } else if (activityFrom.equalsIgnoreCase("ticketHistory")) {
 
         } else if (activityFrom.equalsIgnoreCase("UNPAID_TICKET_BUTTON")) {
-            Intent intent = new Intent(LoginActivity.this, UnPaiedTicketSearch.class);
+            Intent intent = new Intent(LoginActivity.this, UnPaidTicketSearch.class);
             intent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
             startActivity(intent);
             finish();
