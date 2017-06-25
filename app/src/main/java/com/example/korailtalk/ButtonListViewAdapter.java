@@ -1,15 +1,12 @@
 package com.example.korailtalk;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.TextView;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +34,8 @@ public class ButtonListViewAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.button_items, parent, false);
 
+
+
             Button btn1 = (Button) convertView.findViewById(R.id.btn1);
             Button btn2 = (Button) convertView.findViewById(R.id.btn2);
             Button btn3 = (Button) convertView.findViewById(R.id.btn3);
@@ -47,31 +46,6 @@ public class ButtonListViewAdapter extends BaseAdapter {
             btn3.setText("C" + listViewItemList.get(position).get("position").toString());
             btn4.setText("D" + listViewItemList.get(position).get("position").toString());
 
-            btn1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
-                }
-            });
-            btn2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
-                }
-            });
-
-            btn3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
-                }
-            });
-            btn4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    view.setBackgroundColor(Color.BLUE);
-                }
-            });
             return convertView;
         }
 

@@ -5,23 +5,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import static com.example.korailtalk.R.id.departurePoint;
-import static com.example.korailtalk.R.id.trainNum;
 
 /**
  * Created by ttaka on 2017. 6. 23..
@@ -95,11 +89,11 @@ public class TrainSearch extends Activity {
                     Intent intent2 = new Intent(TrainSearch.this , AvailableTrainLists.class);
                     trainarraylist = new ArrayList<TrainArray>();
                     for(int i = 0; i < train_info.size(); i++){
-                        trainarray = new TrainArray(Integer.parseInt(train_info.get(i).get("boardingDate").toString()),
-                                train_info.get(i).get("departurePoint").toString(),
-                                train_info.get(i).get("destPoint").toString(),
-                                Integer.parseInt(train_info.get(i).get("totalAvailableSeatNum").toString()),
-                                Integer.parseInt(train_info.get(i).get("trainNum").toString()),
+                        trainarray = new TrainArray(Long.parseLong(train_info.get(i).get("boardingDate").toString()) ,
+                                train_info.get(i).get("departurePoint").toString() ,
+                                train_info.get(i).get("destPoint").toString() ,
+                                Integer.parseInt(train_info.get(i).get("totalAvailableSeatNum").toString()) ,
+                                Integer.parseInt(train_info.get(i).get("trainNum").toString()) ,
                                 tempnbofseat);
                         trainarraylist.add(trainarray);
                     }
