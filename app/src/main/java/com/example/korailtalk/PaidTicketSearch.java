@@ -86,11 +86,10 @@ public class PaidTicketSearch extends Activity {
                 ticketCancelButton.setEnabled(true);
                 ticketCancelButton = (Button) findViewById(R.id.ticketCancel);
 
-                HashMap<String,Object> item = ticket_info.get(position);
+                HashMap<String,Object> item = (HashMap<String,Object>)adapter.getItem(position);
                 selectedCustomID = Integer.parseInt(item.get("customID").toString());
                 selectedTicketID = Integer.parseInt(item.get("ticketID").toString());
 
-                view.setBackgroundColor(Color.GRAY);
             }
         });
 
@@ -138,6 +137,22 @@ public class PaidTicketSearch extends Activity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final List<HashMap<String, Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO", customID);
+        adapter = new ListViewAdapter();
+        for (int i = 0; i < ticket_info.size(); ++i) {
+            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0 && Integer.parseInt(ticket_info.get(i).get("paid").toString()) == 1) {
+                adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
+                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString()), "PaidTicketSearch"));
+            }
+        }
+        listView.setAdapter(adapter);
 
     }
 

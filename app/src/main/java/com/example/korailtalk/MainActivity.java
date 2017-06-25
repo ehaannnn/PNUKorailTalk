@@ -180,7 +180,7 @@ public class MainActivity extends Activity {
             dbhelper.insert("TICKET_INFO", ticketinfo2);
 
             HashMap<String, Object> ticketinfo3 = new HashMap<String, Object>();
-            ticketinfo3.put("boardingDate", "20176231300");
+            ticketinfo3.put("boardingDate", "201706231300");
             ticketinfo3.put("departurePoint", "부산");
             ticketinfo3.put("destPoint", "서울");
             ticketinfo3.put("paid", 1);
@@ -190,6 +190,42 @@ public class MainActivity extends Activity {
             ticketinfo3.put("trainNum", 123);
             ticketinfo3.put("use", 1);
             dbhelper.insert("TICKET_INFO", ticketinfo3);
+
+            HashMap<String, Object> ticketinfo4 = new HashMap<String, Object>();
+            ticketinfo4.put("boardingDate", "201706251300");
+            ticketinfo4.put("departurePoint", "부산");
+            ticketinfo4.put("destPoint", "서울");
+            ticketinfo4.put("paid", 1);
+            ticketinfo4.put("seatNum", "2A3");
+            ticketinfo4.put("ticketID", 1339);
+            ticketinfo4.put("customID", 31337);
+            ticketinfo4.put("trainNum", 123);
+            ticketinfo4.put("use", 0);
+            dbhelper.insert("TICKET_INFO", ticketinfo4);
+
+            HashMap<String, Object> ticketinfo5 = new HashMap<String, Object>();
+            ticketinfo5.put("boardingDate", "201706251300");
+            ticketinfo5.put("departurePoint", "부산");
+            ticketinfo5.put("destPoint", "서울");
+            ticketinfo5.put("paid", 1);
+            ticketinfo5.put("seatNum", "2A4");
+            ticketinfo5.put("ticketID", 1340);
+            ticketinfo5.put("customID", 31337);
+            ticketinfo5.put("trainNum", 123);
+            ticketinfo5.put("use", 0);
+            dbhelper.insert("TICKET_INFO", ticketinfo5);
+
+            HashMap<String, Object> ticketinfo6 = new HashMap<String, Object>();
+            ticketinfo6.put("boardingDate", "201706251300");
+            ticketinfo6.put("departurePoint", "부산");
+            ticketinfo6.put("destPoint", "서울");
+            ticketinfo6.put("paid", 1);
+            ticketinfo6.put("seatNum", "2A5");
+            ticketinfo6.put("ticketID", 1341);
+            ticketinfo6.put("customID", 31337);
+            ticketinfo6.put("trainNum", 123);
+            ticketinfo6.put("use", 0);
+            dbhelper.insert("TICKET_INFO", ticketinfo6);
 
             HashMap<String, Object> traininfo1 = new HashMap<String, Object>();
             traininfo1.put("boardingDate", "201706261300");

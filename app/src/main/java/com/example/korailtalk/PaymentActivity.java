@@ -18,6 +18,10 @@ public class PaymentActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_payment_select);
 
+        Intent i = getIntent();
+
+        int ticketNumber = i.getIntExtra("TICKET_NUMBER", 0);
+
         Button btn_payment = (Button) findViewById(R.id.paymentStart);
         btn_payment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,5 +45,4 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
     }
-
 }
