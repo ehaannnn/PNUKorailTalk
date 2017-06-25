@@ -90,7 +90,6 @@ public class PaidTicketSearch extends Activity {
                 selectedCustomID = Integer.parseInt(item.get("customID").toString());
                 selectedTicketID = Integer.parseInt(item.get("ticketID").toString());
 
-                view.setBackgroundColor(Color.GRAY);
             }
         });
 
