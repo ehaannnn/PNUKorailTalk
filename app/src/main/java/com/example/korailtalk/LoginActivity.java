@@ -134,6 +134,7 @@ public class LoginActivity extends Activity {
             newIntent.putExtra("nbofticket", nbofTicket);
             newIntent.putExtra("seatinfo", seatInfo);
             newIntent.putExtra("customID", item.get("customID").toString());
+            newIntent.putExtra("NEW_TICKET", "new");
             startActivity(newIntent);
             finish();
 

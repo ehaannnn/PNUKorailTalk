@@ -104,7 +104,7 @@ public class UnPaidTicketSearch extends Activity {
             public void onClick(View v) {
                 //결제화면으로 넘어가기
                 Intent intent = new Intent(UnPaidTicketSearch.this,PaymentActivity.class);
-                intent.putExtra("OLD_TICKET","old");
+                intent.putExtra("NEW_TICKET","old");
                 intent.putExtra("ticketID",String.valueOf(selectedTicketID));
                 intent.putExtra("customID",String.valueOf(selectedCustomID));
                 startActivity(intent);

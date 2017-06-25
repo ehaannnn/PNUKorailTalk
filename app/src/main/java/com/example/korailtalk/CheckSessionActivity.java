@@ -91,6 +91,7 @@ public class CheckSessionActivity extends Activity {
                 newIntent.putExtra("trainum", traiNum);
                 newIntent.putExtra("nbofticket", nbofTicket);
                 newIntent.putExtra("seatinfo", seatInfo);
+                newIntent.putExtra("NEW_TICKET", "new");
 
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);

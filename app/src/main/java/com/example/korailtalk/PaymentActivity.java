@@ -46,14 +46,14 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //결제
-
+                System.out.println("AaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+newTicket);
                 if(newTicket.equals("new")) {//새로 티켓을 생성.
 
                     boardingDate = i.getStringExtra("departdate");
                     departurePoint = i.getStringExtra("departPoint");
                     destPoint = i.getStringExtra("destPoint");
-                    seatNum = i.getStringExtra("seatInfo");
-                    trainNumber = i.getStringExtra("trainnum");
+                    seatNum = i.getStringExtra("seatinfo");
+                    trainNumber = i.getStringExtra("trainum");
 
                     HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
                     ticketInfo.put("boardingDate", boardingDate);
