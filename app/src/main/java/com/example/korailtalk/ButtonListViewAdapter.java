@@ -1,7 +1,6 @@
 package com.example.korailtalk;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,49 +47,6 @@ public class ButtonListViewAdapter extends BaseAdapter {
             btn3.setText("C" + listViewItemList.get(position).get("position").toString());
             btn4.setText("D" + listViewItemList.get(position).get("position").toString());
 
-            btn1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if ( seatSearch.numOfTickets>=0) {
-                        view.setBackgroundColor(Color.BLUE);
-                        seatSearch.numOfTickets -= 1;
-                    }
-
-                }
-            });
-            btn2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if ( seatSearch.numOfTickets>=0) {
-                        view.setBackgroundColor(Color.BLUE);
-                        seatSearch.numOfTickets -= 1;
-                    }
-
-                }
-            });
-
-            btn3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if ( seatSearch.numOfTickets>=0) {
-                        view.setBackgroundColor(Color.BLUE);
-                        seatSearch.numOfTickets -= 1;
-                    }
-
-                }
-            });
-
-
-            btn4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (seatSearch.numOfTickets>=0) {
-                        view.setBackgroundColor(Color.BLUE);
-                        seatSearch.numOfTickets -= 1;
-                    }
-
-                }
-            });
             return convertView;
         }
 
