@@ -17,7 +17,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     private String ticketNumber;
     private String trainNumber;
-    private String bordingDate;
+    private String boardingDate;
     private String departurePoint;
     private String destPoint;
     private String seatNum;
@@ -25,7 +25,8 @@ public class PaymentActivity extends AppCompatActivity {
     private DBHelper dbhelper;
     private int customNum;
 
-    private List<HashMap<String,Object>> membership_info;
+    private List<HashMap<String,Object>> ticket_infos, membership_info;
+    private HashMap<String, Object> ticket_info;
 
 
     @Override
@@ -38,7 +39,7 @@ public class PaymentActivity extends AppCompatActivity {
         final Intent i = getIntent();
 
         newTicket = i.getStringExtra("NEW_TICKET");
-        customNum = Integer.parseInt(i.getStringExtra("customNum"));
+        customNum = Integer.parseInt(i.getStringExtra("customID"));
 
         Button btn_payment = (Button) findViewById(R.id.paymentStart);
         btn_payment.setOnClickListener(new View.OnClickListener() {
@@ -48,14 +49,14 @@ public class PaymentActivity extends AppCompatActivity {
 
                 if(newTicket.equals("new")) {//새로 티켓을 생성.
 
-                    bordingDate = i.getStringExtra("departdate");
+                    boardingDate = i.getStringExtra("departdate");
                     departurePoint = i.getStringExtra("departPoint");
                     destPoint = i.getStringExtra("destPoint");
                     seatNum = i.getStringExtra("seatInfo");
                     trainNumber = i.getStringExtra("trainnum");
 
                     HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
-                    ticketInfo.put("boardingDate", bordingDate);
+                    ticketInfo.put("boardingDate", boardingDate);
                     ticketInfo.put("departurePoint", departurePoint);
                     ticketInfo.put("destPoint", destPoint);
                     ticketInfo.put("paid", 1);
@@ -70,20 +71,41 @@ public class PaymentActivity extends AppCompatActivity {
 
                 else if(newTicket.equals("old")) {//티켓 페이 변경
                     ticketNumber = i.getStringExtra("TICKET_NUMBER");
+                    ticket_infos = dbhelper.getResultAt("TICKET_INFO",customNum);
+                    for(int i=0; i<ticket_infos.size(); i++) {
+                        if(Integer.parseInt(ticket_infos.get(i).get("ticketID").toString())==Integer.parseInt(ticketNumber)) {
+                            ticket_info = ticket_infos.get(i);
+                        }
+                    }
 
+                    trainNumber = ticket_info.get("trainNum").toString();
+                    boardingDate = ticket_info.get("boardingDate").toString();
+                    departurePoint = ticket_info.get("departurePoint").toString();
+                    destPoint = ticket_info.get("destPoint").toString();
+                    seatNum = ticket_info.get("seatNum").toString();
                     dbhelper.UpdateTicketInfoPaidZeroToOne(ticketNumber);
                 }
 
+                //available seat 수정
+
+                String availableSeatNumber = dbhelper.getResultTrainAvailableSeat(trainNumber, boardingDate);
+
+                String[] selected_seat = ticket_info.get("seatNum").toString().split(",");
+                int newAvailableNum = Integer.parseInt(availableSeatNumber) - selected_seat.length;
+
+                dbhelper.UpdateTrainInfoTotalAvailableSN(trainNumber, boardingDate, String.valueOf(newAvailableNum));
 
                 //공통 변경 부분 사용가능
 
                 //마일리지 증가
                 membership_info = dbhelper.getResultAt("MEMBERSHIP_INFO", customNum);
                 int mileage = Integer.parseInt(membership_info.get(0).get("KTXMileage").toString());
-                mileage += 300;
+                mileage += 300 * selected_seat.length;
                 dbhelper.UpdateKTXMileageSub300(customNum, mileage);
 
                 //좌석 리스트 수정
+
+
 
 
                 Intent intent = new Intent(
@@ -101,14 +123,14 @@ public class PaymentActivity extends AppCompatActivity {
 
                 if(newTicket.equals("new")) {//paid 가 false인 티켓을 생성.
 
-                    bordingDate = i.getStringExtra("departdate");
+                    boardingDate = i.getStringExtra("departdate");
                     departurePoint = i.getStringExtra("departPoint");
                     destPoint = i.getStringExtra("destPoint");
                     seatNum = i.getStringExtra("seatInfo");
                     trainNumber = i.getStringExtra("trainnum");
 
                     HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
-                    ticketInfo.put("boardingDate", bordingDate);
+                    ticketInfo.put("boardingDate", boardingDate);
                     ticketInfo.put("departurePoint", departurePoint);
                     ticketInfo.put("destPoint", destPoint);
                     ticketInfo.put("paid", 0);
