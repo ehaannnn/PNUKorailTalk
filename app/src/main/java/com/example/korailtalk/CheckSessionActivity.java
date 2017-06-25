@@ -44,12 +44,12 @@ public class CheckSessionActivity extends Activity {
         } else if (activityFrom.equalsIgnoreCase("TICKET_HISTORY_BUTTON")) {
             HashMap<String, String> session = sessionDBhelper.getSession();
             if (session.size() != 0) {  //session작동
-                /*
+
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
-                Intent newIntent = new Intent(CheckSessionActivity.this, TicketHistoryActivity.class);
+                Intent newIntent = new Intent(CheckSessionActivity.this, SelectPeriodActivity.class);
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
-                */
+
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
                 newIntent.putExtra("ActivityFrom", TICKET_HISTORY_BUTTON);
