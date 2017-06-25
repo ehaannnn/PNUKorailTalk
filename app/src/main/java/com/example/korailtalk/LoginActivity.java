@@ -35,13 +35,6 @@ public class LoginActivity extends Activity {
 
         sessionDBhelper = new SessionDBHelper(getApplicationContext(), "Session.db",null,1);
 
-        sessionButton = (Button) findViewById(R.id.sessionDelete);
-        sessionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionDBhelper.dropTable();
-            }
-        });
         /*
         HashMap<String,String> session = sessionDBhelper.getSession();
         if (session.size() != 0) {  //session작동
@@ -121,7 +114,7 @@ public class LoginActivity extends Activity {
                                 dialog.dismiss();     //닫기
                             }
                         });
-                        alert.setMessage("");
+                        alert.setMessage("존재하지 않는 회원입니다.");
                         alert.show();
                     }
                 }
