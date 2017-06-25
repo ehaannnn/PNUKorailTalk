@@ -75,7 +75,7 @@ public class CheckSessionActivity extends Activity {
             Log.i("세션확인",String.valueOf(session.size()));
             if (session.size() != 0) {  //session작동
                 HashMap<String, Object> item = dbhelper.getResultAtMemberTable(session.get("ID"), session.get("password"));
-                Intent newIntent = new Intent(CheckSessionActivity.this, UnPaiedTicketSearch.class);//TicketPayment로 고쳐야함
+                Intent newIntent = new Intent(CheckSessionActivity.this, UnPaidTicketSearch.class);//TicketPayment로 고쳐야함
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
             } else {

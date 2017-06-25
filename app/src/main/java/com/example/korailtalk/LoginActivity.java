@@ -88,9 +88,10 @@ public class LoginActivity extends Activity {
                     Toast.makeText(getApplicationContext(),"비밀번호를 입력해주세요.",Toast.LENGTH_SHORT);
                 }
                 else {  //로그인 성공
-                    sessionDBhelper.insert(inputID,inputPassword);
+
                     HashMap<String, Object> item = dbhelper.getResultAtMemberTable(inputID,inputPassword);
                     if (item.size() != 0) {
+                        sessionDBhelper.insert(inputID,inputPassword);
                         goActivityAt(item);
                     } else {    //유저 없음
                         Toast.makeText(getApplicationContext(), "아이디 혹은 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT);
@@ -117,7 +118,7 @@ public class LoginActivity extends Activity {
             finish();
 
         } else if (activityFrom.equalsIgnoreCase("SEAT_SEARCH")) {
-            Intent intent = new Intent(LoginActivity.this, UnPaiedTicketSearch.class);//TicketPayment로 고쳐야함
+            Intent intent = new Intent(LoginActivity.this, UnPaidTicketSearch.class);//TicketPayment로 고쳐야함
             intent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
             startActivity(intent);
             finish();

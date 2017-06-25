@@ -22,7 +22,7 @@
             android:name=".CheckSessionActivity"
             android:label="@string/title_activity_check_session" />
         <activity
-            android:name=".PaiedTicketSearch"
+            android:name=".PaidTicketSearch"
             android:label="@string/title_activity_paied_ticket_search" />
         <activity android:name=".MyPageActivity" />
         <activity
