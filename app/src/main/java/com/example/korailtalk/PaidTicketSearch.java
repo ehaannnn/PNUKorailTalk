@@ -141,6 +141,22 @@ public class PaidTicketSearch extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final List<HashMap<String, Object>> ticket_info = dbhelper.getResultAt("TICKET_INFO", customID);
+        adapter = new ListViewAdapter();
+        for (int i = 0; i < ticket_info.size(); ++i) {
+            if (Integer.parseInt(ticket_info.get(i).get("use").toString()) == 0 && Integer.parseInt(ticket_info.get(i).get("paid").toString()) == 1) {
+                adapter.addItem(createItem(ticket_info.get(i).get("boardingDate").toString(), ticket_info.get(i).get("departurePoint").toString(), ticket_info.get(i).get("destPoint").toString(),
+                        ticket_info.get(i).get("seatNum").toString(), Integer.parseInt(ticket_info.get(i).get("trainNum").toString()), "PaidTicketSearch"));
+            }
+        }
+        listView.setAdapter(adapter);
+
+    }
+
     public Map<String, Object> createItem(String boardingDate, String departurePoint, String destPoint, String seatNum, int trainNum, String from) {
         Map<String, Object> item = new HashMap<String, Object>();
         item.put("boardingDate", boardingDate);

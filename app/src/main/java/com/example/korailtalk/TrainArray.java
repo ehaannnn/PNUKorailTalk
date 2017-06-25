@@ -1,6 +1,7 @@
 package com.example.korailtalk;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 /**
  * Created by ttaka on 2017. 6. 24..
@@ -8,14 +9,14 @@ import java.io.Serializable;
 //db.execSQL("CREATE TABLE IF NOT EXISTS TRAIN_INFO(  boardingDate TEXT,
 // departurePoint TEXT, destPoint TEXT, totalAvailableSeatNum INTEGER, trainNum INTEGER);");
 public class TrainArray implements Serializable {
-    long departdate;
+    BigInteger departdate;
     String departurePoint;
     String destPoint;
     int totalAvailableSeatNum;
     int trainnum;
     int nbofticket;
 
-    TrainArray(long departdate, String departurePoint, String destPoint, int totalAvailableSeatNum, int trainnum, int nbofticket){
+    TrainArray(BigInteger departdate, String departurePoint, String destPoint, int totalAvailableSeatNum, int trainnum, int nbofticket){
         this.departdate = departdate;
         this.departurePoint = departurePoint;
         this.destPoint = destPoint;
@@ -24,7 +25,7 @@ public class TrainArray implements Serializable {
         this.nbofticket = nbofticket;
     }
 
-    long getDepartdate(){
+    BigInteger getDepartdate(){
         return departdate;
     }
 

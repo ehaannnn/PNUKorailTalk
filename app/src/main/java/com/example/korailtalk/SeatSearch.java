@@ -2,21 +2,27 @@ package com.example.korailtalk;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import static java.lang.System.in;
 
 /**
  * Created by ttaka on 2017. 6. 24..
@@ -24,7 +30,7 @@ import java.util.List;
 
 public class SeatSearch extends Activity {
     private int trainNum;
-
+    private int nbofticket;
     private int departDate;
     private int trainordernum;
     private Spinner trainorderspinner;
@@ -39,8 +45,8 @@ public class SeatSearch extends Activity {
     private static final String SEAT_SEARCH = "SEAT_SEARCH";
     private Boolean alreadycheck;
 
-    private int numOfTickets;
-
+    private ListView listView;
+    private ArrayList<ButtonListViewAdapter> buttonListViewAdapters;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +55,7 @@ public class SeatSearch extends Activity {
 
         Intent intent = getIntent();
         trainNum = intent.getIntExtra("trainum", 0);
-        numOfTickets = intent.getIntExtra("nbofticket", 0);
+        nbofticket = intent.getIntExtra("nbofticket", 0);
         departDate = intent.getIntExtra("departdate", 0);
         firstime = 0;
         totalselectnb = 0;
@@ -66,20 +72,43 @@ public class SeatSearch extends Activity {
                 }
                 intent2.putExtra("departdate", departDate);
                 intent2.putExtra("trainum", trainNum);
-                intent2.putExtra("nbofticket", numOfTickets);
+                intent2.putExtra("nbofticket", nbofticket);
                 intent2.putExtra("seatinfo", seats);
                 intent2.putExtra("ActivityFrom", SEAT_SEARCH);
                 startActivity(intent2);
             }
         });
 
+        buttonListViewAdapters = new ArrayList<ButtonListViewAdapter>();
+        buttonListViewAdapters.add(new ButtonListViewAdapter());
+        buttonListViewAdapters.add(new ButtonListViewAdapter());
+        buttonListViewAdapters.add(new ButtonListViewAdapter());
+
+
+        for (ButtonListViewAdapter adapter : buttonListViewAdapters) {
+            for (int i = 0; i < 10; ++i) {
+                adapter.addItem(createItem(i));
+            }
+
+        }
+
+        listView = (ListView) findViewById(R.id.listView);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                view.setBackgroundColor(Color.BLUE);
+            }
+        });
 
         trainorderspinner = (Spinner) findViewById(R.id.trainorderspinner);
         trainorderspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 trainordernum = position + 1;
-                makeButton(trainordernum, firstime);
+                //makeButton(trainordernum, firstime);
+                listView.setAdapter(buttonListViewAdapters.get(position));
                 firstime++;
             }
 
@@ -88,7 +117,17 @@ public class SeatSearch extends Activity {
 
             }
         });
+
+
     }
+
+
+    public Map<String, Object> createItem(int position) {
+        Map<String, Object> item = new HashMap<String, Object>();
+        item.put("position", position);
+        return item;
+    }
+
 
     public void makeButton(final int order, int firstcheck) {
         boolean paidseat = false;
@@ -159,7 +198,7 @@ public class SeatSearch extends Activity {
                         @Override
                         public void onClick(View view) {
                             if (click == 0) {
-                                if (totalselectnb < numOfTickets) {
+                                if (totalselectnb < nbofticket) {
                                     /*view.buildDrawingCache();
                                     Bitmap bitmap = view.getDrawingCache();
                                     int color = bitmap.getPixel(0, 0);

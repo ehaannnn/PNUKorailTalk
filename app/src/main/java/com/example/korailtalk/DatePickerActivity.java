@@ -16,6 +16,7 @@ public class DatePickerActivity extends Activity {
     private String boardingDateNoformat;
     private static final int RESULT_CODE = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

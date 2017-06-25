@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -125,7 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return items;
     }
 
-    public List<HashMap<String, Object>> getResultAtTrainTable(int departdate ,String departPoint,
+    public List<HashMap<String, Object>> getResultAtTrainTable(BigInteger departdate , String departPoint,
                                                                String destinationPoint, int nbofseats){
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor;
@@ -133,7 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         cursor = db.rawQuery("SELECT * FROM TRAIN_INFO WHERE departurePoint='" + departPoint +
         "' and destPoint='" + destinationPoint+ "'" + " and totalAvailableSeatNum>=" + nbofseats +
-                " and CAST(boardingDate AS INTEGER)>=" + departdate , null);
+                " and CAST(boardingDate AS BIGINT)>=" + departdate , null);
 
         while(cursor.moveToNext()){
             HashMap<String, Object> item = new HashMap<String, Object>();
