@@ -34,6 +34,7 @@ public class TicketCancelActivity extends Activity {
         TextView textView_departurePoint = (TextView)findViewById(R.id.departurePoint);
         TextView textView_destPoint = (TextView)findViewById(R.id.destPoint);
         TextView textView_seatNum = (TextView)findViewById(R.id.seatNum);
+        TextView textView_passengerNum = (TextView)findViewById(R.id.passengerNum);
         TextView textView_isPaid = (TextView)findViewById(R.id.isPaid);
         TextView textView_isUsable = (TextView)findViewById(R.id.isUsable);
 
@@ -52,6 +53,9 @@ public class TicketCancelActivity extends Activity {
         textView_departurePoint.setText(ticket_info.get("departurePoint").toString());
         textView_destPoint.setText(ticket_info.get("destPoint").toString());
         textView_seatNum.setText(ticket_info.get("seatNum").toString());
+
+        String[] selected_seat = ticket_info.get("seatNum").toString().split(",");
+        textView_passengerNum.setText(String.valueOf(selected_seat.length));
 
         if(paidCheck(Integer.parseInt(ticket_info.get("paid").toString())))
             textView_isPaid.setText("Y");

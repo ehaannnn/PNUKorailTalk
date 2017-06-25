@@ -147,7 +147,7 @@ public class MainActivity extends Activity {
             items2.put("departurePoint", "부산");
             items2.put("destPoint", "서울");
             items2.put("paid", 1);
-            items2.put("seatNum", "1A8");
+            items2.put("seatNum", "1A8,1A9");
             items2.put("ticketID", 1312);
             items2.put("customID", 1);
             items2.put("trainNum", 131);
