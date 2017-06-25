@@ -243,6 +243,14 @@ public class MainActivity extends Activity {
             traininfo3.put("trainNum", 133);
             dbhelper.insert("TRAIN_INFO", traininfo3);
 
+            HashMap<String, Object> traininfo4 = new HashMap<String, Object>();
+            traininfo4.put("boardingDate", "201706251300");
+            traininfo4.put("departurePoint", "부산");
+            traininfo4.put("destPoint", "서울");
+            traininfo4.put("totalAvailableSeatNum", 119);
+            traininfo4.put("trainNum", 123);
+            dbhelper.insert("TRAIN_INFO", traininfo4);
+
             for(int order=0; order<3; order++) {
                 for(int alpha=0; alpha<4; alpha++) {
                     for (int num = 0; num < 10; num++) {
