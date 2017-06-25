@@ -2,6 +2,7 @@ package com.example.korailtalk;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -45,6 +46,7 @@ public class AvailableTrainLists extends Activity {
         trainlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                view.setBackgroundColor(Color.GRAY);
                 Intent intent = new Intent(AvailableTrainLists.this, SeatSearch.class);
                 intent.putExtra("trainum",ticket_info.get(i).getTrainnum());
                 intent.putExtra("nbofticket",ticket_info.get(i).getNbofticket());
