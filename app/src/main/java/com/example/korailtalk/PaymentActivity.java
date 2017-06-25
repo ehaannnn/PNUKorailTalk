@@ -24,9 +24,10 @@ public class PaymentActivity extends AppCompatActivity {
     private String newTicket;
     private DBHelper dbhelper;
     private int customNum;
+    static int createID = 10000;
 
     private List<HashMap<String,Object>> ticket_infos, membership_info;
-    private HashMap<String, Object> ticket_info;
+    private HashMap<String, Object> ticket_info, train_info;
 
 
     @Override
@@ -62,7 +63,8 @@ public class PaymentActivity extends AppCompatActivity {
                     ticketInfo.put("paid", 1);
                     ticketInfo.put("deadLine", null);
                     ticketInfo.put("seatNum", seatNum);
-                    ticketInfo.put("ticketID", null);
+                    ticketInfo.put("ticketID", createID);
+                    createID++;
                     ticketInfo.put("customID", customNum);
                     ticketInfo.put("trainNum", Integer.parseInt(trainNumber));
                     ticketInfo.put("use", 0);
@@ -87,10 +89,11 @@ public class PaymentActivity extends AppCompatActivity {
                 }
 
                 //available seat 수정
-
-                String availableSeatNumber = dbhelper.getResultTrainAvailableSeat(trainNumber, boardingDate);
+                train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(ticket_info.get("trainNum").toString(), ticket_info.get("boardingDate").toString());
 
                 String[] selected_seat = ticket_info.get("seatNum").toString().split(",");
+                String availableSeatNumber = train_info.get("totalAvailableSeatNum").toString();
+
                 int newAvailableNum = Integer.parseInt(availableSeatNumber) - selected_seat.length;
 
                 dbhelper.UpdateTrainInfoTotalAvailableSN(trainNumber, boardingDate, String.valueOf(newAvailableNum));
@@ -127,7 +130,7 @@ public class PaymentActivity extends AppCompatActivity {
                     departurePoint = i.getStringExtra("departPoint");
                     destPoint = i.getStringExtra("destPoint");
                     seatNum = i.getStringExtra("seatInfo");
-                    trainNumber = i.getStringExtra("trainnum");
+                    trainNumber = i.getStringExtra("trainum");
 
                     HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
                     ticketInfo.put("boardingDate", boardingDate);
@@ -136,21 +139,23 @@ public class PaymentActivity extends AppCompatActivity {
                     ticketInfo.put("paid", 0);
                     ticketInfo.put("deadLine", null);
                     ticketInfo.put("seatNum", seatNum);
-                    ticketInfo.put("ticketID", null);
+                    ticketInfo.put("ticketID", createID);
+                    createID++;
                     ticketInfo.put("customID", customNum);
                     ticketInfo.put("trainNum", Integer.parseInt(trainNumber));
                     ticketInfo.put("use", 0);
                     dbhelper.insert("TICKET_INFO", ticketInfo);
+
+                    Intent intent = new Intent(
+                            getApplicationContext(),
+                            MainActivity.class);
+                    startActivity(intent);
                 }
 
                 else if(newTicket.equals("old")) {//바로 예약승차권으로 감
-                    //no action.
+                    finish();
                 }
 
-                Intent intent = new Intent(
-                        getApplicationContext(),
-                        UnPaidTicketSearch.class);
-                startActivity(intent);
             }
         });
     }
