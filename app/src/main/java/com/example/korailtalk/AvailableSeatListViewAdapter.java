@@ -41,8 +41,10 @@ public class AvailableSeatListViewAdapter extends BaseAdapter {
         TextView seatNum = (TextView) convertView.findViewById(R.id.seatNum);
         TextView trainNum = (TextView) convertView.findViewById(R.id.trainNum);
 
+        String tmp = listViewItemList.get(position).get("boardingDate").toString();
+        String date = tmp.substring(0,4)+"/"+tmp.substring(4,6)+"/"+tmp.substring(6,8) + " " +tmp.substring(8, 10)+":"+tmp.substring(10,12);
+        boardingDate.setText(date);
 
-        boardingDate.setText(listViewItemList.get(position).get("boardingDate").toString());
         departurePoint.setText(listViewItemList.get(position).get("departurePoint").toString());
 
         destPoint.setText(listViewItemList.get(position).get("destPoint").toString());
