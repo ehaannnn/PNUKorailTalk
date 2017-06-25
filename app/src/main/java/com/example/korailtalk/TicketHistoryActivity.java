@@ -15,11 +15,19 @@ import java.util.ArrayList;
 
 public class TicketHistoryActivity extends Activity {
 
+    private String startDate;
+    private String endDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_ticket_history);
+
+        Intent intent = getIntent();
+        startDate = intent.getStringExtra("STARTDATE");
+        endDate = intent.getStringExtra("ENDDATE");
+
 
         ListView listView = (ListView)findViewById(R.id.history_list);
 

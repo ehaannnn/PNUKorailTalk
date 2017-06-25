@@ -3,7 +3,6 @@ package com.example.korailtalk;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,7 +70,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(MainActivity.this, CheckSessionActivity.class);
-                Intent intent = new Intent(MainActivity.this, TicketHistoryActivity.class);
+                Intent intent = new Intent(MainActivity.this, SelectPeriod.class);
                 intent.putExtra("ActivityFrom", TICKET_HISTORY_BUTTON);
                 startActivity(intent);
             }
