@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +20,7 @@ public class AvailableTrainLists extends Activity {
 
     private DBHelper dbhelper;
     private ListView trainlistview;
-    private ListViewAdapter adapter;
+    private AvailableSeatListViewAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +34,7 @@ public class AvailableTrainLists extends Activity {
         trainlistview = (ListView)findViewById(R.id.trainlist);
         trainlistview.setAdapter(adapter);
 
-        adapter = new ListViewAdapter();
+        adapter = new AvailableSeatListViewAdapter();
         for (int i = 0; i < ticket_info.size(); i++) {
                 adapter.addItem(createItem(ticket_info.get(i).getDepartdate(),ticket_info.get(i).getDeparturePoint(),
                         ticket_info.get(i).getDestPoint(), ticket_info.get(i).getTotalAvailableSeatNum(),
