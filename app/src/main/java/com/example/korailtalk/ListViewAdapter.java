@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -56,9 +55,10 @@ public class ListViewAdapter extends BaseAdapter {
 
         String[] seats = listViewItemList.get(position).get("seatNum").toString().split(",");
         numOfPeople.setText(String.valueOf(seats.length));
-        if (listViewItemList.get(position).get("seatNum").toString().equalsIgnoreCase("UnPaidTicketSearch")) {
-            //
-            deadLine.setText(listViewItemList.get(position).get("deadLine").toString());
+        if (listViewItemList.get(position).get("from").toString().equalsIgnoreCase("UnPaidTicketSearch")) {
+            tmp = listViewItemList.get(position).get("deadLine").toString();
+            String deadLineDate = tmp.substring(0, 4) + "/" + tmp.substring(4, 6) + "/" + tmp.substring(6, 8) + " " + tmp.substring(8, 10) + ":" + tmp.substring(10, 12);
+            deadLine.setText("     결제기한 : "+deadLineDate);
             ;
         }
         return convertView;

@@ -3,7 +3,6 @@ package com.example.korailtalk;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,13 +118,6 @@ public class MainActivity extends Activity {
             member2.put("phoneNum", "010-7185-7663");
             member2.put("password", "helloworld");
             dbhelper.insert("MEMBER", member2);
-
-            HashMap<String, Object> member3 = new HashMap<String, Object>();
-            member3.put("ID", "holinder4s");
-            member3.put("customID", "31337");
-            member3.put("phoneNum", "010-7185-7663");
-            member3.put("password", "helloworld");
-            dbhelper.insert("MEMBER", member3);
 
             HashMap<String, Object> nonmember1 = new HashMap<String, Object>();
             nonmember1.put("customID", "-1234");
