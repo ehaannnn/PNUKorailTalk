@@ -22,10 +22,10 @@ public class SendSMSAlarmActivity extends Activity {
         String msg = intent.getStringExtra("MESSAGE");
 
 
-
+/*
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage(phoneNumber, null, msg, null, null);
-
+*/
         Intent intent1 = new Intent(this, PaymentSuccessActivity.class);
         startActivity(intent1);
     }
