@@ -182,7 +182,7 @@ public class PaymentActivity extends AppCompatActivity {
                     boardingDate = i.getStringExtra("departdate");
                     departurePoint = i.getStringExtra("departPoint");
                     destPoint = i.getStringExtra("destPoint");
-                    seatNum = i.getStringExtra("seatInfo");
+                    seatNum = i.getStringExtra("seatinfo");
                     trainNumber = i.getStringExtra("trainum");
 
                     HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
