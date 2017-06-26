@@ -49,7 +49,6 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //결제
-                System.out.println("AaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+newTicket);
                 if(newTicket.equals("new")) {//새로 티켓을 생성.
 
                     boardingDate = i.getStringExtra("departdate");
@@ -94,7 +93,6 @@ public class PaymentActivity extends AppCompatActivity {
 
                 //available seat 수정
 
-                System.out.println("AAAAAAAAAAAAVVVVVVVVVVVVVVV" + trainNumber + boardingDate);
                 train_info = dbhelper.getResultAtTrainInfoTableby_TN_BD(trainNumber, boardingDate);
 
                 String[] selected_seat = seatNum.split(",");
@@ -113,7 +111,11 @@ public class PaymentActivity extends AppCompatActivity {
                 mileage += 300 * selected_seat.length;
                 dbhelper.UpdateKTXMileageSub300(customNum, mileage);
 
-                //좌석 리스트 수정
+                //좌석 리스트 수정(제거)
+
+                for(int counter = 0; counter < selected_seat.length; counter++) {
+                    dbhelper.DeleteSeatInfo(boardingDate, selected_seat[counter], Integer.parseInt(trainNumber));
+                }
 
 
                 Intent intent = new Intent(
