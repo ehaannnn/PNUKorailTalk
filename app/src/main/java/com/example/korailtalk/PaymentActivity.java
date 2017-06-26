@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -184,13 +187,21 @@ public class PaymentActivity extends AppCompatActivity {
                     destPoint = i.getStringExtra("destPoint");
                     seatNum = i.getStringExtra("seatinfo");
                     trainNumber = i.getStringExtra("trainum");
+                    long mNow;
+                    Date mDate;
+                    SimpleDateFormat mFormat = new SimpleDateFormat("yyyyMMddhhmm");
+
+                    mNow = System.currentTimeMillis() + 86400000;
+                    mDate = new Date(mNow);
+
+                    String nowTime = mFormat.format(mDate);
 
                     HashMap<String, Object> ticketInfo = new HashMap<String, Object>();
                     ticketInfo.put("boardingDate", boardingDate);
                     ticketInfo.put("departurePoint", departurePoint);
                     ticketInfo.put("destPoint", destPoint);
                     ticketInfo.put("paid", 0);
-                    ticketInfo.put("deadLine", null);
+                    ticketInfo.put("deadLine", nowTime);
                     ticketInfo.put("seatNum", seatNum);
                     ticketInfo.put("ticketID", createID);
                     createID++;
