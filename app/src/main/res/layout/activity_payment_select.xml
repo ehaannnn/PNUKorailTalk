@@ -63,14 +63,5 @@
             android:text="TextView"
             android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/mileageInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/timeInfo"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="68dp"
-            android:text="TextView"
-            android:textSize="30sp" />
     </RelativeLayout>
 </LinearLayout>

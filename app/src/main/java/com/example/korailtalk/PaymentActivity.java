@@ -44,6 +44,50 @@ public class PaymentActivity extends AppCompatActivity {
         newTicket = i.getStringExtra("NEW_TICKET");
         customNum = Integer.parseInt(i.getStringExtra("customID"));
 
+        if(newTicket.equals("new")) {
+            String boardingDate = i.getStringExtra("departdate");
+            String departurePoint = i.getStringExtra("departPoint");
+            String destPoint = i.getStringExtra("destPoint");
+            String seatNum = i.getStringExtra("seatinfo");
+            String trainNumber = i.getStringExtra("trainum");
+
+            TextView textViewBoardingDate = (TextView) findViewById(R.id.bordingDate);
+            TextView textViewSeatQuentity = (TextView) findViewById(R.id.seatQuentity);
+            TextView textViewSeatNum = (TextView) findViewById(R.id.seatInfo);
+            TextView textViewTime = (TextView) findViewById(R.id.timeInfo);
+
+            textViewBoardingDate.setText(boardingDate.substring(0,4) + "년 " + boardingDate.substring(4,6) + "월 " + boardingDate.substring(6, 8) + "일 " + boardingDate.substring(8, 10) + "시 " + boardingDate.substring(10, 12) + "분");
+            textViewSeatQuentity.setText("출발점 : " + departurePoint);
+            textViewSeatNum.setText("도착점 : " + destPoint);
+            textViewTime.setText("좌석번호 : " + seatNum);
+
+        } else  {
+            ticketNumber = i.getStringExtra("ticketID");
+            ticketNumberOutput = ticketNumber;
+            ticket_infos = dbhelper.getResultAt("TICKET_INFO",customNum);
+            for(int count=0; count<ticket_infos.size(); count++) {
+                if(Integer.parseInt(ticket_infos.get(count).get("ticketID").toString())==Integer.parseInt(ticketNumber)) {
+                    ticket_info = ticket_infos.get(count);
+                }
+            }
+
+            String trainNumber = ticket_info.get("trainNum").toString();
+            String boardingDate = ticket_info.get("boardingDate").toString();
+            String departurePoint = ticket_info.get("departurePoint").toString();
+            String destPoint = ticket_info.get("destPoint").toString();
+            String seatNum = ticket_info.get("seatNum").toString();
+
+            TextView textViewBoardingDate = (TextView) findViewById(R.id.bordingDate);
+            TextView textViewSeatQuentity = (TextView) findViewById(R.id.seatQuentity);
+            TextView textViewSeatNum = (TextView) findViewById(R.id.seatInfo);
+            TextView textViewTime = (TextView) findViewById(R.id.timeInfo);
+
+            textViewBoardingDate.setText(boardingDate.substring(0,4) + "년 " + boardingDate.substring(4,6) + "월 " + boardingDate.substring(6, 8) + "일 " + boardingDate.substring(8, 10) + "시 " + boardingDate.substring(10, 12) + "분");
+            textViewSeatQuentity.setText("출발점 : " + departurePoint);
+            textViewSeatNum.setText("도착점 : " + destPoint);
+            textViewTime.setText("좌석번호 : " + seatNum);
+        }
+
         Button btn_payment = (Button) findViewById(R.id.paymentStart);
         btn_payment.setOnClickListener(new View.OnClickListener() {
             @Override
