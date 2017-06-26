@@ -36,10 +36,12 @@ public class CheckSessionActivity extends Activity {
                 Intent newIntent = new Intent(CheckSessionActivity.this, PaidTicketSearch.class);
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
+                finish();
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
                 newIntent.putExtra("ActivityFrom", PAID_TICKET_BUTTON);
                 startActivity(newIntent);
+                finish();
             }
         } else if (activityFrom.equalsIgnoreCase("TICKET_HISTORY_BUTTON")) {
             HashMap<String, String> session = sessionDBhelper.getSession();
@@ -49,11 +51,13 @@ public class CheckSessionActivity extends Activity {
                 Intent newIntent = new Intent(CheckSessionActivity.this, SelectPeriodActivity.class);
                 newIntent.putExtra("customID", Integer.parseInt(item.get("customID").toString()));
                 startActivity(newIntent);
+                finish();
 
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
                 newIntent.putExtra("ActivityFrom", TICKET_HISTORY_BUTTON);
                 startActivity(newIntent);
+                finish();
             }
 
         } else if (activityFrom.equalsIgnoreCase("UNPAID_TICKET_BUTTON")) {
@@ -95,6 +99,7 @@ public class CheckSessionActivity extends Activity {
                 newIntent.putExtra("seatinfo", seatInfo);
                 newIntent.putExtra("NEW_TICKET", "new");
                 startActivity(newIntent);
+                finish();
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
                 newIntent.putExtra("departPoint", departPoint);
@@ -105,6 +110,7 @@ public class CheckSessionActivity extends Activity {
                 newIntent.putExtra("seatinfo", seatInfo);
                 newIntent.putExtra("ActivityFrom", SEAT_SEARCH);
                 startActivity(newIntent);
+                finish();
             }
         } else if (activityFrom.equalsIgnoreCase("MY_PAGE")) {
             HashMap<String, String> session = sessionDBhelper.getSession();
@@ -113,10 +119,12 @@ public class CheckSessionActivity extends Activity {
                 Intent newIntent = new Intent(CheckSessionActivity.this, MyPageActivity.class);
                 newIntent.putExtra("customID", item.get("customID").toString());
                 startActivity(newIntent);
+                finish();
             } else {
                 Intent newIntent = new Intent(CheckSessionActivity.this, LoginActivity.class);
                 newIntent.putExtra("ActivityFrom", MY_PAGE);
                 startActivity(newIntent);
+                finish();
             }
         }
 

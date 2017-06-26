@@ -1,6 +1,8 @@
 package com.example.korailtalk;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -67,31 +70,55 @@ public class SeatSearch extends Activity {
         train_info = dbhelper2.getResultAtTrainInfoTableby_TN_BD(String.valueOf(trainNum), departdatestr);
         btnbuyticket = (Button) findViewById(R.id.buyticket);
 
+
+
+
         btnbuyticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(SeatSearch.this, CheckSessionActivity.class);
-                seats = seatinfo.get(0).toString();
-                seats += ',';
-                for (int i = 1; i < seatinfo.size(); i++) {
-                    seats += seatinfo.get(i).toString();
-                    seats += ',';
-                }
-                /*Log.i("departPoint", train_info.get("departurePoint").toString());
-                Log.i("destPoint", train_info.get("destPoint").toString());
-                Log.i("departdate", departdatestr);
-                Log.i("trainum", String.valueOf(trainNum));
-                Log.i("nbofticket", String.valueOf(nbofticket));
-                Log.i("seatinfo", seats);*/
 
-                intent2.putExtra("departPoint", train_info.get("departurePoint").toString());
-                intent2.putExtra("destPoint", train_info.get("destPoint").toString());
-                intent2.putExtra("departdate", departdatestr);
-                intent2.putExtra("trainum", String.valueOf(trainNum));
-                intent2.putExtra("nbofticket", String.valueOf(nbofticket));
-                intent2.putExtra("seatinfo", seats);
-                intent2.putExtra("ActivityFrom", SEAT_SEARCH);
-                startActivity(intent2);
+                if(totalselectnb < nbofticket){
+                    Toast.makeText(getApplicationContext(),"좌석 선택이 완료되지 않았습니다",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    seats = seatinfo.get(0).toString();
+                    seats += ',';
+                    for (int i = 1; i < seatinfo.size(); i++) {
+                        seats += seatinfo.get(i).toString();
+                        seats += ',';
+                    }
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SeatSearch.this);
+
+                    alertDialogBuilder.setTitle("좌석확인");
+                    alertDialogBuilder
+                            .setMessage("현재 선택한 좌석 : " + seats)
+                            .setCancelable(false)
+                            .setPositiveButton("아니오",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(
+                                                DialogInterface dialog, int id) {
+                                        }
+                                    })
+                            .setNegativeButton("예",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(
+                                                DialogInterface dialog, int id) {
+
+                                            dialog.cancel();
+                                            Intent intent2 = new Intent(SeatSearch.this, CheckSessionActivity.class);
+                                            intent2.putExtra("departPoint", train_info.get("departurePoint").toString());
+                                            intent2.putExtra("destPoint", train_info.get("destPoint").toString());
+                                            intent2.putExtra("departdate", departdatestr);
+                                            intent2.putExtra("trainum", String.valueOf(trainNum));
+                                            intent2.putExtra("nbofticket", String.valueOf(nbofticket));
+                                            intent2.putExtra("seatinfo", seats);
+                                            intent2.putExtra("ActivityFrom", SEAT_SEARCH);
+                                            startActivity(intent2);
+                                        }
+
+                                    });
+                    alertDialogBuilder.show();
+                }
             }
         });
 

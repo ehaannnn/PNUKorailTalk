@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
             dbhelper.insert("MEMBERSHIP_INFO", membershipinfo2);
 
             HashMap<String, Object> ticketinfo1 = new HashMap<String, Object>();
-            ticketinfo1.put("boardingDate", "201706261300");
+            ticketinfo1.put("boardingDate", "201706271300");
             //Log.i("test",items1.get("boardingDate")+"");
             ticketinfo1.put("departurePoint", "부산");
             ticketinfo1.put("destPoint", "서울");
@@ -220,7 +220,7 @@ public class MainActivity extends Activity {
             dbhelper.insert("TICKET_INFO", ticketinfo6);
 
             HashMap<String, Object> traininfo1 = new HashMap<String, Object>();
-            traininfo1.put("boardingDate", "201706261300");
+            traininfo1.put("boardingDate", "201706271300");
             traininfo1.put("departurePoint", "부산");
             traininfo1.put("destPoint", "서울");
             traininfo1.put("totalAvailableSeatNum", 117);
@@ -255,7 +255,7 @@ public class MainActivity extends Activity {
                 for(int alpha=0; alpha<4; alpha++) {
                     for (int num = 0; num < 10; num++) {
                         HashMap<String, Object> seatinfo1 = new HashMap<String, Object>();
-                        seatinfo1.put("boardingDate", "201706261300");
+                        seatinfo1.put("boardingDate", "201706271300");
                         String availableSeat = String.valueOf(order+1);
                         if(alpha == 0) availableSeat += "A";
                         else if(alpha == 1) availableSeat += "B";
